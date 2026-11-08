@@ -3,12 +3,12 @@ const { APP } = require('../config/identity');
 
 // Resilient fallback candidate pool (prioritizing high-availability & zero-cost models)
 const DEFAULT_FALLBACK_POOL = [
+  'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free',
   'nvidia/nemotron-3-ultra-550b-a55b:free',
   'cohere/north-mini-code:free',
   'nvidia/nemotron-3.5-lightning:free',
-  'minimax/minimax-m3:free',
-  'poolside/laguna-s-2.1:free',
-  'google/gemma-4-31b-it:free'
+  'dots-studio/dots-3-note-preview:free',
+  'liquid/lfm-2.5-2.6b:free'
 ];
 
 class OpenRouterService {
