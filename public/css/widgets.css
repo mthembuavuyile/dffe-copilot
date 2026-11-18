@@ -1,13 +1,13 @@
 /* Atlas Minimalist Widgets & Action Cards — Vylex Design System */
 
 .atlas-widget {
-    background: var(--bg-card, #09351E);
-    border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+    background: var(--bg-card, #FFFFFF);
+    border: 1px solid var(--border-subtle, #E2EAE5);
     border-radius: 6px;
     padding: 12px 14px;
     margin: 10px 0;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
-    color: var(--text-main, #f8fafc);
+    box-shadow: var(--shadow-soft, 0 2px 10px rgba(17, 28, 22, 0.06));
+    color: var(--text-main, #111C16);
     font-family: var(--font-body, 'DM Sans', sans-serif);
     max-width: 620px;
     width: 100%;
@@ -54,9 +54,9 @@
     font-size: 0.68rem;
     font-family: var(--font-mono, monospace);
     font-weight: 600;
-    color: var(--accent-primary, #6DBE45);
-    background: rgba(109, 190, 69, 0.12);
-    border: 1px solid rgba(109, 190, 69, 0.25);
+    color: var(--accent-primary, #006633);
+    background: var(--pill-active-bg, rgba(0, 102, 51, 0.09));
+    border: 1px solid var(--border-medium, rgba(0, 102, 51, 0.25));
     letter-spacing: 0.02em;
     text-transform: uppercase;
 }
@@ -2139,8 +2139,8 @@
     gap: 8px;
     padding: 8px 10px;
     margin-bottom: 10px;
-    background: rgba(0, 0, 0, 0.22);
-    border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+    background: var(--surface-inset, #F1F5F2);
+    border: 1px solid var(--border-subtle, #E2EAE5);
     border-radius: 5px;
 }
 
@@ -2155,13 +2155,13 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: var(--text-muted, #94a3b8);
+    color: var(--text-muted, #5F7367);
 }
 
 .atlas-dffe-select {
-    background: var(--bg-app, #052314);
-    color: var(--text-main, #f8fafc);
-    border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
+    background: var(--bg-app, #FFFFFF);
+    color: var(--text-main, #111C16);
+    border: 1px solid var(--border-subtle, #E2EAE5);
     border-radius: 4px;
     padding: 4px 6px;
     font-size: 0.75rem;
@@ -2170,7 +2170,7 @@
 }
 
 .atlas-dffe-select:focus {
-    border-color: var(--accent-primary, #6DBE45);
+    border-color: var(--accent-primary, #006633);
 }
 
 .atlas-dffe-docs-container {
@@ -2180,8 +2180,8 @@
 }
 
 .atlas-dffe-doc-card {
-    background: rgba(0, 0, 0, 0.18);
-    border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+    background: var(--surface-subtle, rgba(17, 28, 22, 0.03));
+    border: 1px solid var(--border-subtle, #E2EAE5);
     border-radius: 5px;
     padding: 10px 12px;
 }
@@ -2207,19 +2207,19 @@
 }
 
 .atlas-dffe-series-tag {
-    color: var(--accent-primary, #6DBE45);
-    background: rgba(109, 190, 69, 0.12);
-    border: 1px solid rgba(109, 190, 69, 0.25);
+    color: var(--accent-primary, #006633);
+    background: var(--pill-active-bg, rgba(0, 102, 51, 0.09));
+    border: 1px solid var(--border-medium, #C9D8CE);
 }
 
 .atlas-dffe-year-tag {
-    color: var(--text-secondary, #cbd5e1);
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
+    color: var(--text-secondary, #3B4D42);
+    background: var(--surface-subtle, rgba(17, 28, 22, 0.04));
+    border: 1px solid var(--border-subtle, #E2EAE5);
 }
 
 .atlas-dffe-gov-tag {
-    color: #10b981;
+    color: var(--accent-secondary, #128044);
     background: rgba(16, 185, 129, 0.1);
     border: 1px solid rgba(16, 185, 129, 0.25);
 }
@@ -2227,19 +2227,19 @@
 .atlas-dffe-doc-title {
     font-size: 0.92rem;
     font-weight: 600;
-    color: var(--text-main, #f8fafc);
+    color: var(--text-main, #111C16);
     margin: 0 0 3px 0;
 }
 
 .atlas-dffe-doc-branch {
     font-size: 0.74rem;
-    color: var(--text-muted, #94a3b8);
+    color: var(--text-muted, #5F7367);
     margin-bottom: 6px;
 }
 
 .atlas-dffe-doc-summary {
     font-size: 0.82rem;
-    color: var(--text-secondary, #cbd5e1);
+    color: var(--text-secondary, #3B4D42);
     margin: 0 0 8px 0;
     line-height: 1.45;
 }
@@ -2248,7 +2248,7 @@
     margin: 0 0 8px 16px;
     padding: 0;
     font-size: 0.79rem;
-    color: var(--text-main, #f8fafc);
+    color: var(--text-main, #111C16);
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -2257,16 +2257,16 @@
 .atlas-dffe-doc-citation {
     font-size: 0.72rem;
     font-family: var(--font-mono, monospace);
-    color: var(--text-muted, #94a3b8);
+    color: var(--text-muted, #5F7367);
     padding: 5px 8px;
-    background: rgba(0, 0, 0, 0.22);
-    border-left: 2px solid var(--accent-primary, #6DBE45);
+    background: var(--surface-inset, #F1F5F2);
+    border-left: 2px solid var(--accent-primary, #006633);
     border-radius: 3px;
     margin-bottom: 8px;
 }
 
 .atlas-dffe-citation-label {
-    color: var(--text-secondary, #cbd5e1);
+    color: var(--text-secondary, #3B4D42);
     font-weight: 600;
     margin-right: 4px;
 }
@@ -2286,9 +2286,9 @@
     font-size: 0.74rem;
     font-weight: 500;
     font-family: inherit;
-    color: var(--text-secondary, #cbd5e1);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
+    color: var(--text-secondary, #3B4D42);
+    background: var(--bg-card, #FFFFFF);
+    border: 1px solid var(--border-subtle, #E2EAE5);
     border-radius: 4px;
     text-decoration: none;
     cursor: pointer;
@@ -2296,14 +2296,14 @@
 }
 
 .atlas-dffe-action-btn:hover {
-    color: var(--text-main, #f8fafc);
-    border-color: var(--accent-primary, #6DBE45);
+    color: var(--text-main, #111C16);
+    border-color: var(--accent-primary, #006633);
 }
 
 .atlas-dffe-action-btn.primary {
-    color: var(--accent-primary, #6DBE45);
-    background: rgba(109, 190, 69, 0.12);
-    border-color: rgba(109, 190, 69, 0.28);
+    color: var(--accent-primary, #006633);
+    background: var(--pill-active-bg, rgba(0, 102, 51, 0.09));
+    border-color: var(--border-medium, #C9D8CE);
 }
 
 .atlas-dffe-governance-footer {

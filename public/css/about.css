@@ -1,18 +1,18 @@
 :root {
-  --bg-color: var(--site-bg, #052314);
-  --bg-gradient: var(--site-bg-gradient, linear-gradient(135deg, #052314 0%, #03170D 100%));
-  --text-primary: var(--site-text-primary, #F8FAFC);
-  --text-secondary: var(--site-text-secondary, #CBD5E1);
-  --text-muted: var(--site-text-muted, #94A3B8);
-  --accent-color: var(--site-accent, #6DBE45);
-  --accent-hover: var(--site-accent-hover, #006633);
-  --card-bg: var(--site-card-bg, rgba(9, 53, 30, 0.4));
-  --card-border: var(--site-card-border, rgba(255, 255, 255, 0.08));
+  --bg-color: var(--site-bg, #FFFFFF);
+  --bg-gradient: var(--site-bg-gradient, linear-gradient(180deg, #FFFFFF 0%, #F4F7F5 100%));
+  --text-primary: var(--site-text-primary, #111C16);
+  --text-secondary: var(--site-text-secondary, #3B4D42);
+  --text-muted: var(--site-text-muted, #5F7367);
+  --accent-color: var(--site-accent, #006633);
+  --accent-hover: var(--site-accent-hover, #004D26);
+  --card-bg: var(--site-card-bg, #FFFFFF);
+  --card-border: var(--site-card-border, #DCE6DF);
 }
 
 .btn-primary {
   background: var(--accent-color);
-  color: #03170D !important;
+  color: #FFFFFF !important;
   padding: 0.6rem 1.2rem;
   border-radius: 6px;
   font-weight: 600;
@@ -516,7 +516,7 @@
 /* Use Case Section */
 .use-case {
   padding: 6rem 0;
-  background: #03170D;
+  background: #F4F7F5;
   border-top: 1px solid var(--card-border);
   border-bottom: 1px solid var(--card-border);
 }
@@ -578,11 +578,11 @@
 .code-mockup {
   width: 100%;
   height: 100%;
-  background: #021009;
+  background: #111C16;
   border-radius: 8px;
   padding: 1.5rem;
   font-family: 'JetBrains Mono', monospace;
-  color: #CBD5E1;
+  color: #E2EAE5;
   font-size: 0.9rem;
   border: 1px solid var(--card-border);
 }

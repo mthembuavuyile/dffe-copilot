@@ -11,9 +11,25 @@ import { escapeHtml } from '../markdown/parser.js';
 
 export function applyTheme(theme) {
   const normalizedTheme = (!theme || theme === 'vylex') ? 'dffe' : theme;
+  const isLightTheme = normalizedTheme === 'dffe';
   state.theme = normalizedTheme;
   document.documentElement.setAttribute('data-theme', normalizedTheme);
   localStorage.setItem('omni_theme', normalizedTheme);
+
+  const colorSchemeMeta = document.querySelector('meta[name="color-scheme"]');
+  if (colorSchemeMeta) {
+    colorSchemeMeta.setAttribute('content', isLightTheme ? 'light' : 'dark');
+  }
+
+  const hljsLink = document.getElementById('hljsTheme');
+  if (hljsLink) {
+    const targetHref = isLightTheme
+      ? 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css'
+      : 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css';
+    if (hljsLink.getAttribute('href') !== targetHref) {
+      hljsLink.setAttribute('href', targetHref);
+    }
+  }
 
   dom.themeBtns.forEach(btn => {
     btn.classList.toggle('active', btn.getAttribute('data-theme-val') === normalizedTheme);

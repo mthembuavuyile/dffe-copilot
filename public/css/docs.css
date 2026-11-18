@@ -3,20 +3,20 @@
 */
 
 :root {
-  --bg-color: var(--site-bg, #052314);
-  --bg-gradient: var(--site-bg-gradient, linear-gradient(135deg, #052314 0%, #03170D 100%));
-  --surface-1: var(--site-surface-1, rgba(9, 53, 30, 0.45));
-  --surface-2: var(--site-surface-2, rgba(13, 56, 112, 0.35));
-  --surface-hover: var(--site-surface-hover, rgba(18, 70, 138, 0.5));
-  --card-border: var(--site-card-border, rgba(255, 255, 255, 0.09));
-  --card-border-focus: var(--site-card-border-focus, rgba(109, 190, 69, 0.4));
-  --text-primary: var(--site-text-primary, #F8FAFC);
-  --text-secondary: var(--site-text-secondary, #CBD5E1);
-  --text-muted: var(--site-text-muted, #94A3B8);
-  --accent: var(--site-accent, #6DBE45);
-  --accent-hover: var(--site-accent-hover, #006633);
-  --accent-glow: var(--site-accent-glow, rgba(109, 190, 69, 0.15));
-  --code-bg: var(--site-code-bg, #021009);
+  --bg-color: var(--site-bg, #FFFFFF);
+  --bg-gradient: var(--site-bg-gradient, linear-gradient(180deg, #FFFFFF 0%, #F4F7F5 100%));
+  --surface-1: var(--site-surface-1, #FFFFFF);
+  --surface-2: var(--site-surface-2, #F4F7F5);
+  --surface-hover: var(--site-surface-hover, #EDF3EF);
+  --card-border: var(--site-card-border, #DCE6DF);
+  --card-border-focus: var(--site-card-border-focus, #006633);
+  --text-primary: var(--site-text-primary, #111C16);
+  --text-secondary: var(--site-text-secondary, #3B4D42);
+  --text-muted: var(--site-text-muted, #5F7367);
+  --accent: var(--site-accent, #006633);
+  --accent-hover: var(--site-accent-hover, #004D26);
+  --accent-glow: var(--site-accent-glow, rgba(0, 102, 51, 0.12));
+  --code-bg: var(--site-code-bg, #F4F7F5);
   --radius-sm: var(--site-radius-sm, 6px);
   --radius-md: var(--site-radius-md, 10px);
   --radius-lg: var(--site-radius-lg, 14px);
@@ -43,7 +43,7 @@ body {
 
 .btn-primary {
   background: var(--accent);
-  color: #03170D !important;
+  color: #FFFFFF !important;
   font-weight: 700;
   padding: 0.55rem 1.25rem;
   border-radius: var(--radius-sm);
@@ -728,7 +728,7 @@ body {
 
 .docs-back-to-top:hover {
   background: var(--accent);
-  color: #03170D;
+  color: #FFFFFF;
   border-color: var(--accent);
   transform: translateY(-2px);
 }

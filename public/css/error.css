@@ -104,8 +104,8 @@
 }
 
 .btn-primary {
-  background: var(--site-accent, #6DBE45);
-  color: #03170D !important;
+  background: var(--site-accent, #006633);
+  color: #FFFFFF !important;
   padding: 0.65rem 1.25rem;
   border-radius: var(--site-radius-sm, 6px);
   font-weight: 700;
