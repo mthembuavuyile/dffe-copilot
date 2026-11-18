@@ -137,22 +137,13 @@ class ChatController {
         ...nonSystemMessages
       ];
 
-      // DFFE RAG Knowledge Grounding (Automatic for DFFE queries or when DFFE filters are active)
-      let autoDffeWidgetResult = null;
+      // DFFE RAG Knowledge Grounding (Silent reference data source only — AI response only, no widget dump)
       const lastUserMessageObj = [...normalizedMessages].reverse().find(m => m.role === 'user');
       const lastUserQueryText = lastUserMessageObj && lastUserMessageObj.content
         ? (typeof lastUserMessageObj.content === 'string' ? lastUserMessageObj.content : JSON.stringify(lastUserMessageObj.content))
         : '';
 
-      const hasExplicitDffeFilter = Boolean(
-        dffeFilters && (
-          dffeFilters.enabled ||
-          (dffeFilters.series && dffeFilters.series !== 'all') ||
-          (dffeFilters.year && dffeFilters.year !== 'all')
-        )
-      );
-
-      if (lastUserQueryText && (dffeRagService.isDffeQuery(lastUserQueryText) || hasExplicitDffeFilter)) {
+      if (lastUserQueryText && dffeRagService.isDffeQuery(lastUserQueryText)) {
         const dffeSearchRes = dffeRagService.searchKnowledge({
           query: lastUserQueryText,
           series: dffeFilters?.series || 'all',
@@ -166,11 +157,6 @@ class ChatController {
             role: 'system',
             content: dffeContext
           });
-          autoDffeWidgetResult = {
-            type: 'dffe_knowledge',
-            data: dffeSearchRes,
-            error: null
-          };
         }
       }
 
@@ -233,9 +219,6 @@ class ChatController {
             res.setHeader('Access-Control-Allow-Origin', '*');
             if (typeof res.flushHeaders === 'function') {
               res.flushHeaders();
-            }
-            if (autoDffeWidgetResult && iteration === 1) {
-              res.write(`data: ${JSON.stringify({ __widget__: autoDffeWidgetResult })}\n\n`);
             }
           }
 
@@ -367,15 +350,21 @@ class ChatController {
                 executedToolCallsInTurn.set(toolSignature, widgetResult);
               }
 
-              // Send widget payload to client ONLY if not a redundant duplicate
-              if (!isRedundant) {
+              // Send widget payload to client ONLY if not a redundant duplicate and not silent RAG reference
+              if (!isRedundant && toolName !== 'search_dffe_knowledge') {
                 res.write(`data: ${JSON.stringify({ __widget__: { type: widgetResult.type, data: widgetResult.data, error: widgetResult.error } })}\n\n`);
               }
               res.write(`data: ${JSON.stringify({ __tool_done__: { name: toolName, success: !widgetResult.error } })}\n\n`);
 
               // Structure tool response for LLM
               let toolContentForLlm = widgetResult;
-              if (toolName === 'search_images' && widgetResult.data?.images) {
+              if (toolName === 'search_dffe_knowledge' && widgetResult.data) {
+                toolContentForLlm = {
+                  status: 'success',
+                  groundingContext: dffeRagService.formatDffeGroundingContext(widgetResult.data),
+                  instruction: 'Use the verified DFFE RAG sources above strictly as background reference data. Write a clear, natural AI response with inline citations and official https://www.dffe.gov.za links where relevant.'
+                };
+              } else if (toolName === 'search_images' && widgetResult.data?.images) {
                 toolContentForLlm = {
                   status: 'success',
                   query: widgetResult.data.query,
