@@ -536,7 +536,7 @@ export async function executeChatTurn(session) {
 
           if (rawReasoning) {
             accumulatedReasoning += rawReasoning;
-            setReasoning(accumulatedReasoning);
+            setReasoning(accumulatedReasoning, true);
             scrollToBottom(false);
           }
 
@@ -553,10 +553,13 @@ export async function executeChatTurn(session) {
             } else {
               accumulatedReasoning += rawContent.replace('<think>', '');
             }
-            setReasoning(accumulatedReasoning);
+            setReasoning(accumulatedReasoning, inThinkTag);
             scrollToBottom(false);
           } else if (rawContent) {
             if (statusAnimator) { statusAnimator.stop(); statusAnimator = null; }
+            if (accumulatedReasoning) {
+              setReasoning(accumulatedReasoning, false);
+            }
             accumulatedContent += rawContent;
 
             const now = Date.now();
@@ -583,7 +586,7 @@ export async function executeChatTurn(session) {
         const extracted = thoughtPrefixMatch[1].trim();
         if (!accumulatedReasoning) {
           accumulatedReasoning = extracted;
-          setReasoning(accumulatedReasoning);
+          setReasoning(accumulatedReasoning, false);
         }
         accumulatedContent = accumulatedContent.slice(thoughtPrefixMatch[0].length).trim();
       }
@@ -596,7 +599,7 @@ export async function executeChatTurn(session) {
     }
 
     if (accumulatedReasoning) {
-      setReasoning(accumulatedReasoning);
+      setReasoning(accumulatedReasoning, false);
     }
 
     bubble.innerHTML = parseMarkdownSafely(accumulatedContent, false);
@@ -623,6 +626,9 @@ export async function executeChatTurn(session) {
     if (statusAnimator) { statusAnimator.stop(); statusAnimator = null; }
 
     if (accumulatedContent || accumulatedReasoning) {
+      if (accumulatedReasoning) {
+        setReasoning(accumulatedReasoning, false);
+      }
       session.messages.push({
         role: 'assistant',
         content: accumulatedContent,

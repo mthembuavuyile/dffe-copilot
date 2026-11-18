@@ -84,20 +84,25 @@ export function renderMessageItem(role, content = '', reasoning = '', shouldScro
   wrapper.className = 'message-content-wrapper';
 
   let reasoningDetails = null;
+  let reasoningSummary = null;
   let reasoningBody = null;
 
-  function setReasoning(text) {
+  function setReasoning(text, isThinking = false) {
     if (!text || !text.trim()) return;
     if (!reasoningDetails) {
       reasoningDetails = document.createElement('details');
       reasoningDetails.className = 'reasoning-accordion';
-      reasoningDetails.open = true;
+      reasoningDetails.open = false;
       reasoningDetails.innerHTML = `
-        <summary>Thought Process</summary>
+        <summary></summary>
         <div class="reasoning-body"></div>
       `;
       wrapper.insertBefore(reasoningDetails, wrapper.firstChild);
+      reasoningSummary = reasoningDetails.querySelector('summary');
       reasoningBody = reasoningDetails.querySelector('.reasoning-body');
+    }
+    if (reasoningSummary) {
+      reasoningSummary.textContent = isThinking ? 'Thinking...' : 'Thought Process';
     }
     if (reasoningBody) {
       reasoningBody.textContent = text;

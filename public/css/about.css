@@ -106,7 +106,7 @@
   letter-spacing: -1.5px;
   margin-bottom: 1.5rem;
   line-height: 1.1;
-  background: linear-gradient(135deg, #FFFFFF 40%, #CBD5E1 100%);
+  background: linear-gradient(135deg, #111C16 25%, #006633 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -148,8 +148,8 @@
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: var(--site-surface-hover, #EDF3EF);
+  border-color: var(--accent-color, #006633);
 }
 
 /* ==========================================================================
@@ -381,7 +381,7 @@
 
 .preview-line {
   height: 12px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(17, 28, 22, 0.08);
   border-radius: 2px;
   margin-bottom: 8px;
 }

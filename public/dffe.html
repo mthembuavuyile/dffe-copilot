@@ -14,6 +14,7 @@
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="/css/site-common.css">
+  <script src="/js/site-nav.js" defer></script>
   <style>
     :root {
       --bg-app: #FFFFFF;
@@ -65,8 +66,8 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--accent-primary);
-      background: rgba(251, 169, 25, 0.12);
-      border: 1px solid rgba(251, 169, 25, 0.28);
+      background: rgba(0, 102, 51, 0.08);
+      border: 1px solid rgba(0, 102, 51, 0.22);
       padding: 4px 10px;
       border-radius: 4px;
       margin-bottom: 12px;
@@ -375,21 +376,67 @@
 <body>
   <a href="#mainContent" class="skip-to-content">Skip to main content</a>
 
-  <header class="site-header">
-    <div class="site-header-inner">
-      <a href="/" class="site-brand">
-        <span class="site-brand-name">DFFE Copilot</span>
-        <span class="dffe-tag" style="margin-left: 6px;">BETA</span>
-        <span class="site-brand-tag">Forestry, Fisheries &amp; the Environment</span>
+  <header class="site-header" role="banner">
+    <div class="container site-header-inner">
+      <a href="/" class="site-logo" aria-label="DFFE Copilot Homepage">
+        <span class="site-logo-symbol" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="dffe-portal-header-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#6DBE45" />
+                <stop offset="100%" stop-color="#006633" />
+              </linearGradient>
+            </defs>
+            <rect x="6" y="6" width="88" height="88" rx="20" fill="#FFFFFF" stroke="#006633" stroke-width="6" />
+            <path d="M50 18C68 18 80 32 76 54C72 72 56 82 40 82C26 82 22 70 24 56C27 34 38 18 50 18Z" fill="url(#dffe-portal-header-gradient)" />
+            <path d="M32 74C42 60 54 46 68 28" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" />
+            <circle cx="68" cy="28" r="5" fill="#D4A017" />
+          </svg>
+        </span>
+        <div class="site-logo-brand">
+          <span class="site-logo-title">DFFE Copilot</span>
+          <span class="site-logo-sub">BETA &bull; Forestry, Fisheries &amp; Environment</span>
+        </div>
       </a>
-      <nav class="site-nav-links" aria-label="Primary Navigation">
-        <a href="/">Workspace</a>
-        <a href="/dffe" class="active">DFFE Portal &amp; RAG</a>
-        <a href="/docs">Documentation</a>
-        <a href="/about">About</a>
+
+      <nav class="site-nav" aria-label="Primary Navigation">
+        <ul class="site-nav-links">
+          <li><a href="/about" class="site-nav-link">About</a></li>
+          <li><a href="/dffe" class="site-nav-link active">RAG Portal</a></li>
+          <li><a href="/docs" class="site-nav-link">Documentation</a></li>
+          <li><a href="/privacy" class="site-nav-link">Privacy</a></li>
+          <li><a href="/terms" class="site-nav-link">Terms</a></li>
+          <li><a href="https://www.dffe.gov.za" class="site-nav-link" target="_blank" rel="noopener">dffe.gov.za</a></li>
+        </ul>
+        <a href="/" class="site-btn-primary">Launch Workspace</a>
+
+        <button id="siteBurgerBtn" class="site-burger-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="siteMobileDrawer">
+          <span class="burger-box" aria-hidden="true">
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+          </span>
+        </button>
       </nav>
     </div>
   </header>
+
+  <!-- Mobile Navigation Drawer & Backdrop Overlay -->
+  <div id="siteBackdropOverlay" class="site-backdrop-overlay" aria-hidden="true"></div>
+  <aside id="siteMobileDrawer" class="site-mobile-drawer" aria-label="Mobile Navigation">
+    <ul class="mobile-drawer-links">
+      <li><a href="/" class="mobile-drawer-link">Workspace</a></li>
+      <li><a href="/dffe" class="mobile-drawer-link active">RAG Portal &amp; Widget</a></li>
+      <li><a href="/about" class="mobile-drawer-link">About DFFE Copilot</a></li>
+      <li><a href="/docs" class="mobile-drawer-link">Documentation &amp; Specs</a></li>
+      <li><a href="/privacy" class="mobile-drawer-link">Privacy Policy</a></li>
+      <li><a href="/terms" class="mobile-drawer-link">Terms of Service</a></li>
+      <li><a href="https://www.dffe.gov.za" class="mobile-drawer-link" target="_blank" rel="noopener">Official DFFE Website</a></li>
+    </ul>
+    <div class="mobile-drawer-actions">
+      <a href="/" class="site-btn-primary">Launch Workspace</a>
+    </div>
+  </aside>
 
   <main id="mainContent" class="dffe-container">
     <section class="dffe-hero">
