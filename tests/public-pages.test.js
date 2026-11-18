@@ -232,7 +232,7 @@ describe('Public Pages Architecture & Layout Standardization', () => {
     assert.ok(css.includes('max-width: calc(100vw - 24px);'), 'Mobile attach menu must have proper max-width');
   });
 
-  test('AI identity and system prompt accurately describe Atlas without false fine-tuning claims', () => {
+  test('AI identity and system prompt accurately describe DFFE Copilot without false fine-tuning claims', () => {
     const {
       SYSTEM_PROMPT_FULL,
       SYSTEM_PROMPT_COMPACT,
@@ -241,23 +241,21 @@ describe('Public Pages Architecture & Layout Standardization', () => {
     const { CURATED_MODELS } = require('../src/config/models.config');
     const chatController = require('../src/controllers/chat.controller');
 
-    // Provenance & Founder
-    assert.ok(SYSTEM_PROMPT_FULL.includes('Vylex Technologies'));
-    assert.ok(SYSTEM_PROMPT_FULL.includes('https://vylex.co.za'));
-    assert.ok(SYSTEM_PROMPT_FULL.includes('Avuyile Mthembu'));
-    assert.ok(SYSTEM_PROMPT_FULL.includes('https://avuyilemthembu.co.za'));
+    // Provenance & Department
+    assert.ok(SYSTEM_PROMPT_FULL.includes('DFFE Copilot'));
+    assert.ok(!SYSTEM_PROMPT_FULL.includes('DFFE Copilot Beta'), 'Beta must be a release stage label, not part of the product name');
+    assert.ok(SYSTEM_PROMPT_FULL.includes('Department of Forestry, Fisheries and the Environment (DFFE)'));
+    assert.ok(SYSTEM_PROMPT_FULL.includes('https://www.dffe.gov.za'));
 
-    // Honest architecture: explicitly forbids claiming Vylex trained or fine-tuned underlying model weights
-    assert.ok(ATLAS_PLATFORM_KNOWLEDGE.includes('NEVER claim that Vylex trained or fine-tuned underlying foundation model weights'));
-    assert.ok(!SYSTEM_PROMPT_FULL.includes('You were created, developed, and fine-tuned by Vylex'));
-    assert.ok(!SYSTEM_PROMPT_COMPACT.includes('engineered and fine-tuned by Vylex'));
+    // Honest architecture: explicitly forbids claiming DFFE trained or fine-tuned underlying model weights
+    assert.ok(ATLAS_PLATFORM_KNOWLEDGE.includes('NEVER claim that DFFE trained or fine-tuned underlying foundation model weights'));
 
-    // Knows all 7 curated models, 8 modes, 26 tools, 5-tab Canvas, and localStorage persistence
+    // Knows all 7 curated models, 8 modes, 27 tools, 5-tab Canvas, and localStorage persistence
     for (const model of CURATED_MODELS) {
       assert.ok(SYSTEM_PROMPT_FULL.includes(model.id), `System prompt should include curated model ${model.id}`);
       assert.ok(SYSTEM_PROMPT_FULL.includes(model.name), `System prompt should include curated model name ${model.name}`);
     }
-    assert.ok(SYSTEM_PROMPT_FULL.includes('26 Built-In Deterministic Tools'));
+    assert.ok(SYSTEM_PROMPT_FULL.includes('27 Built-In Deterministic Tools'));
     assert.ok(SYSTEM_PROMPT_FULL.includes('5-tab Artifacts Canvas'));
     assert.ok(SYSTEM_PROMPT_FULL.includes('localStorage'));
 
@@ -269,7 +267,7 @@ describe('Public Pages Architecture & Layout Standardization', () => {
       reasoning: true,
     });
     assert.ok(builtPrompt.includes('Active Investigation Mode: Solve (solve)'));
-    assert.ok(builtPrompt.includes('Active Model Selection: Atlas Default Engine (openrouter/free, badge AUTO)'));
+    assert.ok(builtPrompt.includes('Active Model Selection: DFFE Copilot Auto (openrouter/free, badge AUTO)'));
     assert.ok(builtPrompt.includes('Deep Reasoning Effort: HIGH (enabled)'));
   });
 

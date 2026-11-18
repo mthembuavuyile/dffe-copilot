@@ -1,6 +1,7 @@
 const openrouterService = require('../services/openrouter.service');
 const searchService = require('../services/search.service');
 const widgetService = require('../services/widget.service');
+const dffeRagService = require('../services/dffe-rag.service');
 const { ATLAS_TOOLS } = require('../config/tools.config');
 const { CURATED_MODELS } = require('../config/models.config');
 const env = require('../config/env');
@@ -85,7 +86,8 @@ class ChatController {
       systemPrompt: customSystemPrompt = null,
       reasoning: enableDeepReasoning = false,
       maxTokens = 4096,
-      apiKey = null
+      apiKey = null,
+      dffeFilters = null
     } = req.body;
 
     const customApiKey = req.headers['x-openrouter-key'] ||
@@ -134,6 +136,43 @@ class ChatController {
         },
         ...nonSystemMessages
       ];
+
+      // DFFE RAG Knowledge Grounding (Automatic for DFFE queries or when DFFE filters are active)
+      let autoDffeWidgetResult = null;
+      const lastUserMessageObj = [...normalizedMessages].reverse().find(m => m.role === 'user');
+      const lastUserQueryText = lastUserMessageObj && lastUserMessageObj.content
+        ? (typeof lastUserMessageObj.content === 'string' ? lastUserMessageObj.content : JSON.stringify(lastUserMessageObj.content))
+        : '';
+
+      const hasExplicitDffeFilter = Boolean(
+        dffeFilters && (
+          dffeFilters.enabled ||
+          (dffeFilters.series && dffeFilters.series !== 'all') ||
+          (dffeFilters.year && dffeFilters.year !== 'all')
+        )
+      );
+
+      if (lastUserQueryText && (dffeRagService.isDffeQuery(lastUserQueryText) || hasExplicitDffeFilter)) {
+        const dffeSearchRes = dffeRagService.searchKnowledge({
+          query: lastUserQueryText,
+          series: dffeFilters?.series || 'all',
+          year: dffeFilters?.year || 'all',
+          audience: dffeFilters?.audience || 'public',
+          limit: 4
+        });
+        const dffeContext = dffeRagService.formatDffeGroundingContext(dffeSearchRes);
+        if (dffeContext) {
+          normalizedMessages.push({
+            role: 'system',
+            content: dffeContext
+          });
+          autoDffeWidgetResult = {
+            type: 'dffe_knowledge',
+            data: dffeSearchRes,
+            error: null
+          };
+        }
+      }
 
       if (webSearch) {
         const lastUserMsg = [...normalizedMessages].reverse().find(m => m.role === 'user');
@@ -194,6 +233,9 @@ class ChatController {
             res.setHeader('Access-Control-Allow-Origin', '*');
             if (typeof res.flushHeaders === 'function') {
               res.flushHeaders();
+            }
+            if (autoDffeWidgetResult && iteration === 1) {
+              res.write(`data: ${JSON.stringify({ __widget__: autoDffeWidgetResult })}\n\n`);
             }
           }
 

@@ -352,6 +352,26 @@ export function resolveSlashCommand(prompt) {
     argsPayload = nearMatch
       ? { query: nearMatch[1].trim(), near: nearMatch[2].trim() }
       : { query: arg || 'coffee shop' };
+  } else if (command === 'dffe' || command === 'soer' || command === 'programmes' || command === 'nema') {
+    const defaultSeriesMap = {
+      dffe: state.dffeFilters?.series || 'all',
+      soer: 'soer',
+      programmes: 'programmes',
+      nema: 'legislation'
+    };
+    const defaultQueryMap = {
+      dffe: 'What environmental programmes is DFFE currently running, and what are the key findings from the latest State of the Environment reports?',
+      soer: 'South Africa State of the Environment Report (SoER) national synthesis and key findings',
+      programmes: 'DFFE EPWP environmental programmes: Working for Water, Working on Fire, Working for Wetlands, Working for the Coast, Working on Waste',
+      nema: 'NEMA Section 24 EIA regulations, Listing Notices 1, 2 and 3, and National Environmental Screening Tool'
+    };
+    toolToCall = 'search_dffe_knowledge';
+    argsPayload = {
+      query: arg.trim() || defaultQueryMap[command],
+      series: defaultSeriesMap[command] || 'all',
+      year: state.dffeFilters?.year || 'all',
+      audience: state.dffeFilters?.audience || 'public'
+    };
   } else {
     // Unrecognized slash command; do not hijack, let main reasoning engine handle
     return null;

@@ -1,7 +1,7 @@
 /**
  * qr-widget.js
  * Adaptive QR Code Studio widget:
- * - Supports both "Standard" (clean, universal) and "Branded" (Vylex Navy #051B38 + center emblem)
+ * - Supports both "Standard" (clean, universal) and "Branded" (Vylex Navy #052314 + center emblem)
  * - Interactive QR Studio templates: Text/URL, Wi-Fi Network, Contact vCard, and WhatsApp Link
  * - 1-click toggle between Standard & Branded on the fly
  * - Level H error correction (30% redundancy) for branded mode
@@ -37,7 +37,7 @@ export function renderQrWidget(data) {
                 margin: 2,
                 errorCorrectionLevel: isBranded ? 'H' : 'M',
                 color: {
-                    dark: isBranded ? '#051B38' : '#000000',
+                    dark: isBranded ? '#052314' : '#000000',
                     light: '#FFFFFF'
                 }
             }, (error) => {
@@ -249,7 +249,7 @@ function drawVylexBrandEmblem(canvas) {
 
     // 1. Draw rounded white badge plate
     ctx.fillStyle = '#FFFFFF';
-    ctx.strokeStyle = '#FBA919';
+    ctx.strokeStyle = '#6DBE45';
     ctx.lineWidth = 2;
     ctx.beginPath();
     if (typeof ctx.roundRect === 'function') {
@@ -262,8 +262,8 @@ function drawVylexBrandEmblem(canvas) {
 
     // 2. Draw Vylex Brand Gradient Icon
     const grad = ctx.createLinearGradient(x, y, x + badgeSize, y + badgeSize);
-    grad.addColorStop(0, '#FBA919');
-    grad.addColorStop(1, '#D97706');
+    grad.addColorStop(0, '#6DBE45');
+    grad.addColorStop(1, '#006633');
     ctx.fillStyle = grad;
 
     // Stylized Vylex 'V' glyph

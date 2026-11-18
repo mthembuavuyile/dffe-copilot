@@ -3,20 +3,20 @@
 */
 
 :root {
-  --bg-color: var(--site-bg, #051B38);
-  --bg-gradient: var(--site-bg-gradient, linear-gradient(135deg, #051B38 0%, #031227 100%));
-  --surface-1: var(--site-surface-1, rgba(10, 46, 92, 0.45));
+  --bg-color: var(--site-bg, #052314);
+  --bg-gradient: var(--site-bg-gradient, linear-gradient(135deg, #052314 0%, #03170D 100%));
+  --surface-1: var(--site-surface-1, rgba(9, 53, 30, 0.45));
   --surface-2: var(--site-surface-2, rgba(13, 56, 112, 0.35));
   --surface-hover: var(--site-surface-hover, rgba(18, 70, 138, 0.5));
   --card-border: var(--site-card-border, rgba(255, 255, 255, 0.09));
-  --card-border-focus: var(--site-card-border-focus, rgba(251, 169, 25, 0.4));
+  --card-border-focus: var(--site-card-border-focus, rgba(109, 190, 69, 0.4));
   --text-primary: var(--site-text-primary, #F8FAFC);
   --text-secondary: var(--site-text-secondary, #CBD5E1);
   --text-muted: var(--site-text-muted, #94A3B8);
-  --accent: var(--site-accent, #FBA919);
-  --accent-hover: var(--site-accent-hover, #D97706);
-  --accent-glow: var(--site-accent-glow, rgba(251, 169, 25, 0.15));
-  --code-bg: var(--site-code-bg, #020B18);
+  --accent: var(--site-accent, #6DBE45);
+  --accent-hover: var(--site-accent-hover, #006633);
+  --accent-glow: var(--site-accent-glow, rgba(109, 190, 69, 0.15));
+  --code-bg: var(--site-code-bg, #021009);
   --radius-sm: var(--site-radius-sm, 6px);
   --radius-md: var(--site-radius-md, 10px);
   --radius-lg: var(--site-radius-lg, 14px);
@@ -43,7 +43,7 @@ body {
 
 .btn-primary {
   background: var(--accent);
-  color: #031227 !important;
+  color: #03170D !important;
   font-weight: 700;
   padding: 0.55rem 1.25rem;
   border-radius: var(--radius-sm);
@@ -122,7 +122,7 @@ body {
 
 .docs-search-input:focus {
   border-color: var(--card-border-focus);
-  background: rgba(10, 46, 92, 0.6);
+  background: rgba(9, 53, 30, 0.6);
 }
 
 .docs-search-icon {
@@ -215,7 +215,7 @@ body {
 }
 
 .sidebar-nav a.active {
-  background: rgba(251, 169, 25, 0.12);
+  background: rgba(109, 190, 69, 0.12);
   color: var(--accent);
   font-weight: 600;
 }
@@ -310,8 +310,8 @@ body {
 }
 
 .model-badge {
-  background: rgba(251, 169, 25, 0.12);
-  border: 1px solid rgba(251, 169, 25, 0.3);
+  background: rgba(109, 190, 69, 0.12);
+  border: 1px solid rgba(109, 190, 69, 0.3);
   color: var(--accent);
   font-family: var(--font-mono);
   font-size: 0.72rem;
@@ -385,7 +385,7 @@ body {
   width: 32px;
   height: 32px;
   border-radius: var(--radius-sm);
-  background: rgba(251, 169, 25, 0.1);
+  background: rgba(109, 190, 69, 0.1);
   color: var(--accent);
   display: flex;
   align-items: center;
@@ -455,7 +455,7 @@ body {
   width: 36px;
   height: 36px;
   border-radius: var(--radius-sm);
-  background: rgba(251, 169, 25, 0.1);
+  background: rgba(109, 190, 69, 0.1);
   color: var(--accent);
   display: flex;
   align-items: center;
@@ -473,7 +473,7 @@ body {
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--accent);
-  background: rgba(251, 169, 25, 0.08);
+  background: rgba(109, 190, 69, 0.08);
   padding: 0.15rem 0.5rem;
   border-radius: 4px;
   display: inline-block;
@@ -703,7 +703,7 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(10, 46, 92, 0.85);
+  background: rgba(9, 53, 30, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--card-border);
@@ -728,7 +728,7 @@ body {
 
 .docs-back-to-top:hover {
   background: var(--accent);
-  color: #031227;
+  color: #03170D;
   border-color: var(--accent);
   transform: translateY(-2px);
 }

@@ -56,6 +56,10 @@ setRenderSessionMessagesCallback(renderSessionMessages);
 setRegenerateCallback(regenerateLastResponse);
 
 const availableSlashCommands = [
+  { cmd: '/dffe', desc: 'Search verified DFFE environmental reports & RAG corpus', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>' },
+  { cmd: '/soer', desc: 'State of the Environment Report (SoER) findings & indicators', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>' },
+  { cmd: '/programmes', desc: 'DFFE EPWP programmes (Working for Water, Fire, Coast, Waste)', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' },
+  { cmd: '/nema', desc: 'NEMA Section 24 EIA regulations & National Screening Tool', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg>' },
   { cmd: '/web', desc: 'Search the web for current information', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>' },
   { cmd: '/image', desc: 'Search visual references', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>' },
   { cmd: '/analyze', desc: 'Deep analysis of uploaded files', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>' },
@@ -293,6 +297,45 @@ function initComposerListeners() {
       dom.chatForm.dispatchEvent(new Event('submit'));
     }
   };
+
+  // Wire DFFE Environmental Knowledge Filter Bar (UNEP EnvironmentGPT Reference)
+  const dffeSeriesEl = document.getElementById('dffeFilterSeries');
+  const dffeYearEl = document.getElementById('dffeFilterYear');
+  const dffeAudienceEl = document.getElementById('dffeFilterAudience');
+  const dffeBrowseBtn = document.getElementById('dffeBrowseCorpusBtn');
+
+  if (dffeSeriesEl && state.dffeFilters?.series) dffeSeriesEl.value = state.dffeFilters.series;
+  if (dffeYearEl && state.dffeFilters?.year) dffeYearEl.value = state.dffeFilters.year;
+  if (dffeAudienceEl && state.dffeFilters?.audience) dffeAudienceEl.value = state.dffeFilters.audience;
+
+  dffeSeriesEl?.addEventListener('change', (e) => {
+    state.dffeFilters.series = e.target.value;
+    localStorage.setItem('atlas_dffe_series', e.target.value);
+  });
+
+  dffeYearEl?.addEventListener('change', (e) => {
+    state.dffeFilters.year = e.target.value;
+    localStorage.setItem('atlas_dffe_year', e.target.value);
+  });
+
+  dffeAudienceEl?.addEventListener('change', (e) => {
+    state.dffeFilters.audience = e.target.value;
+    localStorage.setItem('atlas_dffe_audience', e.target.value);
+  });
+
+  dffeBrowseBtn?.addEventListener('click', () => {
+    if (!dom.messageInput) return;
+    const seriesVal = state.dffeFilters?.series || 'all';
+    const cmdMap = {
+      soer: '/soer',
+      programmes: '/programmes',
+      legislation: '/nema'
+    };
+    const slashCmd = cmdMap[seriesVal] || '/dffe';
+    dom.messageInput.value = slashCmd;
+    autoResizeTextarea();
+    dom.chatForm?.dispatchEvent(new Event('submit'));
+  });
 }
 
 function init() {

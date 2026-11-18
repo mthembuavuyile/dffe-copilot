@@ -11,6 +11,7 @@ const discoverMoviesCapability = require('./media/discover-movies.capability');
 const stockCapability = require('./finance/stock.capability');
 const cryptoCapability = require('./finance/crypto.capability');
 const searchCapability = require('./core/search.capability');
+const dffeKnowledgeCapability = require('./dffe/dffe-knowledge.capability');
 const { LEGACY_TOOLS } = require('./legacy-bridge');
 
 // Registry of modular capability modules
@@ -19,7 +20,8 @@ const CAPABILITY_MODULES = [
   discoverMoviesCapability,
   stockCapability,
   cryptoCapability,
-  searchCapability
+  searchCapability,
+  dffeKnowledgeCapability
 ];
 
 // Map of capability handlers keyed by tool name

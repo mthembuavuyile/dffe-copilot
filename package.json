@@ -1,7 +1,7 @@
 {
-  "name": "atlas-by-vylex",
-  "version": "1.0.0",
-  "description": "Atlas — AI Chat Studio by Vylex Technologies (vylex.co.za). Multi-model workspace with SSE streaming, chain-of-thought reasoning, and artifact rendering.",
+  "name": "dffe-copilot",
+  "version": "1.0.0-beta.1",
+  "description": "DFFE Copilot — Environmental Intelligence & RAG Assistant for the Department of Forestry, Fisheries and the Environment (DFFE), Republic of South Africa.",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
@@ -14,19 +14,20 @@
     "test": "node --test tests/*.test.js"
   },
   "keywords": [
-    "atlas",
-    "vylex",
-    "vylex-technologies",
-    "ai-chat",
-    "openrouter",
-    "express",
+    "dffe",
+    "dffe-copilot-beta",
+    "south-africa",
+    "environmental-ai",
+    "rag",
+    "soer",
+    "nema",
     "sse-streaming",
     "multi-model"
   ],
-  "author": "Vylex Technologies <hello@vylex.co.za> (https://vylex.co.za)",
+  "author": "DFFE IT Business Solutions Directorate <callcentre@dffe.gov.za> (https://www.dffe.gov.za)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mthembuavuyile/atlas.git"
+    "url": "https://www.dffe.gov.za"
   },
   "license": "MIT",
   "dependencies": {

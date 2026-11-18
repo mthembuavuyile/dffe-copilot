@@ -181,7 +181,7 @@ export function renderErrorCard(errorInfo) {
     : '';
 
   const settingsBtn = errorInfo.openSettings
-    ? `<button class="atlas-settings-btn" onclick="window.atlasOpenSettings && window.atlasOpenSettings('general-settings')" style="padding: 6px 12px; background: rgba(251,169,25,0.14); border: 1px solid var(--accent-primary, #fba919); border-radius: 4px; color: var(--accent-primary, #fba919); font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> Configure Key in Settings</button>`
+    ? `<button class="atlas-settings-btn" onclick="window.atlasOpenSettings && window.atlasOpenSettings('general-settings')" style="padding: 6px 12px; background: rgba(109, 190, 69,0.14); border: 1px solid var(--accent-primary, #6DBE45); border-radius: 4px; color: var(--accent-primary, #6DBE45); font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> Configure Key in Settings</button>`
     : '';
 
   const actionText = errorInfo.action ? `<div class="atlas-error-action" style="margin-top: 4px; font-weight: 500;">${escapeHtml(errorInfo.action)}</div>` : '';
@@ -276,7 +276,7 @@ export async function executeChatTurn(session) {
       const autoItem = document.createElement('div');
       autoItem.className = 'agent-log-item';
       autoItem.innerHTML = `
-        <span style="display: flex; align-items: center; gap: 0.5rem; color: #fba919;">
+        <span style="display: flex; align-items: center; gap: 0.5rem; color: #6DBE45;">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>
           <span>Autonomous Intent: <strong>Activated Live Web Grounding</strong> (${escapeHtml(autoNeed.reason || 'Temporal query detected')})</span>
         </span>
@@ -342,7 +342,8 @@ export async function executeChatTurn(session) {
             webSearch: requestWebSearch,
             reasoning: requestDeepReasoning,
             maxTokens: 4096,
-            apiKey: state.apiKey || undefined
+            apiKey: state.apiKey || undefined,
+            dffeFilters: state.dffeFilters || undefined
           })
         });
 
@@ -447,7 +448,7 @@ export async function executeChatTurn(session) {
             logItem.innerHTML = `
               <span style="display: flex; align-items: center; gap: 0.5rem;">
                 <svg class="tool-spinner" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
-                <span style="color: #FBA919;">Executing tool: <strong style="color: #fff; font-weight: 500;">${toolName}</strong></span>
+                <span style="color: #6DBE45;">Executing tool: <strong style="color: #fff; font-weight: 500;">${toolName}</strong></span>
               </span>
             `;
             agentLog.appendChild(logItem);

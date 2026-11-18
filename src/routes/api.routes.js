@@ -8,6 +8,7 @@ const healthController = require('../controllers/health.controller');
 const toolController = require('../controllers/tool.controller');
 const widgetController = require('../controllers/widget.controller');
 const elevenlabsService = require('../services/elevenlabs.service');
+const dffeRagService = require('../services/dffe-rag.service');
 
 // Security & Rate Limiting Middlewares
 const { chatLimiter, titleLimiter, toolLimiter } = require('../middleware/rateLimiter');
@@ -31,6 +32,34 @@ if (process.env.NODE_ENV !== 'production') {
 
 // Atlas widget endpoint
 router.post('/widget/execute', toolLimiter, (req, res) => widgetController.execute(req, res));
+
+// DFFE Environmental Knowledge & RAG endpoints (UNEP EnvironmentGPT-aligned filtering & citations)
+router.get('/dffe/corpus', (req, res) => {
+  res.json(dffeRagService.getMetadata());
+});
+
+router.get('/dffe/search', toolLimiter, (req, res) => {
+  const result = dffeRagService.searchKnowledge({
+    query: req.query.q || req.query.query || '',
+    series: req.query.series || 'all',
+    year: req.query.year || 'all',
+    audience: req.query.audience || 'public',
+    limit: req.query.limit || 4
+  });
+  res.json(result);
+});
+
+router.post('/dffe/search', toolLimiter, (req, res) => {
+  const body = req.body || {};
+  const result = dffeRagService.searchKnowledge({
+    query: body.query || body.q || '',
+    series: body.series || 'all',
+    year: body.year || 'all',
+    audience: body.audience || 'public',
+    limit: body.limit || 4
+  });
+  res.json(result);
+});
 
 // Read-Aloud Text-to-Speech (ElevenLabs Free Tier API alongside Browser/Google Speech)
 router.get('/tts/voices', (req, res) => {

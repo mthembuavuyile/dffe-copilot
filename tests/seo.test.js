@@ -68,7 +68,7 @@ describe('SEO, Sitemap & Public Discovery Integrity', () => {
       assert.ok(html.includes('https://atlas.vylex.co.za/atlas-og-image.jpg'));
       assert.ok(html.includes('Privacy Policy'));
       assert.ok(html.includes('POPIA'));
-      assert.ok(html.includes('Vylex Technologies'));
+      assert.ok(html.includes('Department of Forestry, Fisheries and the Environment (DFFE)'));
     } finally {
       server.close();
     }
@@ -93,7 +93,7 @@ describe('SEO, Sitemap & Public Discovery Integrity', () => {
     }
   });
 
-  test('GET / and /about contain Sitelinks Schema.org structured data with atlas domain', async () => {
+  test('GET / and /about contain Sitelinks Schema.org structured data with DFFE Copilot metadata', async () => {
     const server = app.listen(0);
     const port = server.address().port;
 
@@ -102,10 +102,12 @@ describe('SEO, Sitemap & Public Discovery Integrity', () => {
       assert.strictEqual(resHome.status, 200);
       const htmlHome = await resHome.text();
       assert.ok(htmlHome.includes('"SiteNavigationElement"'));
-      assert.ok(htmlHome.includes('Vylex builds AI powered apps'));
-      assert.ok(htmlHome.includes('https://atlas.vylex.co.za/about'));
-      assert.ok(htmlHome.includes('https://atlas.vylex.co.za/docs'));
-      assert.ok(htmlHome.includes('<link rel="canonical" href="https://atlas.vylex.co.za/">'));
+      assert.ok(htmlHome.includes('DFFE Copilot'));
+      assert.ok(htmlHome.includes('class="release-stage-badge"'));
+      assert.ok(htmlHome.includes('Department of Forestry, Fisheries and the Environment (DFFE)'));
+      assert.ok(htmlHome.includes('https://www.dffe.gov.za/about'));
+      assert.ok(htmlHome.includes('https://www.dffe.gov.za/docs'));
+      assert.ok(htmlHome.includes('<link rel="canonical" href="https://www.dffe.gov.za/">'));
       assert.ok(htmlHome.includes('<meta name="robots" content="index, follow'));
 
       const resAbout = await fetch(`http://127.0.0.1:${port}/about`);

@@ -10,12 +10,13 @@ import { INVESTIGATION_MODES, FREE_MODELS, getModelIcon, API_BASE } from '../con
 import { escapeHtml } from '../markdown/parser.js';
 
 export function applyTheme(theme) {
-  state.theme = theme;
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('omni_theme', theme);
+  const normalizedTheme = (!theme || theme === 'vylex') ? 'dffe' : theme;
+  state.theme = normalizedTheme;
+  document.documentElement.setAttribute('data-theme', normalizedTheme);
+  localStorage.setItem('omni_theme', normalizedTheme);
 
   dom.themeBtns.forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('data-theme-val') === theme);
+    btn.classList.toggle('active', btn.getAttribute('data-theme-val') === normalizedTheme);
   });
 }
 

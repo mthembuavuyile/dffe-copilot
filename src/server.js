@@ -105,6 +105,10 @@ app.get(['/atlas', '/atlas/', '/atlas.html'], (req, res) => {
   res.sendFile(path.join(publicDir, 'atlas.html'));
 });
 
+app.get(['/dffe', '/dffe/', '/dffe.html'], (req, res) => {
+  res.sendFile(path.join(publicDir, 'dffe.html'));
+});
+
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain').sendFile(path.join(publicDir, 'robots.txt'));
 });

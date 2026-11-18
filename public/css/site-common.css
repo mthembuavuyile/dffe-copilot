@@ -1,32 +1,32 @@
 /* ==========================================================================
-   ATLAS BY VYLEX TECHNOLOGIES — UNIFIED WEBSITE COMMON STYLES
-   Shared Master Brand System for Atlas Website Pages (About, Docs, 404)
-   https://vylex.co.za
+   DFFE COPILOT — UNIFIED WEBSITE COMMON STYLES
+   Shared Design System for DFFE Copilot Pages (About, Docs, Portal, 404)
+   Department of Forestry, Fisheries and the Environment (https://www.dffe.gov.za)
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Design Tokens & Master Brand Variables
+   1. Design Tokens & DFFE Brand Variables
    -------------------------------------------------------------------------- */
 :root {
-  --site-bg: #051B38;
-  --site-bg-gradient: linear-gradient(135deg, #051B38 0%, #031227 100%);
-  --site-surface-1: rgba(10, 46, 92, 0.45);
-  --site-surface-2: rgba(13, 56, 112, 0.35);
-  --site-surface-hover: rgba(18, 70, 138, 0.5);
-  --site-card-bg: rgba(10, 46, 92, 0.35);
-  --site-card-border: rgba(255, 255, 255, 0.09);
-  --site-card-border-focus: rgba(251, 169, 25, 0.45);
+  --site-bg: #052314;
+  --site-bg-gradient: linear-gradient(135deg, #052314 0%, #03170D 100%);
+  --site-surface-1: rgba(9, 53, 30, 0.55);
+  --site-surface-2: rgba(14, 71, 41, 0.45);
+  --site-surface-hover: rgba(0, 102, 51, 0.55);
+  --site-card-bg: rgba(9, 53, 30, 0.45);
+  --site-card-border: rgba(109, 190, 69, 0.16);
+  --site-card-border-focus: rgba(109, 190, 69, 0.5);
   
-  --site-text-primary: #F8FAFC;
-  --site-text-secondary: #CBD5E1;
-  --site-text-muted: #94A3B8;
-  --site-text-subtle: #64748B;
+  --site-text-primary: #F4F9F5;
+  --site-text-secondary: #C8DEC9;
+  --site-text-muted: #8FB394;
+  --site-text-subtle: #5E8464;
   
-  --site-accent: #FBA919;
-  --site-accent-hover: #D97706;
-  --site-accent-glow: rgba(251, 169, 25, 0.15);
+  --site-accent: #6DBE45;
+  --site-accent-hover: #56A331;
+  --site-accent-glow: rgba(109, 190, 69, 0.16);
   
-  --site-code-bg: #020B18;
+  --site-code-bg: #021009;
   --site-header-height: 68px;
   
   --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -84,7 +84,7 @@ body.site-menu-locked {
   top: -100px;
   left: 1rem;
   background: var(--site-accent);
-  color: #031227;
+  color: #03170D;
   font-weight: 700;
   padding: 0.75rem 1.25rem;
   border-radius: var(--site-radius-sm);
@@ -206,8 +206,8 @@ body.site-menu-locked {
   display: inline-flex;
   align-items: center;
   padding: 0.15rem 0.45rem;
-  background: rgba(251, 169, 25, 0.12);
-  border: 1px solid rgba(251, 169, 25, 0.3);
+  background: rgba(109, 190, 69, 0.12);
+  border: 1px solid rgba(109, 190, 69, 0.3);
   border-radius: 4px;
   font-size: 0.68rem;
   font-weight: 700;
@@ -264,7 +264,7 @@ body.site-menu-locked {
 /* Primary CTA Button */
 .site-btn-primary {
   background: var(--site-accent);
-  color: #031227 !important;
+  color: #03170D !important;
   font-family: var(--font-sans);
   font-weight: 700;
   font-size: 0.88rem;
@@ -284,7 +284,7 @@ body.site-menu-locked {
 .site-btn-primary:hover {
   background: var(--site-accent-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(251, 169, 25, 0.25);
+  box-shadow: 0 4px 14px rgba(109, 190, 69, 0.25);
 }
 
 .site-btn-primary:active {
@@ -515,7 +515,7 @@ body.site-menu-locked {
 }
 
 .table-responsive::-webkit-scrollbar-thumb:hover {
-  background: rgba(251, 169, 25, 0.4);
+  background: rgba(109, 190, 69, 0.4);
 }
 
 /* --------------------------------------------------------------------------

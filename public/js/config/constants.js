@@ -1,7 +1,7 @@
 /**
  * constants.js
  * Application constants, investigation mode definitions, vector icon library,
- * persona presets, and curated free models.
+ * persona presets, and curated DFFE Copilot models.
  */
 
 export const API_BASE = (typeof window !== 'undefined' && window.location && window.location.protocol.startsWith('http'))
@@ -12,151 +12,151 @@ export const INVESTIGATION_MODES = {
   auto: {
     id: 'auto',
     name: 'Auto',
-    desc: 'Adapts the response to your question while preserving clear, useful reasoning',
-    actionHint: 'what would you like to work on?',
+    desc: 'Adapts the response to your environmental, policy, or technical question with source citations',
+    actionHint: 'what environmental or departmental question can I help with?',
     suggestions: [
-      { label: 'Explain a Difficult Idea', prompt: 'Explain a difficult idea to me clearly, using an example and checking my likely assumptions.' },
-      { label: 'Help Me Decide', prompt: 'Help me think through an important decision. Ask only the questions needed, then compare the options and trade-offs.' },
-      { label: 'Review My Work', prompt: 'Review the work below, identify the most important problems, and suggest practical improvements.' }
+      { label: 'DFFE Programmes & SoER Findings', prompt: 'What environmental programmes is DFFE currently running, and what are the key findings from the latest State of the Environment reports?' },
+      { label: 'NEMA EIA & Screening Tool', prompt: 'Explain NEMA Section 24 EIA Listing Notices 1, 2 and 3, the mandatory DFFE National Screening Tool, and REDZ fast-track timeframes.' },
+      { label: 'Climate Change Act & Carbon Budgets', prompt: 'Synthesize the Climate Change Act (Act 22 of 2024) Sector Emission Targets (SETs), mandatory company Carbon Budgets, and municipal adaptation duties.' }
     ]
   },
   research: {
     id: 'research',
     name: 'Research',
-    desc: 'Literature synthesis, evidence evaluation, hypothesis formation, research maps',
-    actionHint: 'what literature or evidence shall we explore?',
+    desc: 'State of the Environment synthesis, evidence evaluation, biodiversity & climate research maps',
+    actionHint: 'what environmental report or scientific evidence shall we explore?',
     suggestions: [
-      { label: 'Superconductivity Landscape', prompt: 'Synthesize the current approaches, contested claims, and experimental gaps in room-temperature superconductivity.' },
-      { label: 'Contradicting Hypothesis', prompt: 'Why does this experimental result contradict the standard thermodynamic hypothesis? Identify confounding variables and competing explanations.' },
-      { label: 'Quantum Coherence Limits', prompt: 'Map the theoretical and empirical limits of quantum coherence at room temperature in solid-state systems.' }
+      { label: 'State of the Environment Synthesis', prompt: 'Synthesize the latest South Africa State of the Environment Report (SoER) findings across biodiversity (30x30), inland water, air quality (SAAQIS), and waste (SAWIC).' },
+      { label: 'Biodiversity White Paper & NEMBA', prompt: 'Synthesize the four strategic pillars of DFFE\'s White Paper on Conservation and Sustainable Use of South Africa\'s Biodiversity and the National Biodiversity Economy Strategy.' },
+      { label: 'Oceans, Coasts & FRAP Stock Outlook', prompt: 'Evaluate DFFE\'s Marine Protected Areas (MPAs), OCIMS satellite monitoring, and Small-Scale Fisheries co-operative allocations under the Marine Living Resources Act.' }
     ]
   },
   solve: {
     id: 'solve',
     name: 'Solve',
-    desc: 'Step-by-step derivation, calculation, verification, alternative solutions',
-    actionHint: 'what equations or derivations shall we solve?',
+    desc: 'Quantitative environmental modelling, carbon budget calculations, and mathematical derivations',
+    actionHint: 'what environmental calculation or derivation shall we solve?',
     suggestions: [
-      { label: 'Schrödinger PDE Solution', prompt: 'Derive and solve the time-independent Schrödinger equation for a finite square well potential. Verify boundary conditions.' },
-      { label: 'Navier-Stokes Derivation', prompt: 'Derive the Navier-Stokes equations from the Reynolds Transport Theorem and conservation of momentum.' },
-      { label: 'Bayesian Evidence Update', prompt: 'Calculate the posterior probability distribution given this prior and likelihood matrix. Verify with Monte Carlo.' }
+      { label: 'Catchment Runoff Recovery Model', prompt: 'Model the annual surface water runoff recovery (in million cubic metres) achieved by clearing 250,000 hectares of high-density invasive alien plants under Working for Water.' },
+      { label: 'Sector Carbon Budget Trajectory', prompt: 'Calculate the linear and compound annual emissions reduction rate required for an industrial facility to align with South Africa\'s 350–420 Mt CO2-eq 2030 NDC target band.' },
+      { label: 'Atmospheric Dispersion Plume', prompt: 'Derive and calculate ground-level PM2.5 concentration downwind of an industrial stack using the Gaussian plume dispersion equation.' }
     ]
   },
   build: {
     id: 'build',
     name: 'Build',
-    desc: 'Architecture reasoning, code generation, debugging, testing, systems engineering',
-    actionHint: 'what system or architecture shall we build?',
+    desc: 'DFFE IT Business Solutions architecture, code generation, API integration, and debugging',
+    actionHint: 'what DFFE digital service or system shall we build?',
     suggestions: [
-      { label: 'Sandboxed Python Runner', prompt: 'Design and write a high-throughput, secure Python code execution engine with memory cgroups and timeout guards.' },
-      { label: 'Raft Consensus Node', prompt: 'Implement a complete Raft consensus state machine in TypeScript with leader election, log replication, and RPC handling.' },
-      { label: 'Zero-Copy Ring Buffer', prompt: 'Write a high-performance zero-copy lock-free ring buffer for inter-process communication.' }
+      { label: 'DFFE RAG Ingestion Pipeline', prompt: 'Write a production-ready Node.js / Python PDF chunking and pgvector ingestion pipeline for indexing 50-page DFFE State of the Environment PDF reports with page citations.' },
+      { label: 'SAAQIS Air Quality Dashboard', prompt: 'Build an interactive HTML/CSS/JS dashboard for monitoring PM2.5, PM10, and SO2 across the Vaal Triangle, Highveld, and Waterberg-Bojanala Priority Areas.' },
+      { label: 'NEMA EIA Timeframe Calculator', prompt: 'Build an interactive web calculator for tracking statutory NEMA Basic Assessment (197-day), S&EIR (300-day), and REDZ (57-day) application milestones.' }
     ]
   },
   engineer: {
     id: 'engineer',
     name: 'Engineer',
-    desc: 'Systems constraints, scalability analysis, failure modes, cost analysis',
-    actionHint: 'what constraints or scalability shall we analyze?',
+    desc: 'Systems integration, POPIA governance constraints, scalability analysis, and cost trade-offs',
+    actionHint: 'what departmental architecture or system constraint shall we analyze?',
     suggestions: [
-      { label: '10M Req/Min Architecture', prompt: 'Deconstruct the requirements, database partitioning, edge caching, and failure modes for a 10M requests/min system.' },
-      { label: 'Multi-Region Active-Active', prompt: 'Design an active-active multi-region distributed system with CRDT conflict resolution and latency SLAs under 50ms.' },
-      { label: 'Chaos & Fault Resilience', prompt: 'Analyze failure modes, split-brain scenarios, and network partition recovery for a distributed key-value store.' }
+      { label: 'DFFE In-House RAG vs Vendor Lock-In', prompt: 'Deconstruct the architecture, security governance, POPIA compliance, and 5-year total cost of ownership of an in-house DFFE RAG platform versus proprietary cloud licensing.' },
+      { label: 'Public vs Internal Entra ID Separation', prompt: 'Design a dual-tier security architecture separating unauthenticated public DFFE report discovery from Microsoft Entra ID-authenticated internal directorate SharePoint search.' },
+      { label: 'National Systems API Federation', prompt: 'Design a federated API gateway integrating SAAQIS, SAWIC, OCIMS, and the National Environmental Screening Tool with read-only governance guardrails.' }
     ]
   },
   experiment: {
     id: 'experiment',
     name: 'Experiment',
-    desc: 'Data analysis, model fitting, hypothesis testing, visualization',
-    actionHint: 'what dataset or simulation shall we run?',
+    desc: 'Environmental dataset analysis (CSV/PDF), SAAQIS/SAWIC telemetry, and statistical testing',
+    actionHint: 'what environmental dataset or monitoring series shall we analyze?',
     suggestions: [
-      { label: 'Dataset Anomaly Inspection', prompt: 'Analyse this dataset for non-linear correlations, statistical anomalies, and distribution shifts. Form hypotheses.' },
-      { label: 'Monte Carlo Power Test', prompt: 'Run a Monte Carlo simulation to estimate sample size and statistical power for a multivariate randomized experiment.' },
-      { label: 'Linear Model Diagnostic', prompt: 'Fit a regularized regression model to this synthetic dataset and check for heteroscedasticity and multicollinearity.' }
+      { label: 'SAAQIS Winter PM2.5 Anomaly Test', prompt: 'Design a statistical hypothesis test and Python analysis pipeline to evaluate winter PM2.5 exceedances across Highveld monitoring stations.' },
+      { label: 'SAWIC EPR Diversion Regression', prompt: 'Analyze Extended Producer Responsibility (EPR) waste diversion rates across paper, packaging, e-waste, and lighting sectors.' },
+      { label: 'Wetland Rehabilitation Impact', prompt: 'Formulate a before-after-control-impact (BACI) statistical model for evaluating Working for Wetlands rehabilitation sites.' }
     ]
   },
   reason: {
     id: 'reason',
     name: 'Reason',
-    desc: 'Multi-step logical decomposition, assumption identification, proof strategy',
-    actionHint: 'what logical breakdown shall we deconstruct?',
+    desc: 'Statutory & policy decomposition, NEMA/EIA compliance logic, and assumption verification',
+    actionHint: 'what legislative provision or policy trade-off shall we deconstruct?',
     suggestions: [
-      { label: 'Formal Proof Strategy', prompt: 'Prove that no general algorithm can decide whether two context-free grammars generate the same language.' },
-      { label: 'First-Principles Deconstruction', prompt: 'Deconstruct the computational and thermodynamic minimum energy required to erase one bit of information (Landauer Principle).' },
-      { label: 'Challenge My Hypothesis', prompt: 'Challenge my hypothesis: "Deep MoE architectures will replace dense models for all reasoning tasks within 2 years." Expose hidden assumptions.' }
+      { label: 'NEMA Section 28 Duty of Care', prompt: 'Deconstruct the legal elements, strict liability principles, and Environmental Management Inspector (Green Scorpions) enforcement powers under NEMA Section 28 and Section 24G.' },
+      { label: 'Just Transition Policy Trade-Offs', prompt: 'Analyze the socio-economic and environmental trade-offs in phasing down coal-fired generation while protecting Mpumalanga livelihoods under the Climate Change Act.' },
+      { label: 'Challenge My Policy Proposal', prompt: 'Challenge this proposal: "DFFE should deploy a single unsegmented AI chatbot connected to both internal SharePoint and the public website." Identify governance and POPIA risks.' }
     ]
   },
   discover: {
     id: 'discover',
     name: 'Discover',
-    desc: 'Explore relationships, find anomalies, generate hypotheses',
-    actionHint: 'what cross-domain hypothesis shall we formulate?',
+    desc: 'Cross-sector environmental synthesis, anomaly detection, and policy hypothesis generation',
+    actionHint: 'what cross-directorate environmental relationship shall we explore?',
     suggestions: [
-      { label: 'Cross-Domain Synthesis', prompt: 'Explore potential relationships between topological quantum field theory and error-correcting codes in neural networks.' },
-      { label: 'Unexplained Patterns', prompt: 'What are the most compelling unexplained observations in recent high-energy astrophysics that challenge standard models?' },
-      { label: 'Hypothesis Generator', prompt: 'Generate 3 falsifiable hypotheses to explain why certain transformer attention heads develop induction capabilities abruptly.' }
+      { label: 'Invasive Species & Wildfire Nexus', prompt: 'Explore the empirical relationship between invasive alien plant density (Working for Water) and wildfire intensity (Working on Fire) across Western Cape and KwaZulu-Natal catchments.' },
+      { label: 'Circular Economy & Municipal Methane', prompt: 'Generate 3 testable hypotheses linking municipal organic waste diversion under NEMWA to landfill methane reductions under South Africa\'s NDC.' },
+      { label: 'Estuary Health & Small-Scale Fisheries', prompt: 'Map the ecological links between inland river nutrient loading, estuary mouth dynamics, and coastal linefish recruitment.' }
     ]
   }
 };
 
 export const INVESTIGATION_STATUS_TERMS = {
   research: [
-    'Parsing literature & problem space...',
-    'Evaluating evidence & contradictions...',
-    'Synthesizing conceptual framework...',
-    'Mapping research landscape...',
-    'Identifying experimental gaps...'
+    'Searching verified DFFE publications...',
+    'Evaluating State of the Environment indicators...',
+    'Synthesizing departmental evidence & citations...',
+    'Mapping environmental research landscape...',
+    'Verifying source references...'
   ],
   solve: [
-    'Deconstructing mathematical formulation...',
-    'Deriving step-by-step proof...',
-    'Verifying boundary conditions...',
+    'Deconstructing quantitative formulation...',
+    'Deriving step-by-step environmental model...',
+    'Verifying units & boundary conditions...',
     'Computing analytical solution...',
-    'Checking logical consistency...'
+    'Checking consistency...'
   ],
   build: [
-    'Analyzing architecture & dependencies...',
+    'Analyzing DFFE IT architecture & dependencies...',
     'Constructing implementation logic...',
-    'Evaluating edge cases & security...',
-    'Optimizing algorithmic structure...',
+    'Evaluating POPIA & security guardrails...',
+    'Optimizing system structure...',
     'Assembling code artifact...'
   ],
   engineer: [
-    'Modeling system constraints & latency...',
-    'Assessing failure modes & redundancy...',
-    'Benchmarking scalability tradeoffs...',
+    'Modeling system constraints & governance...',
+    'Assessing failure modes & data boundaries...',
+    'Benchmarking scalability & cost trade-offs...',
     'Verifying architectural robustness...',
     'Structuring system topology...'
   ],
   experiment: [
-    'Formulating test hypotheses...',
-    'Simulating parameter variations...',
-    'Inspecting statistical anomalies...',
+    'Formulating environmental test hypotheses...',
+    'Inspecting dataset distributions...',
+    'Evaluating statistical anomalies...',
     'Validating empirical outcomes...'
   ],
   reason: [
-    'Deconstructing first-principles logic...',
-    'Tracing logical dependencies...',
+    'Deconstructing statutory & policy logic...',
+    'Tracing NEMA / SEMA dependencies...',
     'Exposing implicit assumptions...',
-    'Constructing deductive proof...'
+    'Constructing compliance analysis...'
   ],
   discover: [
-    'Mapping conceptual frontier...',
-    'Synthesizing cross-domain insights...',
+    'Mapping cross-directorate indicators...',
+    'Synthesizing ecological relationships...',
     'Evaluating unexplained patterns...',
-    'Formulating falsifiable hypotheses...'
+    'Formulating testable hypotheses...'
   ],
   default: [
-    'Synthesizing problem context...',
-    'Formulating reasoning trace...',
-    'Tracing logical dependencies...',
-    'Evaluating constraint boundaries...',
-    'Structuring response hierarchy...'
+    'Retrieving verified DFFE knowledge context...',
+    'Formulating grounded reasoning trace...',
+    'Cross-checking source citations...',
+    'Evaluating governance boundaries...',
+    'Structuring response...'
   ]
 };
 
 export const ICONS = {
-  freeRouter: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>`,
+  freeRouter: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>`,
   ox: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>`,
   owl: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="10" r="3"></circle><circle cx="16" cy="10" r="3"></circle><path d="M12 13l-1 2h2l-1-2z"></path><path d="M4 4c0 4 2 8 8 8s8-4 8-8"></path></svg>`,
   sonoma: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>`,
@@ -166,7 +166,7 @@ export const ICONS = {
   code: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>`,
   canvas: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="15" y1="3" x2="15" y2="21"></line></svg>`,
   copy: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`,
-  check: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
+  check: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6DBE45" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
   retry: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>`,
   alert: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`,
   reasoning: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>`,
@@ -178,7 +178,7 @@ export const ICONS = {
 };
 
 export function getModelIcon(modelId) {
-  if (!modelId) return ICONS.ox;
+  if (!modelId) return ICONS.freeRouter;
   if (modelId === 'openrouter/free') return ICONS.freeRouter;
   if (modelId.includes('ox')) return ICONS.ox;
   if (modelId.includes('nemotron')) return ICONS.polaris;
@@ -186,74 +186,75 @@ export function getModelIcon(modelId) {
   if (modelId.includes('north') || modelId.includes('cohere')) return ICONS.hunter;
   if (modelId.includes('glm') || modelId.includes('z-ai')) return ICONS.owl;
   if (modelId.includes('gemma')) return ICONS.aurora;
-  return ICONS.ox;
+  return ICONS.freeRouter;
 }
 
 export const FREE_MODELS = [
   {
     id: 'openrouter/free',
-    name: 'Atlas Default Engine',
+    name: 'DFFE Copilot Auto',
     badge: 'AUTO',
     isFree: true,
     context: 'Dynamic context',
-    desc: 'Smart auto-router that automatically selects from available high-performance models based on task requirements.'
+    desc: 'Smart auto-router that selects the optimal reasoning model for DFFE environmental queries, policy analysis, and technical tasks.'
   },
   {
     id: 'nvidia/nemotron-3.5-lightning:free',
-    name: 'Atlas Reasoning Core',
+    name: 'DFFE Reasoning Core',
     badge: '1M',
     isFree: true,
     context: '1,000,000 tokens',
-    desc: 'High-speed frontier reasoning model for deep derivation, multi-step analysis, and code synthesis.'
+    desc: 'High-speed frontier reasoning model for State of the Environment (SoER) synthesis, multi-step analysis, and code generation.'
   },
   {
     id: 'nvidia/nemotron-3-ultra-550b-a55b:free',
-    name: 'Atlas Research Engine',
+    name: 'DFFE Research Engine',
     badge: '1M',
     isFree: true,
     context: '1,000,000 tokens',
-    desc: 'Frontier-scale MoE model optimized for scientific research, hypothesis formation, and complex architecture planning.'
+    desc: 'Frontier-scale MoE model optimized for environmental research, biodiversity synthesis, and complex systems planning.'
   },
   {
     id: 'poolside/laguna-s-2.1:free',
-    name: 'Atlas Code Engine',
+    name: 'DFFE Systems & Code Engine',
     badge: '262K',
     isFree: true,
     context: '262,144 tokens',
-    desc: 'Specialized systems engineering model for code generation, debugging, architecture analysis, and terminal workflows.'
+    desc: 'Specialized systems engineering model for DFFE IT Business Solutions, API integration, debugging, and architecture analysis.'
   },
   {
     id: 'cohere/north-mini-code:free',
-    name: 'Atlas Compute Engine',
+    name: 'DFFE Data & Compute Engine',
     badge: '256K',
     isFree: true,
     context: '256,000 tokens',
-    desc: 'Fast-inference MoE engine for rapid computation, data analysis, and iterative experimental workflows.'
+    desc: 'Fast-inference engine for environmental dataset analysis (SAAQIS, SAWIC, OCIMS), CSV telemetry, and experimental workflows.'
   },
   {
     id: 'z-ai/glm-5.2:free',
-    name: 'Atlas Systems Engine',
+    name: 'DFFE Policy & Compliance Engine',
     badge: '256K',
     isFree: true,
     context: '256,000 tokens',
-    desc: 'Large-scale reasoning model for systems engineering, constraint analysis, and multi-step design verification.'
+    desc: 'Large-scale reasoning model for NEMA/EIA statutory analysis, Climate Change Act compliance, and multi-step verification.'
   },
   {
     id: 'google/gemma-4-26b-a4b-it:free',
-    name: 'Atlas Core',
+    name: 'DFFE Core Intelligence',
     badge: '262K',
     isFree: true,
     context: '262,144 tokens',
-    desc: 'Instruction-tuned core model with native tool calling, configurable thinking depth, and broad scientific knowledge.'
+    desc: 'Instruction-tuned core model with native tool calling, configurable thinking depth, and broad environmental and scientific knowledge.'
   }
 ];
 
 export const PERSONA_PRESETS = {
-  auto: 'You are an adaptive technical assistant. Match your depth, structure, tone, and method to the user request. Answer any reasonable question directly, using rigorous analysis, code, examples, or concise guidance when helpful. Do not force a specialist format onto a general question.',
-  scientist: 'You are a rigorous scientific researcher. Apply the scientific method to every problem. Form hypotheses, gather evidence, test rigorously, and always quantify your uncertainty. Distinguish clearly between what is established, what is probable, and what is speculative.',
-  mathematician: 'You are a mathematician. Approach every problem with mathematical rigor. Provide formal definitions, state theorems precisely, prove claims step by step, and verify results.',
-  engineer: 'You are a principal systems engineer. Focus on architecture, scalability, reliability, and operational excellence. Always present trade-offs, identify failure modes, and consider cost.',
-  builder: 'You are an elite full-stack software engineer and architect. Provide clean, modular, production-ready code with robust error handling, modern patterns, and clear architectural explanations.',
-  reasoner: 'You are a rigorous frontier reasoning AI. Break down all problems step-by-step with structured logical analysis, deep mathematical rigor, and explicit chain-of-thought verification.',
-  concise: 'You are an ultra-concise expert. Output direct, optimal answers and solutions with minimal preamble or conversational filler.'
+  auto: 'You are DFFE Copilot, the adaptive environmental intelligence and technical assistant for the Department of Forestry, Fisheries and the Environment (Republic of South Africa). Match your depth, structure, tone, and method to the user request, citing official DFFE reports and https://www.dffe.gov.za sources whenever answering environmental or policy questions.',
+  dffe: 'You are the DFFE Copilot Environmental Specialist for the Department of Forestry, Fisheries and the Environment (Republic of South Africa). Provide scientifically rigorous, source-cited answers grounded in published DFFE State of the Environment Reports (SoER/SAEO), EPWP Environmental Programmes (Working for Water, Working on Fire, Working for Wetlands, Working for the Coast, Working on Waste, Ten Million Trees), and statutory frameworks (NEMA Act 107 of 1998, Climate Change Act 22 of 2024, NEMBA, NEMWA, NEMAQA, NEMPAA, MLRA). Always include official document citations, publication years, and https://www.dffe.gov.za reference links, and explicitly state when a claim falls outside verified public DFFE records.',
+  scientist: 'You are a rigorous DFFE environmental researcher. Apply the scientific method to every problem. Form hypotheses, gather evidence from State of the Environment reports, and always quantify your uncertainty.',
+  mathematician: 'You are a quantitative environmental modeller and mathematician. Approach every problem with mathematical rigor. Provide formal definitions, state equations precisely, prove claims step by step, and verify results.',
+  engineer: 'You are a principal systems engineer in DFFE IT Business Solutions. Focus on architecture, scalability, POPIA governance, reliability, and operational excellence. Always present trade-offs, identify failure modes, and consider cost.',
+  builder: 'You are an elite full-stack software engineer in DFFE IT Business Solutions. Provide clean, modular, production-ready code with robust error handling, modern patterns, and clear architectural explanations.',
+  reasoner: 'You are a senior environmental policy and statutory compliance analyst. Break down legislative and logical problems step by step with structured analysis and explicit chain-of-thought verification.',
+  concise: 'You are an executive briefing writer for DFFE. Output direct, structured answers and ministerial summaries with minimal preamble or filler.'
 };

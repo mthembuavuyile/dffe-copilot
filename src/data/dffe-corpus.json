@@ -1,0 +1,188 @@
+{
+  "metadata": {
+    "department": "Department of Forestry, Fisheries and the Environment (DFFE)",
+    "jurisdiction": "Republic of South Africa",
+    "officialPortal": "https://www.dffe.gov.za",
+    "version": "2026.11",
+    "governancePolicy": "Public Verified Corpus — Restricted strictly to published DFFE reports, statutory acts, and official departmental programmes. Internal unpublished cabinet memoranda and personal data (POPIA) are excluded.",
+    "seriesCatalogue": [
+      { "id": "all", "label": "All DFFE Sources" },
+      { "id": "soer", "label": "State of the Environment (SoER)" },
+      { "id": "programmes", "label": "Environmental Programmes (EPWP)" },
+      { "id": "legislation", "label": "Legislation & EIA (NEMA)" },
+      { "id": "climate", "label": "Climate Change & Air Quality" },
+      { "id": "forestry_fisheries", "label": "Forestry, Fisheries & Oceans" },
+      { "id": "waste", "label": "Chemicals, Waste & Circular Economy" }
+    ],
+    "audiences": [
+      { "id": "public", "label": "General Public" },
+      { "id": "officials", "label": "DFFE Officials & Directorates" },
+      { "id": "researchers", "label": "Researchers & Policy Analysts" },
+      { "id": "compliance", "label": "Compliance & EIA Practitioners" }
+    ],
+    "years": ["all", "2026", "2025", "2024", "2023", "Statutory"]
+  },
+  "documents": [
+    {
+      "id": "dffe-soer-synthesis-2026",
+      "title": "South Africa State of the Environment Report (SoER / SAEO) — National Synthesis",
+      "series": "soer",
+      "seriesLabel": "State of the Environment (SoER)",
+      "year": "2026",
+      "branch": "Environmental Advisory Services & Chief Directorate: Environmental Knowledge Management",
+      "audiences": ["public", "officials", "researchers"],
+      "governance": "PUBLIC — Verified DFFE Publication",
+      "citation": "DFFE (2026). South Africa State of the Environment Outlook Report (SAEO), Chapters 1–11, Pretoria.",
+      "url": "https://www.dffe.gov.za/state-of-the-environment-reports",
+      "summary": "Authoritative national assessment of South Africa's environmental condition across inland water, air quality, biodiversity, land degradation, oceans and coasts, climate resilience, and waste management.",
+      "keyFindings": [
+        "Biodiversity & Protected Areas: Conservation estate expanded toward the Kunming-Montreal Global Biodiversity Framework 30x30 target, with terrestrial protected areas exceeding 16.8% and Marine Protected Areas (MPAs) covering 5.4% across 42 declared MPAs.",
+        "Inland Water & Ecological Infrastructure: 64% of wetland ecosystems and 52% of river mainstems face moderate-to-severe ecological pressure from catchment degradation, nutrient loading, and invasive alien vegetation.",
+        "Climate & GHG Trajectory: South Africa's net greenhouse gas emissions tracked within the updated Nationally Determined Contribution (NDC) target band of 350–420 Mt CO2-eq by 2030, driven by power-sector decarbonisation and Just Transition investments.",
+        "Land Degradation Neutrality (LDN): Over 7.2 million hectares remain infested to varying densities by invasive alien plants (IAPs), reducing surface water runoff by an estimated 1,440 million cubic metres annually without active Working for Water clearing.",
+        "Circular Economy & Waste Diversion: Approximately 108 million tonnes of general and hazardous waste are generated annually; Extended Producer Responsibility (EPR) schemes in paper, packaging, e-waste, and lighting have increased formal recovery rates."
+      ],
+      "keywords": ["state of the environment", "soer", "saeo", "latest reports", "key findings", "environmental report", "biodiversity", "water", "land degradation", "30x30", "indicators", "findings"]
+    },
+    {
+      "id": "dffe-epwp-programmes-2026",
+      "title": "DFFE National Environmental Programmes (EPWP & Presidential Employment Stimulus)",
+      "series": "programmes",
+      "seriesLabel": "Environmental Programmes (EPWP)",
+      "year": "2026",
+      "branch": "Branch: Environmental Programmes (EP)",
+      "audiences": ["public", "officials", "researchers"],
+      "governance": "PUBLIC — Verified DFFE Programme Portfolio",
+      "citation": "DFFE (2026). Annual Performance Plan & Environmental Programmes (EPWP) Operational Compendium, pp. 42–88.",
+      "url": "https://www.dffe.gov.za/projectsprogrammes",
+      "summary": "Comprehensive portfolio of DFFE's labour-intensive Expanded Public Works Programme (EPWP) environmental programmes creating green jobs, restoring ecological infrastructure, managing wildfires, rehabilitating wetlands and coastlines, and advancing municipal waste management.",
+      "keyFindings": [
+        "Working for Water (WfW): Clears invasive alien plant species across priority water catchments, restoring streamflow, protecting agricultural land, and creating over 28,000 work opportunities annually focusing on women (55%), youth (65%), and persons with disabilities (2%).",
+        "Working on Fire (WoF): Deploys over 5,000 trained wildland firefighters across 200+ bases in South Africa for integrated fire management, prescribed burning, firebreak maintenance, and aerial/ground wildfire suppression.",
+        "Working for Wetlands: Rehabilitates degraded wetlands across all 9 provinces using gabions, earth plugs, and revegetation to restore flood attenuation, water purification, and baseflow regulation.",
+        "Working for the Coast (WftC): Maintains coastal ecological infrastructure along South Africa's 3,000 km coastline, removing marine litter, rehabilitating coastal dunes and estuaries, and upgrading public coastal access.",
+        "Working on Waste (WoW) & Municipal Cleaning and Greening: Supports municipalities with waste buy-back centres, illegal dumping eradication, material recovery facilities (MRFs), and circular economy diversion.",
+        "Ten Million Trees Programme & Groen Sebenza: Coordinates the Presidential Ten Million Trees planting drive (indigenous and fruit trees across human settlements) and the Groen Sebenza / Youth Environmental Service (YES) graduate pipeline into the biodiversity sector."
+      ],
+      "keywords": ["environmental programmes", "programmes", "currently running", "working for water", "wfw", "working on fire", "wof", "working for wetlands", "working for the coast", "working on waste", "epwp", "ten million trees", "groen sebenza", "youth", "jobs", "projects"]
+    },
+    {
+      "id": "dffe-climate-change-act-2026",
+      "title": "Climate Change Act (Act 22 of 2024) — Implementation, Carbon Budgets & Sector Emission Targets",
+      "series": "climate",
+      "seriesLabel": "Climate Change & Air Quality",
+      "year": "2026",
+      "branch": "Branch: Climate Change and Air Quality",
+      "audiences": ["public", "officials", "researchers", "compliance"],
+      "governance": "PUBLIC — Statutory Act & Regulatory Framework",
+      "citation": "Republic of South Africa (2024/2026). Climate Change Act, Act No. 22 of 2024 & DFFE Sector Emission Target (SET) Regulations.",
+      "url": "https://www.dffe.gov.za/legislation/acts",
+      "summary": "South Africa's overarching statutory framework for a coordinated, just transition to a low-carbon and climate-resilient economy, mandating provincial/municipal climate adaptation plans, Sector Emission Targets (SETs), and company-level Carbon Budgets.",
+      "keyFindings": [
+        "Sector Emission Targets (SETs): Binding greenhouse gas reduction targets allocated across key national sectors (Energy, Transport, Industry, Agriculture, Forestry & Other Land Use, and Waste) reviewed every 5 years.",
+        "Mandatory Carbon Budgets: High-emitting entities exceeding prescribed GHG thresholds are allocated mandatory Carbon Budgets over 5-year commitment periods and must submit annual GHG mitigation plans to DFFE.",
+        "Provincial & Municipal Forums: Establishes Municipal and Provincial Forums on Climate Change; every metropolitan and district municipality must conduct a climate change needs and response assessment and integrate a Climate Change Response Implementation Plan into its IDP.",
+        "National Adaptation Strategy (NCCAS): Mandates sector adaptation scenarios, early-warning climate risk modelling, and alignment with the Presidential Climate Commission (PCC) and South African Weather Service (SAWS)."
+      ],
+      "keywords": ["climate change", "climate change act", "act 22 of 2024", "carbon budgets", "sector emission targets", "sets", "ndc", "ghg", "greenhouse gas", "emissions", "just transition", "adaptation"]
+    },
+    {
+      "id": "dffe-saaqis-air-quality-2026",
+      "title": "State of Air Report & National Priority Areas Air Quality Management (NEMAQA / SAAQIS)",
+      "series": "climate",
+      "seriesLabel": "Climate Change & Air Quality",
+      "year": "2025",
+      "branch": "Branch: Climate Change and Air Quality — Chief Directorate: Air Quality Management",
+      "audiences": ["public", "officials", "researchers", "compliance"],
+      "governance": "PUBLIC — Verified DFFE & SAAQIS Report",
+      "citation": "DFFE (2025). Annual State of the Air Report & Priority Area Air Quality Management Plan (AQMP) Review, SAAQIS.",
+      "url": "https://saaqis.environment.gov.za",
+      "summary": "Monitoring and regulatory assessment of ambient air quality across South Africa under the National Environmental Management: Air Quality Act (NEMAQA, Act 39 of 2004), tracking PM2.5, PM10, SO2, NO2, and O3 across over 130 government monitoring stations.",
+      "keyFindings": [
+        "Three National Priority Areas: Focused Air Quality Management Plans (AQMPs) operate in the Vaal Triangle Airshed Priority Area (VTAPA), Highveld Priority Area (HPA), and Waterberg-Bojanala Priority Area (WBPA).",
+        "Particulate Matter (PM2.5 & PM10) Drivers: Domestic solid-fuel burning in low-income settlements, industrial stack emissions, coal-fired power generation, mine tailings windblown dust, and open waste burning remain the primary drivers of winter PM2.5 exceedances.",
+        "Minimum Emission Standards (MES): Section 21 listed activities require Atmospheric Emission Licences (AELs) monitored via the National Atmospheric Emission Inventory System (NAEIS) and live telemetry on the South African Air Quality Information System (SAAQIS)."
+      ],
+      "keywords": ["air quality", "state of air", "saaqis", "nemaqa", "pm2.5", "pm10", "so2", "highveld", "vaal triangle", "waterberg", "priority area", "pollution", "emissions", "naeis", "ael"]
+    },
+    {
+      "id": "dffe-nema-eia-screening-2026",
+      "title": "NEMA Environmental Impact Assessment (EIA) Regulations & National Screening Tool Guide",
+      "series": "legislation",
+      "seriesLabel": "Legislation & EIA (NEMA)",
+      "year": "2026",
+      "branch": "Branch: Regulatory Compliance and Sector Monitoring (RCSM)",
+      "audiences": ["public", "officials", "compliance"],
+      "governance": "PUBLIC — Statutory Guidance & Compliance Standard",
+      "citation": "DFFE (2026). National Environmental Management Act (Act 107 of 1998) — EIA Regulations & National Web-Based Environmental Screening Tool Protocol.",
+      "url": "https://screening.environment.gov.za",
+      "summary": "Regulatory rules governing Environmental Authorisations (EAs), Basic Assessment Reports (BAR), Scoping and Environmental Impact Reporting (S&EIR), Renewable Energy Development Zones (REDZs), and Environmental Management Inspectors (Green Scorpions).",
+      "keyFindings": [
+        "Listing Notices 1, 2 & 3: Listing Notice 1 (GNR 983) and Listing Notice 3 (GNR 985 — geographical sensitivity) trigger a Basic Assessment (197-day statutory timeframe); Listing Notice 2 (GNR 984) triggers full Scoping & Environmental Impact Reporting (S&EIR, 300-day timeframe).",
+        "Mandatory National Screening Tool: Every application for Environmental Authorisation must generate a site sensitivity report from the DFFE National Web-Based Environmental Screening Tool (https://screening.environment.gov.za), mapping theme sensitivities across terrestrial biodiversity, aquatic biodiversity, agriculture, palaeontology, and avian/bat corridors.",
+        "Renewable Energy & Grid Fast-Tracking (REDZs): Projects located within gazetted Renewable Energy Development Zones (REDZs) and Strategic Transmission Corridors qualify for a streamlined 57-day decision timeframe following final BAR submission.",
+        "Compliance & Enforcement (Green Scorpions): Over 3,200 designated Environmental Management Inspectors (EMIs) across national, provincial, and municipal spheres enforce NEMA Section 24G rectification, Section 28 Duty of Care directives, and criminal prosecutions against environmental crimes."
+      ],
+      "keywords": ["nema", "eia", "environmental impact assessment", "screening tool", "basic assessment", "bar", "listing notice", "environmental authorisation", "redz", "green scorpions", "emi", "compliance", "section 24", "permits", "legislation"]
+    },
+    {
+      "id": "dffe-waste-circular-economy-2026",
+      "title": "South Africa State of Waste Report, NEMWA & Extended Producer Responsibility (EPR)",
+      "series": "waste",
+      "seriesLabel": "Chemicals, Waste & Circular Economy",
+      "year": "2025",
+      "branch": "Branch: Chemicals and Waste Management",
+      "audiences": ["public", "officials", "researchers", "compliance"],
+      "governance": "PUBLIC — Verified DFFE & SAWIC Report",
+      "citation": "DFFE (2025). National Waste Management Strategy (NWMS) & Extended Producer Responsibility (EPR) Performance Report, SAWIC.",
+      "url": "https://sawic.environment.gov.za",
+      "summary": "National framework under the National Environmental Management: Waste Act (NEMWA, Act 59 of 2008) advancing the circular economy, waste picker integration, landfill diversion, and mandatory Extended Producer Responsibility (EPR) across 6 priority sectors.",
+      "keyFindings": [
+        "National Waste Management Strategy (NWMS) Pillars: Built on three strategic pillars — (1) Waste Minimisation (preventing waste and diverting 45% of waste from landfill within 5 years), (2) Effective and Sustainable Waste Services, and (3) Compliance, Enforcement and Awareness.",
+        "Mandatory EPR Sectors: Section 18 Extended Producer Responsibility regulations apply to Paper & Packaging, Electrical & Electronic Equipment (e-waste), Lighting, Portable Batteries, Lubricant Oils, and Pesticides, requiring Producer Responsibility Organisations (PROs) to meet annual collection and recycling targets.",
+        "South African Waste Information System (SAWIS / SAWIC): Facilities exceeding threshold quantities must report monthly waste generation, treatment, recycling, and disposal tonnages to the South African Waste Information Centre (SAWIC).",
+        "Chemicals & POPs Governance: Implements the Stockholm, Basel, Rotterdam, and Minamata Conventions, phasing out mercury-added products, managing Polychlorinated Biphenyls (PCBs), and regulating High-Hazard Hazardous Waste."
+      ],
+      "keywords": ["waste", "circular economy", "nemwa", "epr", "extended producer responsibility", "recycling", "sawic", "sawis", "landfill", "plastics", "e-waste", "chemicals", "hazardous waste", "nwms"]
+    },
+    {
+      "id": "dffe-forestry-fisheries-oceans-2026",
+      "title": "Forestry Masterplan, Marine Living Resources (FRAP) & Oceans and Coasts Outlook",
+      "series": "forestry_fisheries",
+      "seriesLabel": "Forestry, Fisheries & Oceans",
+      "year": "2026",
+      "branch": "Branches: Forestry Management | Fisheries Management | Oceans and Coasts",
+      "audiences": ["public", "officials", "researchers", "compliance"],
+      "governance": "PUBLIC — Verified DFFE Sector Report",
+      "citation": "DFFE (2026). Commercial Forestry Sector Masterplan, FRAP Allocation Review & State of the Oceans and Coasts Report.",
+      "url": "https://www.dffe.gov.za/branches",
+      "summary": "Integrated governance of South Africa's indigenous and commercial forests (National Forests Act, Act 84 of 1998), marine capture fisheries and aquaculture (Marine Living Resources Act, Act 18 of 1998), and exclusive economic zone (EEZ) ocean ecosystems.",
+      "keyFindings": [
+        "Fisheries Management & Small-Scale Fisheries: Regulates 22 commercial fishing sectors under the Fishing Rights Allocation Process (FRAP) alongside the Small-Scale Fisheries Policy, which has recognized over 315 small-scale fishing co-operatives across the 4 coastal provinces (Western Cape, Eastern Cape, KwaZulu-Natal, Northern Cape).",
+        "Total Allowable Catch (TAC) & Stock Recovery: Scientific Working Groups conduct annual stock assessments for hake, abalone, West Coast rock lobster, pelagic species (sardine and anchovy), and linefish to set sustainable TAC and Total Applied Effort (TAE) limits.",
+        "Forestry Sector Masterplan: Manages 1.2 million hectares of commercial timber plantations and over 500,000 hectares of indigenous state forests, transferring state plantations to community-private partnerships and protecting Champion Trees and protected woodland species (e.g., Camel Thorn, Yellowwood, White Milkwood).",
+        "Oceans & Coasts (OCIMS & Operation Phakisa): Operates the Oceans and Coasts Information Management System (OCIMS) with satellite Vessel Monitoring Systems (VMS), Synthetic Aperture Radar (SAR) illegal fishing & oil-spill detection, harmful algal bloom (HAB) early warning, and Marine Spatial Planning across South Africa's 1.54 million km² Exclusive Economic Zone."
+      ],
+      "keywords": ["forestry", "fisheries", "oceans", "coasts", "frap", "fishing rights", "small-scale fisheries", "marine protected areas", "mpa", "ocims", "trees", "plantations", "indigenous forest", "abalone", "hake", "tac", "mlra"]
+    },
+    {
+      "id": "dffe-biodiversity-nemba-whitepaper-2026",
+      "title": "White Paper on Conservation and Sustainable Use of South Africa's Biodiversity & NEMBA",
+      "series": "legislation",
+      "seriesLabel": "Legislation & EIA (NEMA)",
+      "year": "2025",
+      "branch": "Branch: Biodiversity and Conservation",
+      "audiences": ["public", "officials", "researchers", "compliance"],
+      "governance": "PUBLIC — Policy White Paper & Statutory Act",
+      "citation": "DFFE (2025). White Paper on Conservation and Sustainable Use of South Africa's Biodiversity & NEMBA (Act 10 of 2004) Revised National Biodiversity Economy Strategy (NBES).",
+      "url": "https://www.dffe.gov.za/legislation/whitepapers",
+      "summary": "National biodiversity policy and regulatory framework under NEMBA (Act 10 of 2004) and NEMPAA (Act 57 of 2003), governing Threatened or Protected Species (TOPS), Alien and Invasive Species (AIS), bioprospecting, and the National Biodiversity Economy Strategy (NBES).",
+      "keyFindings": [
+        "Four Strategic Pillars of the White Paper: (1) Conservation of Mega-Living Landscapes and Seascapes, (2) Sustainable Use of Biodiversity, (3) Equitable Access and Benefit-Sharing (ABS / Nagoya Protocol), and (4) Transformed Biodiversity Governance aligned with Ubuntu environmental ethics.",
+        "National Biodiversity Economy Strategy (NBES): Targets inclusive growth across ecotourism, wildlife ranching, marine/coastal biodiversity tourism, and indigenous bioprospecting (e.g., Rooibos, Buchu, Honeybush, Pelargonium, Aloe ferox benefit-sharing agreements).",
+        "Anti-Poaching & Integrated Wildlife Zones: Coordinates the National Integrated Strategy to Combat Wildlife Trafficking (NISCWT) with SANParks, SAPS, and provincial conservation authorities, achieving sustained reductions in rhino poaching across Kruger National Park and priority reserves."
+      ],
+      "keywords": ["biodiversity", "nemba", "nempaa", "white paper", "tops", "threatened species", "invasive species", "ais", "bioprospecting", "rhino", "poaching", "sanparks", "sanbi", "conservation", "wildlife economy", "nbes"]
+    }
+  ]
+}

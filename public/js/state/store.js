@@ -28,8 +28,11 @@ export function loadInitialSessions() {
   return [];
 }
 
+const rawSavedTheme = (typeof window !== 'undefined' && window.localStorage?.getItem('omni_theme')) || 'dffe';
+const normalizedInitialTheme = rawSavedTheme === 'vylex' ? 'dffe' : rawSavedTheme;
+
 export const state = {
-  theme: (typeof window !== 'undefined' && window.localStorage?.getItem('omni_theme')) || 'vylex',
+  theme: normalizedInitialTheme,
   currentModel: (typeof window !== 'undefined' && window.localStorage?.getItem('omni_model')) || 'openrouter/free',
   models: FREE_MODELS,
   apiKey: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_openrouter_api_key')) || '',
@@ -51,5 +54,10 @@ export const state = {
   lastUserPrompt: '',
   isReadingResponse: false,
   activeSpeechButton: null,
-  projectFiles: []
+  projectFiles: [],
+  dffeFilters: {
+    series: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_series')) || 'all',
+    year: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_year')) || 'all',
+    audience: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_audience')) || 'public'
+  }
 };
