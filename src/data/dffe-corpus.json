@@ -4,7 +4,7 @@
     "jurisdiction": "Republic of South Africa",
     "officialPortal": "https://www.dffe.gov.za",
     "version": "2026.11",
-    "governancePolicy": "Public Verified Corpus — Restricted strictly to published DFFE reports, statutory acts, and official departmental programmes. Internal unpublished cabinet memoranda and personal data (POPIA) are excluded.",
+    "governancePolicy": "Tiered DFFE Information Management (FM/IM) & POPIA Governance — Enforces sensitivity boundaries across Phase 1 (Internal Official / Teams), Phase 2 (External Public Website & WhatsApp), and Phase 3 (Authenticated Enterprise Systems & Restricted Compliance Records).",
     "seriesCatalogue": [
       { "id": "all", "label": "All DFFE Sources" },
       { "id": "soer", "label": "State of the Environment (SoER)" },
@@ -12,7 +12,8 @@
       { "id": "legislation", "label": "Legislation & EIA (NEMA)" },
       { "id": "climate", "label": "Climate Change & Air Quality" },
       { "id": "forestry_fisheries", "label": "Forestry, Fisheries & Oceans" },
-      { "id": "waste", "label": "Chemicals, Waste & Circular Economy" }
+      { "id": "waste", "label": "Chemicals, Waste & Circular Economy" },
+      { "id": "internal_sop", "label": "Internal Directorate SOPs & Governance" }
     ],
     "audiences": [
       { "id": "public", "label": "General Public" },
@@ -20,7 +21,112 @@
       { "id": "researchers", "label": "Researchers & Policy Analysts" },
       { "id": "compliance", "label": "Compliance & EIA Practitioners" }
     ],
-    "years": ["all", "2026", "2025", "2024", "2023", "Statutory"]
+    "years": ["all", "2026", "2025", "2024", "2023", "Statutory"],
+    "deploymentPhases": [
+      {
+        "id": "phase1_internal",
+        "name": "Phase 1: Internal Official & Teams",
+        "shortLabel": "Phase 1: Internal / Teams",
+        "channels": ["DFFE Intranet Studio", "Microsoft Teams App", "SharePoint Grounding"],
+        "allowedSensitivities": ["public", "internal"],
+        "authContext": "Microsoft Entra ID (@dffe.gov.za Official)",
+        "description": "Internal DFFE staff and directorates query verified public & internal SOP corpora, or create custom directorate agents grounded on specific URLs and policy documents."
+      },
+      {
+        "id": "phase2_public",
+        "name": "Phase 2: External Public Web & WhatsApp",
+        "shortLabel": "Phase 2: Public / WhatsApp",
+        "channels": ["dffe.gov.za Web Widget", "Citizen WhatsApp Channel", "Public EnvironmentGPT Portal"],
+        "allowedSensitivities": ["public"],
+        "authContext": "Anonymous Citizen / Public Stakeholder",
+        "description": "External public-facing conversational agent strictly isolated to PUBLIC-APPROVED publications. Internal SOPs and restricted enforcement dockets are blocked by the FM/IM sensitivity gate."
+      },
+      {
+        "id": "phase3_enterprise",
+        "name": "Phase 3: Enterprise Systems & FM/IM RBAC",
+        "shortLabel": "Phase 3: Enterprise Systems (RBAC)",
+        "channels": ["SAAQIS / SAWIC Live Connectors", "National Screening Tool API", "e-Permitting & EMI Docket Vault"],
+        "allowedSensitivities": ["public", "internal", "restricted"],
+        "authContext": "Entra ID + FM/IM Security Clearance (EMI / Compliance Directorate)",
+        "description": "Authenticated line-of-business integration pulling live regulatory telemetry and restricted compliance records after Information Management (FM/IM) authorization verification."
+      }
+    ],
+    "directorateAgents": [
+      {
+        "id": "dffe-general-agent",
+        "name": "DFFE Environmental Intelligence Agent",
+        "directorate": "Chief Directorate: Environmental Knowledge Management & IT Business Solutions",
+        "defaultSeries": "all",
+        "defaultAudience": "public",
+        "sensitivity": "public",
+        "channels": ["Internal Teams", "dffe.gov.za Web", "WhatsApp"],
+        "groundingUrls": [
+          "https://www.dffe.gov.za/state-of-the-environment-reports",
+          "https://www.dffe.gov.za/projectsprogrammes"
+        ],
+        "description": "Cross-departmental environmental synthesis across State of the Environment (SoER) reports, EPWP programmes, climate, biodiversity, and waste.",
+        "deliverableFormat": "Cited Environmental Synthesis & Policy Summary"
+      },
+      {
+        "id": "dffe-eia-compliance-agent",
+        "name": "NEMA Section 24 EIA & Screening Agent",
+        "directorate": "Branch: Regulatory Compliance and Sector Monitoring (RCSM)",
+        "defaultSeries": "legislation",
+        "defaultAudience": "compliance",
+        "sensitivity": "internal",
+        "channels": ["Internal Teams", "dffe.gov.za Web", "National Screening Tool"],
+        "groundingUrls": [
+          "https://screening.environment.gov.za",
+          "https://www.dffe.gov.za/legislation/acts"
+        ],
+        "description": "Evaluates proposed developments against NEMA Listing Notices 1, 2 & 3, Basic Assessment (197d) vs. S&EIR (300d) vs. REDZ (57d) timeframes, and Green Scorpions enforcement.",
+        "deliverableFormat": "NEMA Section 24 EIA Screening Checklist & Statutory Roadmap"
+      },
+      {
+        "id": "dffe-climate-air-agent",
+        "name": "Climate Change Act & SAAQIS Air Agent",
+        "directorate": "Branch: Climate Change and Air Quality",
+        "defaultSeries": "climate",
+        "defaultAudience": "researchers",
+        "sensitivity": "public",
+        "channels": ["Internal Teams", "SAAQIS Connector", "dffe.gov.za Web"],
+        "groundingUrls": [
+          "https://saaqis.environment.gov.za",
+          "https://www.dffe.gov.za/legislation/acts"
+        ],
+        "description": "Analyzes Climate Change Act (Act 22 of 2024) Sector Emission Targets (SETs), mandatory company Carbon Budgets, 2030 NDC trajectory, and SAAQIS Priority Area air quality.",
+        "deliverableFormat": "Carbon Budget & Priority Area Air Quality Compliance Brief"
+      },
+      {
+        "id": "dffe-epwp-fisheries-agent",
+        "name": "EPWP Programmes, Forestry & Fisheries (FRAP) Agent",
+        "directorate": "Branches: Environmental Programmes | Forestry | Fisheries Management",
+        "defaultSeries": "programmes",
+        "defaultAudience": "public",
+        "sensitivity": "public",
+        "channels": ["Citizen WhatsApp", "dffe.gov.za Web", "Internal Teams"],
+        "groundingUrls": [
+          "https://www.dffe.gov.za/projectsprogrammes",
+          "https://www.dffe.gov.za/branches"
+        ],
+        "description": "Guides citizens, small-scale fishing co-operatives, and officials on Working for Water, Working on Fire, Working for Wetlands, Working for the Coast, Ten Million Trees, and FRAP allocations.",
+        "deliverableFormat": "Programme Targets & Citizen Service Delivery Guide"
+      },
+      {
+        "id": "dffe-waste-circular-agent",
+        "name": "Chemicals, Waste (SAWIC) & Circular Economy Agent",
+        "directorate": "Branch: Chemicals and Waste Management",
+        "defaultSeries": "waste",
+        "defaultAudience": "compliance",
+        "sensitivity": "public",
+        "channels": ["Internal Teams", "SAWIC Portal", "dffe.gov.za Web"],
+        "groundingUrls": [
+          "https://sawic.environment.gov.za"
+        ],
+        "description": "Tracks NEMWA Extended Producer Responsibility (EPR) compliance across packaging, e-waste, lighting, and batteries, plus municipal landfill diversion metrics.",
+        "deliverableFormat": "NEMWA & EPR Sector Compliance Assessment"
+      }
+    ]
   },
   "documents": [
     {
@@ -31,6 +137,7 @@
       "year": "2026",
       "branch": "Environmental Advisory Services & Chief Directorate: Environmental Knowledge Management",
       "audiences": ["public", "officials", "researchers"],
+      "sensitivity": "public",
       "governance": "PUBLIC — Verified DFFE Publication",
       "citation": "DFFE (2026). South Africa State of the Environment Outlook Report (SAEO), Chapters 1–11, Pretoria.",
       "url": "https://www.dffe.gov.za/state-of-the-environment-reports",
@@ -52,6 +159,7 @@
       "year": "2026",
       "branch": "Branch: Environmental Programmes (EP)",
       "audiences": ["public", "officials", "researchers"],
+      "sensitivity": "public",
       "governance": "PUBLIC — Verified DFFE Programme Portfolio",
       "citation": "DFFE (2026). Annual Performance Plan & Environmental Programmes (EPWP) Operational Compendium, pp. 42–88.",
       "url": "https://www.dffe.gov.za/projectsprogrammes",
@@ -74,6 +182,7 @@
       "year": "2026",
       "branch": "Branch: Climate Change and Air Quality",
       "audiences": ["public", "officials", "researchers", "compliance"],
+      "sensitivity": "public",
       "governance": "PUBLIC — Statutory Act & Regulatory Framework",
       "citation": "Republic of South Africa (2024/2026). Climate Change Act, Act No. 22 of 2024 & DFFE Sector Emission Target (SET) Regulations.",
       "url": "https://www.dffe.gov.za/legislation/acts",
@@ -94,6 +203,7 @@
       "year": "2025",
       "branch": "Branch: Climate Change and Air Quality — Chief Directorate: Air Quality Management",
       "audiences": ["public", "officials", "researchers", "compliance"],
+      "sensitivity": "public",
       "governance": "PUBLIC — Verified DFFE & SAAQIS Report",
       "citation": "DFFE (2025). Annual State of the Air Report & Priority Area Air Quality Management Plan (AQMP) Review, SAAQIS.",
       "url": "https://saaqis.environment.gov.za",
@@ -113,6 +223,7 @@
       "year": "2026",
       "branch": "Branch: Regulatory Compliance and Sector Monitoring (RCSM)",
       "audiences": ["public", "officials", "compliance"],
+      "sensitivity": "public",
       "governance": "PUBLIC — Statutory Guidance & Compliance Standard",
       "citation": "DFFE (2026). National Environmental Management Act (Act 107 of 1998) — EIA Regulations & National Web-Based Environmental Screening Tool Protocol.",
       "url": "https://screening.environment.gov.za",
@@ -133,6 +244,7 @@
       "year": "2025",
       "branch": "Branch: Chemicals and Waste Management",
       "audiences": ["public", "officials", "researchers", "compliance"],
+      "sensitivity": "public",
       "governance": "PUBLIC — Verified DFFE & SAWIC Report",
       "citation": "DFFE (2025). National Waste Management Strategy (NWMS) & Extended Producer Responsibility (EPR) Performance Report, SAWIC.",
       "url": "https://sawic.environment.gov.za",
@@ -153,6 +265,7 @@
       "year": "2026",
       "branch": "Branches: Forestry Management | Fisheries Management | Oceans and Coasts",
       "audiences": ["public", "officials", "researchers", "compliance"],
+      "sensitivity": "public",
       "governance": "PUBLIC — Verified DFFE Sector Report",
       "citation": "DFFE (2026). Commercial Forestry Sector Masterplan, FRAP Allocation Review & State of the Oceans and Coasts Report.",
       "url": "https://www.dffe.gov.za/branches",
@@ -173,6 +286,7 @@
       "year": "2025",
       "branch": "Branch: Biodiversity and Conservation",
       "audiences": ["public", "officials", "researchers", "compliance"],
+      "sensitivity": "public",
       "governance": "PUBLIC — Policy White Paper & Statutory Act",
       "citation": "DFFE (2025). White Paper on Conservation and Sustainable Use of South Africa's Biodiversity & NEMBA (Act 10 of 2004) Revised National Biodiversity Economy Strategy (NBES).",
       "url": "https://www.dffe.gov.za/legislation/whitepapers",
@@ -183,6 +297,46 @@
         "Anti-Poaching & Integrated Wildlife Zones: Coordinates the National Integrated Strategy to Combat Wildlife Trafficking (NISCWT) with SANParks, SAPS, and provincial conservation authorities, achieving sustained reductions in rhino poaching across Kruger National Park and priority reserves."
       ],
       "keywords": ["biodiversity", "nemba", "nempaa", "white paper", "tops", "threatened species", "invasive species", "ais", "bioprospecting", "rhino", "poaching", "sanparks", "sanbi", "conservation", "wildlife economy", "nbes"]
+    },
+    {
+      "id": "dffe-internal-directorate-sop-2026",
+      "title": "DFFE Internal SOP: Directorate AI Agent Creation, SharePoint Grounding & Ministerial Submissions",
+      "series": "internal_sop",
+      "seriesLabel": "Internal Directorate SOPs & Governance",
+      "year": "2026",
+      "branch": "Chief Directorate: Information Management & IT Business Solutions (Environment House)",
+      "audiences": ["officials"],
+      "sensitivity": "internal",
+      "governance": "INTERNAL OFFICIAL ONLY — Phase 1 Entra ID / Microsoft Teams Grounding",
+      "citation": "DFFE Internal Circular IM-2026/04: Standard Operating Procedure for Directorate Copilot Agents, EDMS & Ministerial Briefing Notes.",
+      "url": "https://www.dffe.gov.za/internal-im-governance",
+      "summary": "Internal operational guideline governing how DFFE directorates configure scoped AI agents over internal SharePoint document libraries, format DG/Ministerial Briefing Notes, and separate internal working drafts from external public channels.",
+      "keyFindings": [
+        "Phase 1 Internal Agent Grounding: Directorate managers may provision scoped agents in Microsoft Teams or DFFE Copilot Studio grounded on approved SharePoint folders, policy drafts, and statutory URLs.",
+        "Ministerial & DG Submission Standard: All internal policy briefings generated with AI assistance must include exact document citations, responsible Chief Directorate sign-off, financial/PFMA implications, and constitutional NEMA Section 24 alignment.",
+        "Information Management (FM/IM) Separation Rule: Internal working documents classified as INTERNAL-OFFICIAL must never be exposed on unauthenticated external channels (dffe.gov.za widget or public WhatsApp)."
+      ],
+      "keywords": ["internal", "sop", "ministerial briefing", "sharepoint", "teams", "copilot studio", "directorate agent", "information management", "edms", "pfma", "governance"]
+    },
+    {
+      "id": "dffe-restricted-emi-enforcement-register-2026",
+      "title": "RESTRICTED: EMI (Green Scorpions) Active Section 31L Compliance Notices & Section 24G Enforcement Register",
+      "series": "legislation",
+      "seriesLabel": "Legislation & EIA (NEMA)",
+      "year": "2026",
+      "branch": "Branch: Regulatory Compliance and Sector Monitoring — Chief Directorate: Enforcement",
+      "audiences": ["officials", "compliance"],
+      "sensitivity": "restricted",
+      "governance": "RESTRICTED / SENSITIVE — Phase 3 FM/IM Security Clearance & EMI Role Required",
+      "citation": "DFFE National Enforcement Register (2026-Q4) — Protected under POPIA, PAIA Section 39 & NEMA Section 31.",
+      "url": "https://www.dffe.gov.za/compliance-enforcement-restricted",
+      "summary": "Confidential enforcement intelligence from the National Environmental Compliance and Enforcement System (NECES), tracking active Section 31L Compliance Notices, Section 28 directives, and criminal dockets under investigation by Grade 1–5 Environmental Management Inspectors.",
+      "keyFindings": [
+        "Active Highveld & Vaal Industrial Directives: 14 active Section 31L pre-compliance and compliance notices issued for Minimum Emission Standard (MES) exceedances and unlicensed hazardous waste treatment.",
+        "Section 24G Rectification Fines: Administrative fine assessments ranging from R1.25 million to R10 million for unlawful commencement of listed activities inside Critical Biodiversity Areas (CBAs).",
+        "FM/IM Access Control Directive: Access to active docket numbers, Whistleblower Environmental Crimes Hotline records, and personally identifiable applicant data (POPIA) is strictly restricted to Entra ID-authenticated EMIs and authorized legal officers."
+      ],
+      "keywords": ["restricted", "enforcement", "docket", "section 31l", "section 24g", "neces", "criminal", "investigation", "fine", "confidential", "sensitive", "green scorpions register"]
     }
   ]
 }

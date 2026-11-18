@@ -58,6 +58,8 @@ export const state = {
   dffeFilters: {
     series: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_series')) || 'all',
     year: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_year')) || 'all',
-    audience: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_audience')) || 'public'
+    audience: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_audience')) || 'public',
+    accessPhase: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_phase')) || 'phase1_internal',
+    agentId: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_agent')) || 'dffe-general-agent'
   }
 };

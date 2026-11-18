@@ -27,7 +27,12 @@ import { movieWidget } from './components/movie-widget.js';
 import { movieCollectionWidget } from './components/movie-collection-widget.js';
 import { stockWidget } from './components/stock-widget.js';
 import { cryptoTerminalWidget } from './components/crypto-terminal-widget.js';
-import { dffeWidget } from './components/dffe-widget.js';
+import {
+  dffeWidget,
+  dffeEiaScreeningWidget,
+  dffeIndicatorsWidget,
+  dffeAgentStudioWidget
+} from './components/dffe-widget.js';
 
 const WIDGET_REGISTRY = new Map();
 
@@ -72,6 +77,9 @@ registerComponent(movieCollectionWidget);
 registerComponent(stockWidget);
 registerComponent(cryptoTerminalWidget);
 registerComponent(dffeWidget);
+registerComponent(dffeEiaScreeningWidget);
+registerComponent(dffeIndicatorsWidget);
+registerComponent(dffeAgentStudioWidget);
 
 /**
  * Render widget HTML by type and data

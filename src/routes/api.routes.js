@@ -9,6 +9,8 @@ const toolController = require('../controllers/tool.controller');
 const widgetController = require('../controllers/widget.controller');
 const elevenlabsService = require('../services/elevenlabs.service');
 const dffeRagService = require('../services/dffe-rag.service');
+const dffeEiaScreeningCapability = require('../capabilities/dffe/dffe-eia-screening.capability');
+const dffeIndicatorsCapability = require('../capabilities/dffe/dffe-indicators.capability');
 
 // Security & Rate Limiting Middlewares
 const { chatLimiter, titleLimiter, toolLimiter } = require('../middleware/rateLimiter');
@@ -33,7 +35,7 @@ if (process.env.NODE_ENV !== 'production') {
 // Atlas widget endpoint
 router.post('/widget/execute', toolLimiter, (req, res) => widgetController.execute(req, res));
 
-// DFFE Environmental Knowledge & RAG endpoints (UNEP EnvironmentGPT-aligned filtering & citations)
+// DFFE Environmental Knowledge & RAG endpoints (UNEP EnvironmentGPT-aligned filtering, 3-Phase FM/IM Sensitivity & Agent Studio)
 router.get('/dffe/corpus', (req, res) => {
   res.json(dffeRagService.getMetadata());
 });
@@ -44,6 +46,7 @@ router.get('/dffe/search', toolLimiter, (req, res) => {
     series: req.query.series || 'all',
     year: req.query.year || 'all',
     audience: req.query.audience || 'public',
+    accessPhase: req.query.accessPhase || req.query.phase || null,
     limit: req.query.limit || 4
   });
   res.json(result);
@@ -56,8 +59,55 @@ router.post('/dffe/search', toolLimiter, (req, res) => {
     series: body.series || 'all',
     year: body.year || 'all',
     audience: body.audience || 'public',
+    accessPhase: body.accessPhase || body.phase || null,
     limit: body.limit || 4
   });
+  res.json(result);
+});
+
+// DFFE Directorate Agent Studio & Self-Service URL/Document Grounding endpoints
+router.get('/dffe/agents', (req, res) => {
+  res.json({
+    agents: dffeRagService.getDirectorateAgents(),
+    phases: dffeRagService.getDeploymentPhases()
+  });
+});
+
+router.post('/dffe/agents', toolLimiter, (req, res) => {
+  const body = req.body || {};
+  if (!body.name && !body.directorate) {
+    return res.status(400).json({ error: 'Agent name or directorate is required.' });
+  }
+  const created = dffeRagService.createDirectorateAgent(body);
+  res.status(201).json({
+    status: 'created',
+    ...created,
+    agents: dffeRagService.getDirectorateAgents()
+  });
+});
+
+router.post('/dffe/ground', toolLimiter, (req, res) => {
+  const body = req.body || {};
+  if (!body.title && !body.url && !body.content) {
+    return res.status(400).json({ error: 'Source title, URL, or content is required for RAG grounding.' });
+  }
+  const doc = dffeRagService.groundCustomSource(body);
+  res.status(201).json({
+    status: 'grounded',
+    document: doc,
+    totalCorpusDocuments: dffeRagService.getAllDocuments().length
+  });
+});
+
+// Deterministic NEMA Section 24 EIA & National Screening Tool endpoint
+router.post('/dffe/eia-screen', toolLimiter, async (req, res) => {
+  const result = await dffeEiaScreeningCapability.execute(req.body || {});
+  res.json(result);
+});
+
+// Deterministic SAAQIS, SAWIC, Climate Change Act & EPWP Indicators endpoint
+router.post('/dffe/indicators', toolLimiter, async (req, res) => {
+  const result = await dffeIndicatorsCapability.execute(req.body || {});
   res.json(result);
 });
 

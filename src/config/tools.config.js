@@ -299,4 +299,29 @@ const COMBINED_TOOLS = [
   ...capabilityRegistry.getCapabilitySchemas()
 ];
 
-module.exports = { ATLAS_TOOLS: COMBINED_TOOLS, BASE_TOOLS: ATLAS_TOOLS };
+// Strictly DFFE-aligned operational tools passed to the LLM during conversational turns (excludes Vylex Atlas consumer bloat)
+const CONSUMER_BLOAT_TOOLS = new Set([
+  'get_movie_info',
+  'discover_movies',
+  'get_stock_chart',
+  'get_crypto_terminal',
+  'get_crypto_price',
+  'get_bible_verse',
+  'tell_joke',
+  'give_advice',
+  'get_reddit_posts',
+  'search_reddit',
+  'get_space_news',
+  'get_news_headlines',
+  'generate_image'
+]);
+
+const DFFE_AGENT_TOOLS = COMBINED_TOOLS.filter(
+  t => t?.function?.name && !CONSUMER_BLOAT_TOOLS.has(t.function.name)
+);
+
+module.exports = {
+  ATLAS_TOOLS: COMBINED_TOOLS,
+  DFFE_AGENT_TOOLS,
+  BASE_TOOLS: ATLAS_TOOLS
+};

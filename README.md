@@ -1,91 +1,37 @@
-# Atlas | Technical Reasoning Workspace by Vylex Technologies
+# DFFE Copilot | 3-Phase Conversational Agentic Platform & RAG Assistant
 
-A focused, locally hostable technical reasoning workspace for research, mathematics, code, and systems engineering. Atlas connects to OpenRouter across 7 curated model options (with automatic rate-limit failover and optional Bring Your Own Key support) and pairs language models with 26 built-in deterministic tools, KaTeX/mhchem scientific rendering, client-side CSV/PDF document intelligence, and a 5-tab Artifacts Canvas.
+**Department of Forestry, Fisheries and the Environment (DFFE) — Republic of South Africa**  
+*Directorate: IT Business Solutions — Software Development & AI Engineering (Environment House, Pretoria)*
 
-Built by [Vylex Technologies](https://vylex.co.za) / [Vylex Labs](https://vylex.co.za/labs), founded by [Avuyile Mthembu](https://avuyilemthembu.co.za).
+DFFE Copilot is an in-house **3-Phase Conversational Agentic Platform, Directorate Agent Studio, and Retrieval-Augmented Generation (RAG) Workspace** built for the Department of Forestry, Fisheries and the Environment (DFFE). Modeled on the **UNEP EnvironmentGPT (`wesr.unep.org/environmentgpt/`)** scientific integrity architecture and the **DFFE / Microsoft / SITA** phased agentic deployment strategy, it goes beyond a static Q&A chatbot by combining source-cited RAG retrieval with **self-service Directorate Agent creation**, **deterministic NEMA / Climate / SAAQIS / SAWIC operational tools**, **multi-channel publishing (`dffe.gov.za` Web, Microsoft Teams, Citizen WhatsApp)**, and **Information Management (FM/IM) Content Sensitivity Governance**.
 
-**[Platform Overview](/public/about.html)** · **[Technical Documentation](/public/docs.html)**
-
----
-
-## Features
-
-- **Curated Model Selector & Failover**: Switch between 7 curated OpenRouter model options (including `openrouter/free` auto-routing with sequential fallback on 429/503 responses) or supply a personal OpenRouter API key (`sk-or-v1-...`) in Settings.
-- **8 Investigation Modes**: Choose between `Auto`, `Research`, `Solve`, `Build`, `Engineer`, `Experiment`, `Reason`, and `Discover` modes, plus 6 Persona Presets and custom instructions.
-- **Real-Time Streaming & Reasoning Traces**: Token-by-token SSE response rendering with collapsible `Reasoning Process` (`<think>`) deliberation blocks.
-- **KaTeX & mhchem Scientific Rendering**: Native rendering for inline and block LaTeX equations, multi-line aligned derivations, and chemical formulas (`\ce{...}`).
-- **5-Tab Artifacts Canvas**: Side-by-side workspace with `Code` (editable source, line numbers, copy, download), `Live Preview` (sandboxed HTML/CSS/JS `iframe`), `Diff` (unified diff against local files), `Document` (Markdown viewer), and `Log`.
-- **Document Intelligence & Local Project Sync**: Client-side parsing of `.csv` datasets (row/column counts and min/max/mean summary statistics), `.pdf` documents (PDF.js text extraction), text/code files, and local directories via the Web File System Access API (`showDirectoryPicker`) with explicit user-approved `Apply to Local File` sync.
-- **26 Built-In Tools & Interactive Widgets**: Deterministic tools for live web search (`DuckDuckGo`), weather (`Open-Meteo`), stock/index/commodity charts (`Yahoo Finance`), crypto terminals & spot prices (`CoinGecko`), Crypto Fear & Greed (`Alternative.me`), Bitcoin mempool telemetry (`Mempool.space`), forex rates (`Frankfurter ECB`), symbolic & numerical math (`Math.js`), unit conversion, timezones, OpenStreetMap + Leaflet maps, NASA APOD & ISS telemetry, Hacker News, Reddit discussions, TMDB movies, Wikimedia Commons image search, Pollinations.ai image synthesis, QR generation/scanning (`jsQR`), OCR (`Tesseract.js`), dictionary definitions, Bible verses, jokes, and advice.
-- **Slash Commands & Natural-Language Triggers**: Trigger tools directly via `/web`, `/weather`, `/stock`, `/crypto`, `/mempool`, `/fear`, `/convert`, `/unit`, `/math`, `/time`, `/places`, `/space`, `/news`, `/reddit`, `/movie`, `/movies`, `/image`, `/qr`, `/scanqr`, `/ocr`, `/define`, `/bible`, `/joke`, `/advice`, or natural-language queries.
-- **Voice Input, Speech Readout & Themes**: Web Speech API microphone dictation and speech readout (`Read Aloud`), plus three dark themes (`Vylex`, `Obsidian`, `Carbon`).
-- **Local-First Privacy & Export**: Conversations, bookmarks, and settings persist in browser `localStorage` (`atlas_investigations`) with one-click Markdown (`.md`) and JSON (`.json`) export/import.
-- **Terminal CLI**: Interactive command-line interface (`npm run cli`) for terminal workflows.
-
-## Atlas Capabilities
-
-| Capability Area | Atlas Coverage |
-| :--- | :--- |
-| Live-data & market tools | DuckDuckGo web search, Open-Meteo weather, Yahoo Finance stock charts, CoinGecko crypto terminals & spot quotes, Crypto Fear & Greed, Bitcoin mempool telemetry, and Frankfurter ECB forex conversion |
-| Science, math & vision | Math.js symbolic differentiation/simplification & numerical evaluation, dimensional unit conversion, KaTeX & mhchem rendering, Tesseract.js OCR, jsQR scanner/generator, Pollinations.ai image synthesis, and Wikimedia Commons visual search |
-| Knowledge & media feeds | NASA APOD & Open Notify ISS telemetry, Hacker News top stories, Reddit discussions, TMDB movie details & release discovery, Wikipedia/URL extraction, Free Dictionary API, Bible API, jokes, and advice |
-| Workspace & context | 5-tab Artifacts Canvas, sandboxed HTML/CSS/JS preview, CSV & PDF client-side Document Intelligence, local folder ingestion with user-approved file sync, Markdown/JSON export, and Terminal CLI |
+**[3-Phase Agent Hub & Multi-Channel Simulator](/public/dffe.html)** · **[Platform Overview](/public/about.html)** · **[Technical Documentation](/public/docs.html)**
 
 ---
 
-## Project Structure
+## Strategic Architecture: The 3-Phase DFFE Agentic Roadmap
 
-```
-atlas/
-├── .env.example              # Environment template
-├── vercel.json               # Vercel deployment configuration
-├── package.json              # Node dependencies & scripts
-│
-├── src/                      # Backend (Node.js + Express)
-│   ├── server.js             # Main server entry point
-│   ├── capabilities/         # Modular capability plug-ins (web, finance, movies, registry)
-│   ├── config/
-│   │   ├── env.js            # Centralized environment configuration
-│   │   ├── identity.js       # Canonical Atlas, Vylex & Founder identity + system prompts
-│   │   ├── models.config.js  # 7 curated OpenRouter model configurations
-│   │   └── tools.config.js   # OpenAI-compatible function tool schemas
-│   ├── middleware/
-│   │   ├── modelGuard.js     # Curated model whitelist & BYOK validation
-│   │   └── rateLimiter.js    # Per-endpoint rate limiters
-│   ├── services/
-│   │   ├── openrouter.service.js  # OpenRouter API adapter with automatic failover
-│   │   ├── search.service.js      # DuckDuckGo, Wikipedia & OpenAlex search grounding
-│   │   └── widget.service.js      # Deterministic tool & widget execution handlers
-│   ├── controllers/
-│   │   ├── chat.controller.js     # Mode-aware chat, SSE streaming & tool loop
-│   │   ├── models.controller.js   # Model listing
-│   │   └── health.controller.js   # Health check payload
-│   ├── routes/
-│   │   ├── api.routes.js     # API endpoints (/api/chat, /api/widget/execute, etc.)
-│   │   └── index.js          # Static & public page route mapping
-│   └── cli/
-│       └── chat-cli.js       # Terminal CLI interface
-│
-├── public/                   # Frontend (Modular ES6 Browser App)
-│   ├── index.html            # Main workspace application interface
-│   ├── about.html            # Platform overview & capability matrix
-│   ├── docs.html             # Technical reference & tool specifications
-│   ├── atlas.html            # Interactive architecture & prompting guide
-│   ├── privacy.html          # POPIA-aligned privacy policy
-│   ├── terms.html            # Terms of service & MIT license
-│   ├── css/                  # Modular stylesheet architecture
-│   └── js/
-│       ├── app.js            # Main ES module bootstrap & slash command router
-│       ├── audio/            # Voice dictation & speech readout pill
-│       ├── config/           # Client constants, modes, icons & presets
-│       ├── markdown/         # Marked + KaTeX + Highlight.js pipeline
-│       ├── services/         # SSE chat stream, intent router & widget execute client
-│       ├── state/            # Reactive client session & settings store
-│       ├── ui/               # Canvas, modals, message renderer, theme & session manager
-│       └── widgets/          # Interactive widget card & chart renderers
-│
-└── tests/                    # Automated Jest test suites
-```
+| Phase | Target Audience & Channels | Information Management (FM/IM) Sensitivity Scope | Key Capabilities |
+| :--- | :--- | :--- | :--- |
+| **Phase 1: Internal Official & Microsoft Teams** | Internal DFFE staff & directorates (`@dffe.gov.za`) via Intranet Studio & Microsoft Teams | `PUBLIC` + `INTERNAL-OFFICIAL` (Withholds `RESTRICTED` criminal dockets) | Query public + internal SOP corpora, **create & ground custom Directorate Agents** on specific `dffe.gov.za` or SharePoint URLs, and draft Ministerial Briefing Notes in the Artifacts Canvas. |
+| **Phase 2: External Public Website & Citizen WhatsApp** | Citizens, researchers, small-scale fishers, EPWP participants & EIA applicants via `dffe.gov.za` & WhatsApp | Strictly `PUBLIC-APPROVED` only (FM/IM Sensitivity Gate blocks all `INTERNAL` & `RESTRICTED` records) | UNEP EnvironmentGPT-aligned filtering by **Report Series**, **Publication Year**, and **Target Audience** over State of the Environment Reports (SoER), EPWP programmes, and statutory acts. |
+| **Phase 3: Enterprise System-Connected & FM/IM RBAC** | Authorised Environmental Management Inspectors (Green Scorpions) & Compliance Officers | `PUBLIC` + `INTERNAL` + `RESTRICTED / SENSITIVE` (Entra ID + FM/IM Security Clearance) | Deterministic connectors to **DFFE National Environmental Screening Tool**, **SAAQIS** (Air Quality Priority Areas), **SAWIC** (Waste & EPR targets), **Climate Change Act Carbon Budgets**, and **NECES Section 31L / 24G enforcement registers**. |
+
+---
+
+## Core Operational Capabilities (Why DFFE Copilot Is Not a "Glorified Chatbot")
+
+1. **UNEP EnvironmentGPT-Aligned RAG & Citation Engine (`search_dffe_knowledge` / `/dffe`, `/soer`, `/programmes`, `/nema`)**:
+   - Grounded strictly in verified DFFE publications, State of the Environment Outlook Reports (SoER / SAEO), EPWP compendiums, and South African environmental statutes (`NEMA Act 107 of 1998`, `Climate Change Act 22 of 2024`, `NEMBA`, `NEMWA`, `NEMAQA`, `NEMPAA`, `MLRA`).
+   - Supports multi-dimensional filtering by **Report Series**, **Year**, **Target Audience**, and **3-Phase FM/IM Sensitivity Tier**.
+2. **Self-Service Directorate Agent Studio & Live URL/Document Grounding (`manage_dffe_directorate_agent` / `/agent`, `/ground`, `/sensitivity`)**:
+   - Enables DFFE branches and directorates (*Biodiversity & Conservation*, *Regulatory Compliance & Sector Monitoring*, *Climate Change & Air Quality*, *Environmental Programmes*, *Chemicals & Waste*, *Forestry & Fisheries*) to provision scoped agents grounded on specific URLs, policy extracts, and sensitivity classifications.
+3. **Deterministic NEMA Section 24 EIA & National Screening Tool Engine (`screen_nema_eia_activity` / `/eia`)**:
+   - Evaluates proposed developments against **Listing Notices 1, 2, and 3 (GNR 983–985)**, determines whether **Basic Assessment (197 days)**, **Scoping & EIR (300 days)**, **REDZ Fast-Track (57 days)**, or **Section 24G Rectification** applies, identifies the Competent Authority, and generates a mandatory **National Web-Based Environmental Screening Tool (`screening.environment.gov.za`)** checklist in the Canvas.
+4. **DFFE National Environmental Systems Telemetry & Carbon Budget Engine (`query_dffe_environmental_indicators` / `/climate`, `/air`, `/waste`)**:
+   - Provides deterministic benchmarks and quantitative modelling across **Climate Change Act (Act 22 of 2024)** (2030 NDC $350\text{–}420\text{ Mt CO}_2\text{-eq}$ trajectory, Sector Emission Targets, and 5-year company Carbon Budget reduction modelling), **SAAQIS** (Highveld, Vaal Triangle, and Waterberg-Bojanala Priority Area $\text{PM}_{2.5}/\text{PM}_{10}/\text{SO}_2$ telemetry), **SAWIC** (Extended Producer Responsibility recycling targets), and **EPWP / FRAP** metrics.
+5. **Client-Side Document Intelligence & Deliverable Canvas**:
+   - Parse attached `.pdf` reports and `.csv` environmental monitoring tables directly in the browser and generate structured **Ministerial Briefing Notes**, **EIA Screening Checklists**, and **Compliance Assessments** in the side-by-side Canvas.
 
 ---
 
@@ -95,68 +41,38 @@ atlas/
 ```bash
 cp .env.example .env
 ```
-Edit `.env` and add your OpenRouter API key:
+Add your OpenRouter or Azure OpenAI/Foundry API key in `.env`:
 ```env
 OPENROUTER_API_KEY=your_key_here
 ```
-You can generate an API key at [openrouter.ai/settings/keys](https://openrouter.ai/settings/keys).
 
 ### 2. Install and Start
 ```bash
 npm install
 npm start
 ```
-Open **[http://localhost:3000](http://localhost:3000)** in your browser to launch the workspace.
-Visit **[http://localhost:3000/about](http://localhost:3000/about)** for the platform overview or **[http://localhost:3000/docs](http://localhost:3000/docs)** for full technical specifications.
+- **Main DFFE Agentic Workspace:** [http://localhost:3000](http://localhost:3000)
+- **3-Phase Agent Hub, Agent Builder & Multi-Channel Simulator (`Web` · `WhatsApp` · `Teams`):** [http://localhost:3000/dffe](http://localhost:3000/dffe)
 
-### 3. Run Tests & Terminal CLI
+### 3. Run Automated Verification Suite
 ```bash
 npm test
-npm run cli
 ```
 
 ---
 
-## Deploying to Vercel
-
-1. Push this repository to GitHub.
-2. Import the repository into your [Vercel](https://vercel.com) account.
-3. In the Vercel dashboard, add the following environment variables:
-   - `OPENROUTER_API_KEY` (Your default server OpenRouter API key)
-   - `APP_URL` (Your deployment domain, e.g., `https://atlas.vylex.co.za`)
-4. Deploy the project.
-
-Note: Ensure your `.env` file is never committed to version control.
-
----
-
-## Routes & API Endpoints
+## Key API Endpoints
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
-| `GET` | `/` | Main Atlas Workspace UI |
-| `GET` | `/about` | About Atlas & Capability Matrix |
-| `GET` | `/docs` | Technical Documentation & Tool Specifications |
-| `GET` | `/atlas` | Interactive Architecture & Prompting Guide |
-| `GET` | `/privacy` | Privacy Policy (POPIA & local storage architecture) |
-| `GET` | `/terms` | Terms of Service & MIT License |
-| `GET` | `/api/health` | Service health check & identity metadata |
-| `GET` | `/api/models` | List of 7 curated OpenRouter models |
-| `POST` | `/api/chat` | Mode-aware chat completion & tool loop (SSE streaming) |
-| `POST` | `/api/chat/title` | Concise conversation title generation |
-| `POST` | `/api/widget/execute` | Direct deterministic tool/widget execution |
-
----
-
-## Security & Privacy Context
-
-- **Server-Side Default Key & Optional BYOK**: The server's default `OPENROUTER_API_KEY` remains strictly on the backend. Users may optionally configure a personal OpenRouter key in browser `localStorage`, which is sent via request headers (`x-openrouter-key`) directly to authenticate with OpenRouter and is never stored or logged on the server.
-- **Model Guard**: Requests using the shared server key are restricted to the 7 curated models in `src/config/models.config.js`; custom OpenRouter models require a valid personal BYOK key.
-- **Local-First Session Storage**: Conversations, bookmarks, and preferences are persisted in browser `localStorage` (`atlas_investigations`), with no server-side chat database.
-- **No Unapproved File Writes**: Local directory context uses the browser File System Access API and requires explicit user confirmation before writing any file diff to disk.
-
----
-
-## License
-
-MIT - Built by [Vylex Technologies](https://vylex.co.za)
+| `GET` | `/` | Main DFFE Copilot Workspace & Deliverable Canvas |
+| `GET` | `/dffe` | 3-Phase Agent Studio, EIA Simulator & Multi-Channel (`Web` · `WhatsApp` · `Teams`) Hub |
+| `GET` | `/api/dffe/corpus` | Verified DFFE RAG corpus metadata, series catalogue, phases & directorate agents |
+| `POST` | `/api/dffe/search` | UNEP EnvironmentGPT-aligned RAG search with 3-Phase FM/IM Sensitivity Gate |
+| `GET` | `/api/dffe/agents` | List predefined & custom DFFE Directorate Agents and 3-Phase governance profiles |
+| `POST` | `/api/dffe/agents` | Provision a new custom Directorate Agent grounded on specific URLs/documents |
+| `POST` | `/api/dffe/ground` | Dynamically ingest an official URL or policy extract into the session RAG corpus |
+| `POST` | `/api/dffe/eia-screen` | Deterministic NEMA Section 24 EIA & National Screening Tool pathway engine |
+| `POST` | `/api/dffe/indicators` | Deterministic Climate Change Act Carbon Budget, SAAQIS, SAWIC & EPWP indicators |
+| `POST` | `/api/chat` | Mode & Agent-aware SSE streaming chat completion with DFFE operational tool loop |
+| `POST` | `/api/widget/execute` | Direct deterministic DFFE capability & widget execution |

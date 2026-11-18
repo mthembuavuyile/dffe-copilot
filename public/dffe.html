@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>DFFE Copilot | RAG Portal &amp; Website Chat Widget PoC</title>
+  <title>DFFE Copilot | 3-Phase Agent Studio, RAG Portal &amp; Multi-Channel PoC</title>
   <meta name="description"
-    content="DFFE Copilot — Environmental Information & RAG AI Agent for the Department of Forestry, Fisheries and the Environment (DFFE), Republic of South Africa.">
+    content="DFFE Copilot — 3-Phase Conversational Agentic Platform, Directorate Agent Studio, and UNEP EnvironmentGPT-aligned RAG Assistant for the Department of Forestry, Fisheries and the Environment (DFFE), Republic of South Africa.">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +43,7 @@
     }
 
     .dffe-container {
-      max-width: 1120px;
+      max-width: 1140px;
       margin: 0 auto;
       padding: 28px 20px 96px;
     }
@@ -82,7 +82,7 @@
     .dffe-hero p {
       color: var(--text-secondary);
       margin: 0 0 16px 0;
-      max-width: 820px;
+      max-width: 880px;
       font-size: 0.95rem;
     }
 
@@ -121,6 +121,13 @@
       margin-bottom: 24px;
     }
 
+    .dffe-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
     .dffe-panel {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
@@ -141,9 +148,23 @@
       margin: 0 0 14px 0;
     }
 
+    .dffe-phase-card {
+      background: var(--bg-sidebar);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 14px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .dffe-phase-card.active {
+      border: 2px solid var(--accent-primary);
+      background: #EAF4EE;
+    }
+
     .dffe-explorer-controls {
       display: grid;
-      grid-template-columns: 1.5fr 1fr 0.7fr 1fr auto;
+      grid-template-columns: 1.4fr 1fr 0.7fr 0.9fr 1fr auto;
       gap: 10px;
       align-items: end;
       margin-bottom: 16px;
@@ -151,6 +172,17 @@
       background: var(--bg-sidebar);
       border: 1px solid var(--border-subtle);
       border-radius: 6px;
+    }
+
+    .dffe-studio-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+      padding: 14px;
+      background: var(--bg-sidebar);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      margin-bottom: 14px;
     }
 
     .dffe-field {
@@ -219,6 +251,12 @@
       border-color: rgba(16, 185, 129, 0.25);
     }
 
+    .dffe-tag.restricted {
+      background: rgba(185, 28, 28, 0.1);
+      color: #991B1B;
+      border-color: rgba(185, 28, 28, 0.25);
+    }
+
     .dffe-source-card h3 {
       font-size: 0.96rem;
       margin: 0 0 4px 0;
@@ -257,7 +295,20 @@
       border-radius: 3px;
     }
 
-    /* Embeddable DFFE Website Chat Bubble Simulator (Channel 1 from Meeting) */
+    .dffe-audit-banner {
+      padding: 10px 14px;
+      border-radius: 6px;
+      background: rgba(0, 102, 51, 0.07);
+      border: 1px solid rgba(0, 102, 51, 0.24);
+      font-size: 0.8rem;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Multi-Channel Conversational Agent Simulator (Teams · dffe.gov.za Web · Citizen WhatsApp) */
     .dffe-chat-bubble-launcher {
       position: fixed;
       bottom: 20px;
@@ -282,9 +333,9 @@
       position: fixed;
       bottom: 70px;
       right: 20px;
-      width: 380px;
+      width: 400px;
       max-width: calc(100vw - 32px);
-      height: 500px;
+      height: 540px;
       max-height: calc(100vh - 110px);
       background: var(--bg-sidebar);
       border: 1px solid var(--border-active);
@@ -304,6 +355,12 @@
       padding: 10px 14px;
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .dffe-widget-top-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -365,7 +422,7 @@
       font-family: inherit;
     }
 
-    @media (max-width: 820px) {
+    @media (max-width: 900px) {
       .dffe-explorer-controls {
         grid-template-columns: 1fr 1fr;
       }
@@ -402,7 +459,7 @@
       <nav class="site-nav" aria-label="Primary Navigation">
         <ul class="site-nav-links">
           <li><a href="/about" class="site-nav-link">About</a></li>
-          <li><a href="/dffe" class="site-nav-link active">RAG Portal</a></li>
+          <li><a href="/dffe" class="site-nav-link active">3-Phase Agent Hub</a></li>
           <li><a href="/docs" class="site-nav-link">Documentation</a></li>
           <li><a href="/privacy" class="site-nav-link">Privacy</a></li>
           <li><a href="/terms" class="site-nav-link">Terms</a></li>
@@ -421,12 +478,11 @@
     </div>
   </header>
 
-  <!-- Mobile Navigation Drawer & Backdrop Overlay -->
   <div id="siteBackdropOverlay" class="site-backdrop-overlay" aria-hidden="true"></div>
   <aside id="siteMobileDrawer" class="site-mobile-drawer" aria-label="Mobile Navigation">
     <ul class="mobile-drawer-links">
       <li><a href="/" class="mobile-drawer-link">Workspace</a></li>
-      <li><a href="/dffe" class="mobile-drawer-link active">RAG Portal &amp; Widget</a></li>
+      <li><a href="/dffe" class="mobile-drawer-link active">3-Phase Agent Hub</a></li>
       <li><a href="/about" class="mobile-drawer-link">About DFFE Copilot</a></li>
       <li><a href="/docs" class="mobile-drawer-link">Documentation &amp; Specs</a></li>
       <li><a href="/privacy" class="mobile-drawer-link">Privacy Policy</a></li>
@@ -441,14 +497,15 @@
   <main id="mainContent" class="dffe-container">
     <section class="dffe-hero">
       <div class="dffe-kicker">
-        <span>Department of Forestry, Fisheries and the Environment (DFFE) &bull; IT Business Solutions PoC</span>
+        <span>Department of Forestry, Fisheries and the Environment (DFFE) &bull; 3-Phase Agentic Platform PoC</span>
       </div>
       <h1>DFFE Environmental Intelligence &amp; RAG Assistant</h1>
       <p>
-        In-house Proof of Concept modeled on the <strong>UNEP EnvironmentGPT</strong> reference architecture and DFFE
-        Business Analysis requirements. Retrieves source-cited answers from published <strong>State of the Environment
-          Reports (SoER)</strong>, <strong>EPWP Environmental Programmes</strong>, and <strong>NEMA / Climate Change Act
-          legislation</strong> without reading 50-page PDFs.
+        Purpose-built Conversational Agentic Platform aligned with the <strong>DFFE / Microsoft / SITA</strong> strategic
+        architecture and <strong>UNEP EnvironmentGPT</strong> reference design. Demonstrates <strong>Phase 1 Internal
+          Directorate Agent Creation (Microsoft Teams / SharePoint)</strong>, <strong>Phase 2 External Public Channels
+          (<code>dffe.gov.za</code> &amp; Citizen WhatsApp)</strong>, and <strong>Phase 3 Authenticated Enterprise System
+          Connectors with Information Management (FM/IM) Content Sensitivity Governance</strong>.
       </p>
       <div class="dffe-hero-actions">
         <a class="dffe-btn primary"
@@ -456,7 +513,7 @@
           Launch Meeting Demo Query in Full Workspace &rarr;
         </a>
         <button type="button" class="dffe-btn" id="openChatBubbleDemoBtn">
-          Test Website Chat Bubble Widget
+          Test Multi-Channel Agent (Web · WhatsApp · Teams)
         </button>
         <a class="dffe-btn" href="/">
           Return to DFFE Copilot Studio
@@ -464,19 +521,111 @@
       </div>
     </section>
 
-    <!-- UNEP EnvironmentGPT Reference Document Filter & RAG Explorer -->
-    <section class="dffe-panel" aria-labelledby="ragExplorerHeading">
-      <h2 id="ragExplorerHeading">1. UNEP EnvironmentGPT-Aligned Corpus Filter &amp; RAG Citation Explorer</h2>
+    <!-- SECTION 1: Siviwe Mpondo's 3-Phase Agentic Maturity & FM/IM Content Sensitivity Switcher -->
+    <section class="dffe-panel" aria-labelledby="phasedRoadmapHeading">
+      <h2 id="phasedRoadmapHeading">1. Phased Agentic Deployment &amp; Information Management (FM/IM) Sensitivity Gate</h2>
       <p class="dffe-panel-sub">
-        Filter controlled DFFE publications by <strong>Report Series</strong>, <strong>Publication Year</strong>, and
-        <strong>Target Audience</strong>, or click any source to launch a grounded investigation.
+        Select an operational phase below to see how the exact same DFFE RAG and instruction engine enforces
+        <strong>Information Management (FM/IM) Content Sensitivity</strong> across internal staff, public citizens, and
+        authorized compliance officers.
+      </p>
+
+      <div class="dffe-grid-3" id="phaseSelectorCards">
+        <div class="dffe-phase-card active" data-phase="phase1_internal">
+          <div class="dffe-badge-row">
+            <span class="dffe-tag">PHASE 1</span>
+            <span class="dffe-tag gov">INTERNAL &bull; TEAMS</span>
+          </div>
+          <h3>Internal Directorate &amp; Microsoft Teams Agent</h3>
+          <p class="dffe-source-summary">Targeted at internal DFFE staff (<code>@dffe.gov.za</code>). Unlocks
+            <code>PUBLIC</code> + <code>INTERNAL</code> directorate SOPs and self-service Agent Creation while gating
+            restricted criminal enforcement dockets.</p>
+        </div>
+
+        <div class="dffe-phase-card" data-phase="phase2_public">
+          <div class="dffe-badge-row">
+            <span class="dffe-tag">PHASE 2</span>
+            <span class="dffe-tag gov">EXTERNAL &bull; WEB &amp; WHATSAPP</span>
+          </div>
+          <h3>External Public Website &amp; Citizen WhatsApp Agent</h3>
+          <p class="dffe-source-summary">Published to <code>dffe.gov.za</code> and Citizen WhatsApp using identical
+            grounded instructions. Strictly restricted to <code>PUBLIC-APPROVED</code> publications; internal SOPs and
+            enforcement dockets are blocked.</p>
+        </div>
+
+        <div class="dffe-phase-card" data-phase="phase3_enterprise">
+          <div class="dffe-badge-row">
+            <span class="dffe-tag">PHASE 3</span>
+            <span class="dffe-tag restricted">ENTERPRISE RBAC &bull; FM/IM</span>
+          </div>
+          <h3>System-Connected &amp; FM/IM Sensitivity-Cleared Agent</h3>
+          <p class="dffe-source-summary">Connects to live DFFE systems (SAAQIS, SAWIC, Screening Tool, NECES) with Entra
+            ID + FM/IM authorization checks to permit <code>RESTRICTED</code> compliance &amp; EMI records.</p>
+        </div>
+      </div>
+
+      <div class="dffe-audit-banner" id="sensitivityAuditBanner">
+        <span><strong>Active Governance Context:</strong> Phase 1: Internal Official &amp; Teams &bull; Permitted Tiers: <code>PUBLIC · INTERNAL</code></span>
+        <span>Switch phases above or filter below to verify FM/IM content gating in real time.</span>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Alucias Makonko & Microsoft Copilot Studio — Self-Service Directorate Agent Builder -->
+    <section class="dffe-panel" aria-labelledby="agentStudioHeading">
+      <h2 id="agentStudioHeading">2. DFFE Directorate Agent Studio — Create &amp; Ground Custom Agents</h2>
+      <p class="dffe-panel-sub">
+        Directly addressing internal departmental requirements: directorates can spin up their own specialized agents
+        and ground them on specific <code>dffe.gov.za</code> URLs, SharePoint policy documents, and sensitivity tiers.
+      </p>
+
+      <form class="dffe-studio-form" id="createAgentForm">
+        <div class="dffe-field">
+          <label for="newAgentName">Directorate Agent Name</label>
+          <input type="text" id="newAgentName" class="dffe-input" placeholder="e.g. Biodiversity &amp; Bioprospecting Permit Agent" required />
+        </div>
+        <div class="dffe-field">
+          <label for="newAgentDirectorate">Responsible Branch / Directorate</label>
+          <input type="text" id="newAgentDirectorate" class="dffe-input" placeholder="e.g. Branch: Biodiversity and Conservation" required />
+        </div>
+        <div class="dffe-field">
+          <label for="newAgentUrl">Official Grounding URL or SharePoint Path</label>
+          <input type="url" id="newAgentUrl" class="dffe-input" value="https://www.dffe.gov.za/legislation/whitepapers" required />
+        </div>
+        <div class="dffe-field">
+          <label for="newAgentSensitivity">FM/IM Sensitivity Classification</label>
+          <select id="newAgentSensitivity" class="dffe-select">
+            <option value="internal">INTERNAL OFFICIAL (Phase 1 Teams / Intranet)</option>
+            <option value="public">PUBLIC-APPROVED (Phase 2 Web &amp; WhatsApp)</option>
+            <option value="restricted">RESTRICTED / SENSITIVE (Phase 3 FM/IM RBAC Only)</option>
+          </select>
+        </div>
+        <div class="dffe-field" style="grid-column: 1 / -1;">
+          <label for="newAgentText">Policy Extract / Grounding Document Findings (Ingested Live into DFFE RAG Corpus)</label>
+          <input type="text" id="newAgentText" class="dffe-input"
+            placeholder="e.g. NEMBA Section 81 Bioprospecting permits require prior informed consent and benefit-sharing agreements with indigenous knowledge holders..." />
+        </div>
+        <div style="grid-column: 1 / -1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <span id="createAgentStatus" style="font-size:0.8rem; color:var(--accent-primary); font-weight:600;"></span>
+          <button type="submit" class="dffe-btn primary">Provision &amp; Ground Directorate Agent</button>
+        </div>
+      </form>
+
+      <div id="directorateAgentsGrid" class="dffe-results-grid" aria-live="polite"></div>
+    </section>
+
+    <!-- SECTION 3: UNEP EnvironmentGPT Reference Document Filter & RAG Explorer -->
+    <section class="dffe-panel" aria-labelledby="ragExplorerHeading">
+      <h2 id="ragExplorerHeading">3. UNEP EnvironmentGPT-Aligned Corpus Filter &amp; RAG Citation Explorer</h2>
+      <p class="dffe-panel-sub">
+        Filter verified DFFE publications by <strong>Report Series</strong>, <strong>Publication Year</strong>,
+        <strong>Target Audience</strong>, and <strong>FM/IM Deployment Phase</strong>.
       </p>
 
       <div class="dffe-explorer-controls">
         <div class="dffe-field">
           <label for="explorerQuery">Environmental Question or Keyword</label>
           <input type="text" id="explorerQuery" class="dffe-input"
-            placeholder="e.g. Working for Water, SoER findings, NEMA EIA, Carbon Budgets..." />
+            placeholder="e.g. Working for Water, SoER findings, Section 31L, SOP..." />
         </div>
         <div class="dffe-field">
           <label for="explorerSeries">Report Series</label>
@@ -488,6 +637,7 @@
             <option value="climate">Climate Change &amp; Air Quality</option>
             <option value="forestry_fisheries">Forestry, Fisheries &amp; Oceans</option>
             <option value="waste">Chemicals, Waste &amp; Circular Economy</option>
+            <option value="internal_sop">Internal Directorate SOPs</option>
           </select>
         </div>
         <div class="dffe-field">
@@ -508,109 +658,84 @@
             <option value="compliance">Compliance &amp; EIA Practitioners</option>
           </select>
         </div>
+        <div class="dffe-field">
+          <label for="explorerPhase">Deployment Phase (FM/IM)</label>
+          <select id="explorerPhase" class="dffe-select">
+            <option value="phase1_internal">Phase 1: Internal / Teams</option>
+            <option value="phase2_public">Phase 2: Public / WhatsApp</option>
+            <option value="phase3_enterprise">Phase 3: Enterprise (RBAC)</option>
+          </select>
+        </div>
         <button type="button" id="explorerSearchBtn" class="dffe-btn primary">Search RAG Corpus</button>
       </div>
 
       <div id="explorerResultsGrid" class="dffe-results-grid" aria-live="polite"></div>
     </section>
 
-    <!-- 4 Priority Use Cases from the 18 November 2026 Meeting -->
-    <section class="dffe-panel">
-      <h2>2. Four Priority DFFE Business Use Cases (IT Business Solutions Directorate)</h2>
+    <!-- SECTION 4: Deterministic NEMA Section 24 EIA & National Screening Tool Simulator -->
+    <section class="dffe-panel" aria-labelledby="eiaSimulatorHeading">
+      <h2 id="eiaSimulatorHeading">4. Deterministic Departmental Workflow: NEMA Section 24 EIA &amp; Screening Tool Engine</h2>
       <p class="dffe-panel-sub">
-        Aligned with Siwiwe Mpondo's strategic direction: prioritizing concrete departmental workflows, scientific
-        integrity, and existing DFFE national information systems.
+        Moving beyond static Q&amp;A chatbots: evaluate any proposed project against NEMA Listing Notices 1, 2 &amp; 3,
+        REDZ 57-day fast-tracking, and mandatory DFFE National Screening Tool specialist protocols.
       </p>
-      <div class="dffe-grid-2">
-        <div class="dffe-source-card">
-          <div>
-            <div class="dffe-badge-row"><span class="dffe-tag">USE CASE 1</span><span class="dffe-tag gov">PUBLIC &amp;
-                OFFICIALS</span></div>
-            <h3>State of the Environment (SoER) &amp; Report Discovery</h3>
-            <p class="dffe-source-summary">Synthesize 30–50-page SAEO, State of Air (SAAQIS), and State of Waste (SAWIC)
-              reports with exact chapter citations and official <code>dffe.gov.za</code> links.</p>
-          </div>
-          <a class="dffe-btn"
-            href="/?q=What+environmental+programmes+is+DFFE+currently+running,+and+what+are+the+key+findings+from+the+latest+State+of+the+Environment+reports%3F&amp;send=1">Run
-            Use Case 1 &rarr;</a>
-        </div>
-
-        <div class="dffe-source-card">
-          <div>
-            <div class="dffe-badge-row"><span class="dffe-tag">USE CASE 2</span><span class="dffe-tag gov">EPWP
-                PROGRAMMES</span></div>
-            <h3>Environmental Programmes &amp; Public Service Navigator</h3>
-            <p class="dffe-source-summary">Query Working for Water, Working on Fire, Working for Wetlands, Working for
-              the Coast, Ten Million Trees, and FRAP small-scale fishing rights.</p>
-          </div>
-          <a class="dffe-btn"
-            href="/?q=Compare+DFFE%27s+Working+for+Water,+Working+on+Fire,+Working+for+Wetlands,+and+Working+for+the+Coast+programmes+and+their+annual+targets.&amp;send=1">Run
-            Use Case 2 &rarr;</a>
-        </div>
-
-        <div class="dffe-source-card">
-          <div>
-            <div class="dffe-badge-row"><span class="dffe-tag">USE CASE 3</span><span class="dffe-tag gov">NEMA &amp;
-                EIA COMPLIANCE</span></div>
-            <h3>NEMA Section 24 EIA &amp; Screening Tool Assistant</h3>
-            <p class="dffe-source-summary">Guide applicants and Environmental Management Inspectors (Green Scorpions)
-              through Listing Notices 1–3, Basic Assessments (197d), S&amp;EIR (300d), and REDZs (57d).</p>
-          </div>
-          <a class="dffe-btn"
-            href="/?q=Explain+NEMA+Section+24+EIA+Listing+Notices+1,+2+and+3,+the+mandatory+DFFE+National+Screening+Tool,+and+REDZ+fast-track+timeframes.&amp;send=1">Run
-            Use Case 3 &rarr;</a>
-        </div>
-
-        <div class="dffe-source-card">
-          <div>
-            <div class="dffe-badge-row"><span class="dffe-tag">USE CASE 4</span><span class="dffe-tag gov">CLIMATE &amp;
-                POLICY</span></div>
-            <h3>Climate Change Act (Act 22 of 2024) &amp; Document Intelligence</h3>
-            <p class="dffe-source-summary">Analyze Sector Emission Targets (SETs), mandatory company Carbon Budgets,
-              Extended Producer Responsibility (EPR), and attached PDF/CSV datasets in the Artifacts Canvas.</p>
-          </div>
-          <a class="dffe-btn"
-            href="/?q=Synthesize+the+Climate+Change+Act+(Act+22+of+2024)+Sector+Emission+Targets+(SETs),+mandatory+company+Carbon+Budgets,+and+municipal+adaptation+duties.&amp;send=1">Run
-            Use Case 4 &rarr;</a>
-        </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
+        <input type="text" id="eiaProjectInput" class="dffe-input" style="flex:1; min-width:260px;"
+          value="75 MW Solar PV facility and grid connection inside a Renewable Energy Development Zone (REDZ)" />
+        <button type="button" id="runEiaSimBtn" class="dffe-btn primary">Evaluate NEMA EIA Pathway</button>
       </div>
+      <div id="eiaSimResultBox"></div>
     </section>
   </main>
 
-  <!-- Channel 1 Simulator: Embeddable DFFE Website Chat Bubble -->
+  <!-- Multi-Channel Conversational Agent Simulator (dffe.gov.za Web · WhatsApp · Microsoft Teams) -->
   <button type="button" class="dffe-chat-bubble-launcher" id="dffeBubbleLauncher" aria-expanded="false"
     aria-controls="dffeChatDrawer">
-    <span>DFFE AI Assistant</span>
+    <span>DFFE Multi-Channel Agent</span>
   </button>
 
   <aside class="dffe-chat-widget-drawer" id="dffeChatDrawer" aria-label="DFFE Website Chat Bubble">
     <div class="dffe-widget-top">
-      <div>
-        <span class="dffe-widget-top-title">DFFE Environmental AI Agent</span>
-        <span class="dffe-widget-top-sub">Verified Public RAG Corpus &bull; dffe.gov.za</span>
+      <div class="dffe-widget-top-row">
+        <div>
+          <span class="dffe-widget-top-title" id="drawerChannelTitle">DFFE Environmental AI Agent</span>
+          <span class="dffe-widget-top-sub" id="drawerChannelSub">Verified RAG &bull; dffe.gov.za / Teams / WhatsApp</span>
+        </div>
+        <button type="button" class="dffe-btn" id="closeDffeDrawerBtn" style="padding: 3px 8px; font-size: 0.74rem;">Close</button>
       </div>
-      <button type="button" class="dffe-btn" id="closeDffeDrawerBtn" style="padding: 3px 8px; font-size: 0.74rem;">Close</button>
+      <select id="drawerChannelSelect" class="dffe-select" aria-label="Select Conversational Channel & Phase">
+        <option value="phase2_public|web">Channel: dffe.gov.za Public Website Widget (Phase 2 — Public Only)</option>
+        <option value="phase2_public|whatsapp">Channel: Citizen WhatsApp Assistant (Phase 2 — Public Only)</option>
+        <option value="phase1_internal|teams">Channel: Microsoft Teams Internal Official (Phase 1 — Public + Internal SOP)</option>
+        <option value="phase3_enterprise|enterprise">Channel: EMI Compliance System Connector (Phase 3 — Full FM/IM Clearance)</option>
+      </select>
     </div>
     <div class="dffe-widget-messages" id="dffeWidgetMessages">
       <div class="dffe-msg assistant">
-        <strong>Hello!</strong> I am the DFFE Environmental Information Assistant. Ask me about DFFE programmes, State
-        of the Environment (SoER) findings, NEMA EIA compliance, or Climate Change Act targets.
+        <strong>Hello!</strong> I am the DFFE Conversational Agent. Switch between <strong>dffe.gov.za Web</strong>,
+        <strong>Citizen WhatsApp</strong>, <strong>Microsoft Teams (Internal)</strong>, and <strong>Phase 3 EMI
+          Enterprise RBAC</strong> above to test how I answer questions and enforce Information Management (FM/IM)
+        content sensitivity.
       </div>
     </div>
     <form class="dffe-widget-composer" id="dffeWidgetForm">
       <input type="text" id="dffeWidgetInput"
-        placeholder="Ask about DFFE reports or programmes..." required />
+        placeholder="Ask about DFFE reports, SOPs, or Section 31L dockets..." required />
       <button type="submit" class="dffe-btn primary" style="padding: 6px 10px;">Ask</button>
     </form>
   </aside>
 
   <script>
     const resultsGrid = document.getElementById('explorerResultsGrid');
+    const agentsGrid = document.getElementById('directorateAgentsGrid');
     const queryInput = document.getElementById('explorerQuery');
     const seriesSelect = document.getElementById('explorerSeries');
     const yearSelect = document.getElementById('explorerYear');
     const audienceSelect = document.getElementById('explorerAudience');
+    const phaseSelect = document.getElementById('explorerPhase');
     const searchBtn = document.getElementById('explorerSearchBtn');
+    const auditBanner = document.getElementById('sensitivityAuditBanner');
+    const phaseCards = document.querySelectorAll('.dffe-phase-card');
 
     function escapeHtml(str) {
       return String(str || '')
@@ -620,13 +745,86 @@
         .replace(/"/g, '&quot;');
     }
 
+    function setPhase(phaseId) {
+      phaseSelect.value = phaseId;
+      phaseCards.forEach(card => {
+        card.classList.toggle('active', card.getAttribute('data-phase') === phaseId);
+      });
+      loadCorpusResults();
+    }
+
+    phaseCards.forEach(card => {
+      card.addEventListener('click', () => {
+        setPhase(card.getAttribute('data-phase'));
+      });
+    });
+
+    async function loadDirectorateAgents() {
+      try {
+        const res = await fetch('/api/dffe/agents');
+        const data = await res.json();
+        const agents = data.agents || [];
+        agentsGrid.innerHTML = agents.map(ag => `
+          <article class="dffe-source-card">
+            <div>
+              <div class="dffe-badge-row">
+                <span class="dffe-tag">${escapeHtml((ag.sensitivity || 'public').toUpperCase())}</span>
+                <span class="dffe-tag gov">${escapeHtml((ag.channels || []).join(' · '))}</span>
+              </div>
+              <h3>${escapeHtml(ag.name)}</h3>
+              <div class="dffe-source-branch">${escapeHtml(ag.directorate)}</div>
+              <p class="dffe-source-summary">${escapeHtml(ag.description)}</p>
+              <div class="dffe-citation-box">Grounded URLs: ${escapeHtml((ag.groundingUrls || []).join(', '))}</div>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <a class="dffe-btn primary" style="font-size:0.75rem; padding:5px 10px;" href="/?q=${encodeURIComponent('Using the ' + ag.name + ', provide a source-cited synthesis and ' + ag.deliverableFormat)}&send=1">Launch Agent in Workspace &rarr;</a>
+            </div>
+          </article>
+        `).join('');
+      } catch (err) {
+        agentsGrid.innerHTML = '<p>Unable to load DFFE Directorate Agents.</p>';
+      }
+    }
+
+    document.getElementById('createAgentForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const statusEl = document.getElementById('createAgentStatus');
+      const payload = {
+        name: document.getElementById('newAgentName').value.trim(),
+        directorate: document.getElementById('newAgentDirectorate').value.trim(),
+        groundingUrl: document.getElementById('newAgentUrl').value.trim(),
+        sensitivity: document.getElementById('newAgentSensitivity').value,
+        customDocumentText: document.getElementById('newAgentText').value.trim()
+      };
+      statusEl.textContent = 'Provisioning agent & grounding source...';
+      try {
+        const res = await fetch('/api/dffe/agents', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+          statusEl.textContent = `Provisioned "${payload.name}" & grounded source into DFFE RAG!`;
+          document.getElementById('newAgentName').value = '';
+          document.getElementById('newAgentText').value = '';
+          await loadDirectorateAgents();
+          await loadCorpusResults();
+        } else {
+          statusEl.textContent = 'Failed to create agent.';
+        }
+      } catch (err) {
+        statusEl.textContent = 'Error provisioning agent.';
+      }
+    });
+
     async function loadCorpusResults() {
       const payload = {
         query: queryInput.value.trim(),
         series: seriesSelect.value,
         year: yearSelect.value,
         audience: audienceSelect.value,
-        limit: 8
+        accessPhase: phaseSelect.value,
+        limit: 10
       };
       try {
         const res = await fetch('/api/dffe/search', {
@@ -636,13 +834,25 @@
         });
         const data = await res.json();
         const docs = data.documents || [];
+        const audit = data.sensitivityAudit;
+        if (audit && auditBanner) {
+          const allowed = (audit.allowedSensitivities || ['public']).map(s => s.toUpperCase()).join(' · ');
+          const withheldMsg = audit.withheldCount > 0
+            ? `FM/IM Sensitivity Gate withheld <strong>${audit.withheldCount}</strong> internal/restricted record(s) (${escapeHtml(audit.withheldDocuments.map(w => w.title).join('; '))}).`
+            : `All sensitivity tiers permitted (${escapeHtml(allowed)}).`;
+          auditBanner.innerHTML = `
+            <span><strong>Active Governance Context:</strong> ${escapeHtml(audit.phaseName)} &bull; Permitted Tiers: <code>${escapeHtml(allowed)}</code></span>
+            <span>${withheldMsg}</span>
+          `;
+        }
+
         resultsGrid.innerHTML = docs.map(doc => `
           <article class="dffe-source-card">
             <div>
               <div class="dffe-badge-row">
                 <span class="dffe-tag">${escapeHtml(doc.seriesLabel)}</span>
                 <span class="dffe-tag">${escapeHtml(doc.year)}</span>
-                <span class="dffe-tag gov">${escapeHtml(doc.governance)}</span>
+                <span class="dffe-tag ${doc.sensitivity === 'restricted' ? 'restricted' : 'gov'}">${escapeHtml((doc.sensitivity || 'public').toUpperCase())} &bull; ${escapeHtml(doc.governance)}</span>
               </div>
               <h3>${escapeHtml(doc.title)}</h3>
               <div class="dffe-source-branch">${escapeHtml(doc.branch)}</div>
@@ -665,13 +875,45 @@
       }
     }
 
+    async function runEiaSimulation() {
+      const box = document.getElementById('eiaSimResultBox');
+      const projectDescription = document.getElementById('eiaProjectInput').value.trim();
+      try {
+        const res = await fetch('/api/dffe/eia-screen', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ projectDescription })
+        });
+        const result = await res.json();
+        const d = result.data || {};
+        box.innerHTML = `
+          <div class="dffe-source-card">
+            <div class="dffe-badge-row">
+              <span class="dffe-tag">${escapeHtml(d.listingNotice)}</span>
+              <span class="dffe-tag gov">${escapeHtml(String(d.decisionTimeframeDays))} DAYS STATUTORY TIMEFRAME</span>
+            </div>
+            <h3>${escapeHtml(d.assessmentProcess)}</h3>
+            <div class="dffe-source-branch"><strong>Competent Authority:</strong> ${escapeHtml(d.competentAuthority)}</div>
+            <ul class="dffe-source-findings">
+              ${(d.specialistProtocols || []).map(p => `<li>${escapeHtml(p)}</li>`).join('')}
+            </ul>
+            <div class="dffe-citation-box">${escapeHtml(d.statutoryBasis)} &bull; Screening Portal: <a href="${escapeHtml(d.screeningToolUrl)}" target="_blank" rel="noopener" style="color:var(--accent-primary);">${escapeHtml(d.screeningToolUrl)}</a></div>
+          </div>
+        `;
+      } catch (e) {
+        box.innerHTML = '<p>EIA Screening simulation error.</p>';
+      }
+    }
+
     searchBtn.addEventListener('click', loadCorpusResults);
     seriesSelect.addEventListener('change', loadCorpusResults);
     yearSelect.addEventListener('change', loadCorpusResults);
     audienceSelect.addEventListener('change', loadCorpusResults);
+    phaseSelect.addEventListener('change', () => setPhase(phaseSelect.value));
     queryInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') loadCorpusResults(); });
+    document.getElementById('runEiaSimBtn')?.addEventListener('click', runEiaSimulation);
 
-    // Website Chat Bubble Simulator logic
+    // Multi-Channel Conversational Drawer logic
     const drawer = document.getElementById('dffeChatDrawer');
     const launcher = document.getElementById('dffeBubbleLauncher');
     const openDemoBtn = document.getElementById('openChatBubbleDemoBtn');
@@ -679,6 +921,7 @@
     const widgetForm = document.getElementById('dffeWidgetForm');
     const widgetInput = document.getElementById('dffeWidgetInput');
     const widgetMessages = document.getElementById('dffeWidgetMessages');
+    const channelSelect = document.getElementById('drawerChannelSelect');
 
     function toggleDrawer(force) {
       const isOpen = typeof force === 'boolean' ? force : !drawer.classList.contains('open');
@@ -697,6 +940,8 @@
       if (!q) return;
       widgetInput.value = '';
 
+      const [activePhase, activeChannel] = (channelSelect.value || 'phase2_public|web').split('|');
+
       const userDiv = document.createElement('div');
       userDiv.className = 'dffe-msg user';
       userDiv.textContent = q;
@@ -704,7 +949,7 @@
 
       const botDiv = document.createElement('div');
       botDiv.className = 'dffe-msg assistant';
-      botDiv.textContent = 'Retrieving verified DFFE sources...';
+      botDiv.textContent = 'Checking FM/IM sensitivity clearance & retrieving verified DFFE sources...';
       widgetMessages.appendChild(botDiv);
       widgetMessages.scrollTop = widgetMessages.scrollHeight;
 
@@ -714,20 +959,35 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             query: q,
-            series: seriesSelect.value,
-            year: yearSelect.value,
-            audience: audienceSelect.value,
+            series: 'all',
+            year: 'all',
+            audience: activePhase === 'phase2_public' ? 'public' : 'officials',
+            accessPhase: activePhase,
             limit: 2
           })
         });
         const data = await res.json();
         const topDocs = data.documents || [];
+        const audit = data.sensitivityAudit || {};
+        const channelBadge = activeChannel === 'whatsapp'
+          ? 'WhatsApp Citizen Format'
+          : activeChannel === 'teams'
+          ? 'Microsoft Teams Official Format'
+          : activeChannel === 'enterprise'
+          ? 'Phase 3 EMI Enterprise Connector'
+          : 'dffe.gov.za Web Widget';
+
+        const withheldNotice = audit.withheldCount > 0 && /\b(31l|24g|docket|restricted|sop|internal)\b/i.test(q)
+          ? `<div style="padding:6px 8px; margin-bottom:8px; border-radius:4px; background:rgba(185,28,28,0.08); border:1px solid rgba(185,28,28,0.25); color:#991B1B; font-size:0.74rem;"><strong>FM/IM Sensitivity Gate:</strong> ${audit.withheldCount} internal/restricted record(s) withheld on this channel (${escapeHtml(channelBadge)}). Switch to Phase 1 (Teams) or Phase 3 (EMI RBAC) to access restricted records.</div>`
+          : '';
+
         if (topDocs.length === 0) {
-          botDiv.textContent = 'No verified DFFE source found for that query.';
+          botDiv.innerHTML = `${withheldNotice}<div>No verified DFFE source found for that query in this sensitivity tier.</div>`;
         } else {
-          botDiv.innerHTML = topDocs.map(d => `
+          botDiv.innerHTML = `${withheldNotice}<div style="font-size:0.7rem; font-weight:700; color:var(--accent-primary); margin-bottom:6px;">[${escapeHtml(channelBadge)}]</div>` + topDocs.map(d => `
             <div style="margin-bottom:8px;">
               <strong style="color:var(--accent-primary);">${escapeHtml(d.title)} (${escapeHtml(d.year)})</strong>
+              <span style="font-size:0.66rem; padding:1px 5px; border-radius:3px; background:rgba(0,102,51,0.1); margin-left:4px;">${escapeHtml((d.sensitivity || 'public').toUpperCase())}</span>
               <ul style="margin:4px 0 4px 16px; padding:0;">
                 ${(d.keyFindings || []).slice(0, 2).map(f => `<li>${escapeHtml(f)}</li>`).join('')}
               </ul>
@@ -741,7 +1001,9 @@
       widgetMessages.scrollTop = widgetMessages.scrollHeight;
     });
 
+    loadDirectorateAgents();
     loadCorpusResults();
+    runEiaSimulation();
   </script>
 </body>
 

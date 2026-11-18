@@ -2,7 +2,7 @@ const openrouterService = require('../services/openrouter.service');
 const searchService = require('../services/search.service');
 const widgetService = require('../services/widget.service');
 const dffeRagService = require('../services/dffe-rag.service');
-const { ATLAS_TOOLS } = require('../config/tools.config');
+const { ATLAS_TOOLS, DFFE_AGENT_TOOLS } = require('../config/tools.config');
 const { CURATED_MODELS } = require('../config/models.config');
 const env = require('../config/env');
 const {
@@ -51,7 +51,7 @@ class ChatController {
     if (activeToolsState.webSearch) {
       stateContexts.push("- Live Web Search toggle is ENABLED in UI. Real-time internet grounding is active.");
     } else {
-      stateContexts.push("- Live Web Search toggle is currently OFF in UI. However, you have access to autonomous function tools (including 'search_web' and 'discover_movies') to fetch real-time or upcoming release intelligence when needed. If a query requires current facts, future release calendars, or live internet data, autonomously invoke the 'search_web' tool. When you invoke 'search_web', the system will automatically activate and highlight the Web Search indicator in the user interface.");
+      stateContexts.push("- Live Web Search toggle is currently OFF in UI. However, you have access to autonomous DFFE operational function tools ('search_dffe_knowledge', 'screen_nema_eia_activity', 'query_dffe_environmental_indicators', 'manage_dffe_directorate_agent', and 'search_web'). Invoke the appropriate DFFE tool whenever a query involves DFFE reports, NEMA EIA compliance, SAAQIS/SAWIC/Climate Change Act metrics, or Directorate Agent creation.");
     }
     
     if (activeToolsState.hasAttachments) {
@@ -149,6 +149,7 @@ class ChatController {
           series: dffeFilters?.series || 'all',
           year: dffeFilters?.year || 'all',
           audience: dffeFilters?.audience || 'public',
+          accessPhase: dffeFilters?.accessPhase || null,
           limit: 4
         });
         const dffeContext = dffeRagService.formatDffeGroundingContext(dffeSearchRes);
@@ -156,6 +157,16 @@ class ChatController {
           normalizedMessages.push({
             role: 'system',
             content: dffeContext
+          });
+        }
+      }
+
+      if (dffeFilters?.agentId) {
+        const activeAgent = dffeRagService.getDirectorateAgents().find(a => a.id === dffeFilters.agentId);
+        if (activeAgent) {
+          normalizedMessages.push({
+            role: 'system',
+            content: `[ACTIVE DFFE DIRECTORATE AGENT PROFILE]\n- Agent Name: ${activeAgent.name}\n- Responsible Directorate: ${activeAgent.directorate}\n- Default Series Scope: ${activeAgent.defaultSeries}\n- Sensitivity Tier: ${activeAgent.sensitivity.toUpperCase()}\n- Grounded Official URLs: ${(activeAgent.groundingUrls || []).join(', ')}\n- Required Deliverable Format: ${activeAgent.deliverableFormat}${activeAgent.instructions ? `\n- Directorate Custom Instructions: ${activeAgent.instructions}` : ''}`
           });
         }
       }
@@ -192,7 +203,7 @@ class ChatController {
         const executedToolCallsInTurn = new Map();
 
         // In build mode, allocate 100% of token budget to code generation without tool schema overhead
-        const activeTools = mode === 'build' ? undefined : ATLAS_TOOLS;
+        const activeTools = mode === 'build' ? undefined : DFFE_AGENT_TOOLS;
 
         while (iteration < maxIterations) {
           iteration++;

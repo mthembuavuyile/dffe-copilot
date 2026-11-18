@@ -1,9 +1,9 @@
 /**
  * Central Capability Registry & Tool Dispatcher
  * ─────────────────────────────────────────────────────────────
- * Unifies all modular capabilities and legacy tools into a single,
- * plug-and-play architecture for LLM tool calling, SSE streaming,
- * and deterministic widget endpoints.
+ * Unifies all modular DFFE Agentic Platform capabilities and
+ * deterministic tools into a single architecture for LLM tool
+ * calling, SSE streaming, and deterministic widget endpoints.
  */
 
 const movieCapability = require('./media/movie.capability');
@@ -12,16 +12,27 @@ const stockCapability = require('./finance/stock.capability');
 const cryptoCapability = require('./finance/crypto.capability');
 const searchCapability = require('./core/search.capability');
 const dffeKnowledgeCapability = require('./dffe/dffe-knowledge.capability');
+const dffeEiaScreeningCapability = require('./dffe/dffe-eia-screening.capability');
+const dffeIndicatorsCapability = require('./dffe/dffe-indicators.capability');
+const dffeAgentStudioCapability = require('./dffe/dffe-agent-studio.capability');
 const { LEGACY_TOOLS } = require('./legacy-bridge');
+
+// Primary DFFE Operational Capabilities (Exposed to DFFE Agentic Workspace)
+const DFFE_CAPABILITY_MODULES = [
+  dffeKnowledgeCapability,
+  dffeEiaScreeningCapability,
+  dffeIndicatorsCapability,
+  dffeAgentStudioCapability,
+  searchCapability
+];
 
 // Registry of modular capability modules
 const CAPABILITY_MODULES = [
+  ...DFFE_CAPABILITY_MODULES,
   movieCapability,
   discoverMoviesCapability,
   stockCapability,
-  cryptoCapability,
-  searchCapability,
-  dffeKnowledgeCapability
+  cryptoCapability
 ];
 
 // Map of capability handlers keyed by tool name
@@ -42,6 +53,13 @@ class CapabilityRegistry {
    */
   getCapabilitySchemas() {
     return CAPABILITY_MODULES.map(cap => cap.schema);
+  }
+
+  /**
+   * Get strictly DFFE-aligned capability schemas (no consumer entertainment bloat)
+   */
+  getDffeCapabilitySchemas() {
+    return DFFE_CAPABILITY_MODULES.map(cap => cap.schema);
   }
 
   /**
@@ -77,5 +95,6 @@ const capabilityRegistry = new CapabilityRegistry();
 module.exports = {
   capabilityRegistry,
   UNIFIED_DISPATCHER,
-  CAPABILITY_MODULES
+  CAPABILITY_MODULES,
+  DFFE_CAPABILITY_MODULES
 };

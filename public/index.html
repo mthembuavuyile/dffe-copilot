@@ -646,7 +646,7 @@
             </div>
           </div>
 
-          <!-- DFFE Environmental Knowledge & RAG Filter Bar (UNEP EnvironmentGPT Reference) -->
+          <!-- DFFE Directorate Agent Studio, 3-Phase FM/IM Governance & UNEP EnvironmentGPT RAG Scope -->
           <div class="dffe-knowledge-bar" id="dffeKnowledgeBar" role="region" aria-label="DFFE Environmental Knowledge Scope">
             <div class="dffe-bar-header">
               <div class="dffe-bar-title">
@@ -654,11 +654,29 @@
                   <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
                   <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
                 </svg>
-                <span>DFFE Environmental Knowledge Scope (RAG)</span>
+                <span>DFFE Directorate Agent &amp; 3-Phase RAG Governance Scope</span>
               </div>
-              <a href="/dffe" class="dffe-portal-launch-link" title="Open DFFE Portal &amp; Website Chat Bubble Simulator">DFFE Portal &amp; Chat Bubble Demo &rarr;</a>
+              <a href="/dffe" class="dffe-portal-launch-link" title="Open DFFE 3-Phase Agent Studio, Teams, Web &amp; WhatsApp Simulator">3-Phase Agent Studio &amp; Channel Simulator &rarr;</a>
             </div>
             <div class="dffe-bar-controls">
+              <div class="dffe-control-item">
+                <label for="dffeFilterAgent">Directorate Agent</label>
+                <select id="dffeFilterAgent" class="dffe-filter-select">
+                  <option value="dffe-general-agent">DFFE Environmental Intelligence Agent</option>
+                  <option value="dffe-eia-compliance-agent">NEMA Section 24 EIA &amp; Screening Agent</option>
+                  <option value="dffe-climate-air-agent">Climate Change Act &amp; SAAQIS Air Agent</option>
+                  <option value="dffe-epwp-fisheries-agent">EPWP Programmes &amp; Fisheries (FRAP) Agent</option>
+                  <option value="dffe-waste-circular-agent">Chemicals, Waste (SAWIC) &amp; Circular Economy Agent</option>
+                </select>
+              </div>
+              <div class="dffe-control-item">
+                <label for="dffeFilterPhase">Deployment Phase (FM/IM)</label>
+                <select id="dffeFilterPhase" class="dffe-filter-select">
+                  <option value="phase1_internal">Phase 1: Internal Official &amp; Teams</option>
+                  <option value="phase2_public">Phase 2: Public Web &amp; WhatsApp</option>
+                  <option value="phase3_enterprise">Phase 3: Enterprise Systems (RBAC)</option>
+                </select>
+              </div>
               <div class="dffe-control-item">
                 <label for="dffeFilterSeries">Report Series</label>
                 <select id="dffeFilterSeries" class="dffe-filter-select">
@@ -669,6 +687,7 @@
                   <option value="climate">Climate Change &amp; Air Quality</option>
                   <option value="forestry_fisheries">Forestry, Fisheries &amp; Oceans</option>
                   <option value="waste">Chemicals, Waste &amp; Circular Economy</option>
+                  <option value="internal_sop">Internal Directorate SOPs</option>
                 </select>
               </div>
               <div class="dffe-control-item">
@@ -689,9 +708,17 @@
                   <option value="compliance">Compliance &amp; EIA Practitioners</option>
                 </select>
               </div>
-              <button type="button" id="dffeBrowseCorpusBtn" class="dffe-browse-btn" title="Query DFFE Knowledge Base with active filters">
-                Explore Corpus
-              </button>
+              <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:end;">
+                <button type="button" id="dffeBrowseCorpusBtn" class="dffe-browse-btn" title="Query DFFE Knowledge Base with active filters">
+                  Explore Corpus
+                </button>
+                <button type="button" id="dffeRunEiaBtn" class="dffe-browse-btn" title="Launch Deterministic NEMA Section 24 EIA Screener">
+                  EIA Screener
+                </button>
+                <button type="button" id="dffeRunStudioBtn" class="dffe-browse-btn" title="View Directorate Agents &amp; 3-Phase FM/IM Sensitivity Audit">
+                  Agent Studio
+                </button>
+              </div>
             </div>
           </div>
 

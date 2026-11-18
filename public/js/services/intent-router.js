@@ -1,7 +1,8 @@
 /**
  * intent-router.js
- * Offline deterministic widget intents and slash command routing.
- * Triggers local widgets for math, QR codes, currency, weather, OCR, time, crypto, etc.
+ * Deterministic DFFE Operational Tool Intents & Slash Command Routing.
+ * Routes DFFE RAG queries, NEMA Section 24 EIA screening, SAAQIS/SAWIC/Climate
+ * indicators, Directorate Agent Studio commands, and environmental utilities.
  */
 
 import { state } from '../state/store.js';
@@ -16,13 +17,13 @@ export function detectLocalWidgetIntent(text) {
   const trimmed = text.trim();
   const lower = trimmed.toLowerCase();
 
-  // NEVER hijack prompts in Build mode or when user is asking to build/write/code something
-  if (state.activeMode === 'build' || /\b(build|write|create|code|html|css|js|javascript|python|component|website|app|portfolio|page)\b/i.test(lower)) {
+  // Never hijack prompts in Build mode or when user is asking to draft/write/synthesize a document or code
+  if (state.activeMode === 'build' || /\b(build|write|create|code|html|css|js|javascript|python|component|website|app|portfolio|page|synthesize|explain|briefing|policy)\b/i.test(lower)) {
     return null;
   }
 
-  // If the prompt is a long, multi-sentence prompt, do not hijack with single-intent widgets
-  if (trimmed.length > 100 && !/^(what'?s the weather|convert\s+\d+|what is the time)/i.test(trimmed) && !/\b(?:search|find|look up)\s+(?:on\s+)?reddit\b/i.test(trimmed)) {
+  // If the prompt is a multi-sentence analytical query, let the main DFFE RAG + reasoning engine handle it
+  if (trimmed.length > 100 && !/^(what'?s the weather|convert\s+\d+|what is the time)/i.test(trimmed)) {
     return null;
   }
 
@@ -37,7 +38,7 @@ export function detectLocalWidgetIntent(text) {
 
   // Strict OCR trigger
   if (/^(?:open\s+)?(?:scan\s+)?ocr\b/i.test(trimmed) || /^(?:scan|extract|read)\s+text\s+from\s+(?:an?\s+)?(?:image|photo|camera|screenshot|picture)$/i.test(trimmed)) {
-    return { tool: 'scan_ocr', args: {}, label: 'Opened OCR scanner.' };
+    return { tool: 'scan_ocr', args: {}, label: 'Opened OCR document scanner.' };
   }
 
   // QR Code Scan trigger
@@ -69,16 +70,8 @@ export function detectLocalWidgetIntent(text) {
     return {
       tool: 'convert_units',
       args: { value: parseFloat(unit[1]), from: unit[2].trim(), to: unit[3].trim() },
-      label: 'Converted units.'
+      label: 'Converted measurement units.'
     };
-  }
-
-  const bible = pickMatch([
-    /^(?:give me\s+)?(?:a\s+)?(?:bible verse|scripture|verse)\s+(?:for|about|from)?\s*(.+)$/i,
-    /^([1-3]?\s*[a-z]+(?:\s+[a-z]+)?\s+\d+:\d+(?:-\d+)?)$/i
-  ]);
-  if (bible || /^(a bible verse|random scripture|give me a scripture)$/i.test(trimmed)) {
-    return { tool: 'get_bible_verse', args: { reference: bible || '' }, label: 'Fetched scripture.' };
   }
 
   const definition = pickMatch([/^(?:define|meaning of|what does)\s+["']?([a-z][a-z-]*)["']?(?:\s+mean)?\??$/i]);
@@ -88,85 +81,14 @@ export function detectLocalWidgetIntent(text) {
 
   const weather = pickMatch([/^(?:what'?s the\s+)?weather\s+(?:in|for|at)\s+(.+)\??$/i, /^(?:forecast|temperature)\s+(?:in|for|at)\s+(.+)\??$/i]);
   if (weather) {
-    return { tool: 'get_weather', args: { city: weather }, label: 'Fetched live weather.' };
-  }
-
-
-  const redditSearch = trimmed.match(/^(?:search|find|look up)\s+(?:on\s+)?reddit\s+(?:for|about|on)?\s*(.+)$/i)
-    || trimmed.match(/^what\s+does\s+reddit\s+say\s+about\s+(.+)$/i)
-    || trimmed.match(/^reddit\s+search\s*:\s*(.+)$/i);
-  if (redditSearch?.[1]) {
-    return {
-      tool: 'search_reddit',
-      args: { query: stripTrailing(redditSearch[1]) },
-      label: 'Searched Reddit discussions.'
-    };
-  }
-  const crypto = pickMatch([/^(?:what'?s the\s+)?(?:price of|price for|crypto price of)\s+([a-z0-9 ,&+.-]+)\??$/i, /^([a-z0-9 ,&+.-]+)\s+(?:price|crypto price|price right now)\??$/i]);
-  if (crypto && /\b(bitcoin|btc|ethereum|eth|solana|sol|xrp|doge|cardano|ada|crypto)\b/i.test(crypto)) {
-    return { tool: 'get_crypto_price', args: { coin: crypto.replace(/\bcrypto\b/gi, '').trim() || 'bitcoin' }, label: 'Fetched live crypto price.' };
-  }
-
-  const subreddit = pickMatch([
-    /^(?:show me\s+)?(?:reddit|subreddit)\s+(?:posts|news|threads|discussions)?\s*(?:from|for|in)\s+([a-z0-9_ ,+&/-]+)$/i,
-    /^(?:show me\s+)?(?:reddit|subreddit)\s+(?:posts|news|threads|discussions)\s+(?:from|for|in)?\s*([a-z0-9_ ,+&/-]+)$/i,
-    /^r\/([a-z0-9_+,-]+)$/i
-  ]);
-  if (subreddit) {
-    let subStr = subreddit.trim();
-    let limitVal = null;
-    const limitMatch = subStr.match(/(?:--limit|-n|\blimit:)\s*(\d+)/i);
-    if (limitMatch) {
-      limitVal = parseInt(limitMatch[1], 10);
-      subStr = subStr.replace(limitMatch[0], '').trim();
-    }
-    const payload = { subreddit: subStr || 'news' };
-    if (limitVal) payload.limit = limitVal;
-    return { tool: 'get_reddit_posts', args: payload, label: 'Fetched live discussions.' };
-  }
-
-  const imageMatch = trimmed.match(/^(?:show me|find|search|get|give me)\s+(?:an?\s+|one\s+|(\d+)\s+)?(?:images?|photos?|pictures?)\s+(?:of|for)\s+(.+)$/i)
-    || trimmed.match(/^(\d+)\s+photos?\s+(?:of|for)\s+(.+)$/i)
-    || trimmed.match(/^photos?\s+(?:of|for)\s+(.+)$/i);
-  if (imageMatch) {
-    let limit = 8;
-    let query = '';
-
-    if (imageMatch[1] && /^\d+$/.test(imageMatch[1])) {
-      limit = Math.min(Math.max(parseInt(imageMatch[1], 10), 1), 12);
-      query = imageMatch[2] || '';
-    } else if (/\b(an?|one)\s+(?:images?|photos?|pictures?)\b/i.test(imageMatch[0])) {
-      limit = 1;
-      query = imageMatch[2] || imageMatch[1] || '';
-    } else {
-      query = imageMatch[2] || imageMatch[1] || '';
-    }
-
-    if (!query) {
-      query = imageMatch[0].replace(/^(?:show me|find|search|get|give me)\s+(?:an?\s+|one\s+|\d+\s+)?(?:images?|photos?|pictures?)\s+(?:of|for)\s+/i, '');
-    }
-    query = stripTrailing(query);
-
-    if (query && !/\b(website|portfolio|button|page|component)\b/i.test(query)) {
-      return { tool: 'search_images', args: { query, limit }, label: 'Fetched visual references.' };
-    }
+    return { tool: 'get_weather', args: { city: weather }, label: 'Fetched live environmental weather telemetry.' };
   }
 
   const math = pickMatch([/^(?:derivative|integral|simplify|factor|solve|limit)\s+(?:of\s+)?(.+)$/i]);
   if (math && /[0-9x-z=+\-*/^()]/i.test(math) && trimmed.length < 50) {
     const opMatch = lower.match(/\b(derivative|integral|simplify|factor|solve|limit)\b/);
     const operation = opMatch ? opMatch[1] : 'simplify';
-    return { tool: 'solve_math', args: { expression: math, operation }, label: 'Solved math expression.' };
-  }
-
-  const spaceTopic = pickMatch([/^(?:space|spacex|nasa|mars|artemis|jwst)\s+(?:news|updates|headlines)\s*(.*)$/i]);
-  if (spaceTopic || /^(space news|spacex updates|nasa news|mars rover|artemis mission|jwst discoveries)$/i.test(lower)) {
-    return { tool: 'get_space_news', args: { topic: spaceTopic }, label: 'Fetched space intelligence.' };
-  }
-
-  const newsTopic = pickMatch([/^(?:show me\s+)?(?:latest|current|today'?s)?\s*(?:news|headlines|top stories)\s*(?:about|on|for|in)?\s*(.*)$/i]);
-  if (/^(news|headlines|top stories)$/i.test(lower)) {
-    return { tool: 'get_news_headlines', args: { topic: newsTopic || 'top stories' }, label: 'Fetched live headlines.' };
+    return { tool: 'solve_math', args: { expression: math, operation }, label: 'Solved quantitative expression.' };
   }
 
   const time = pickMatch([/^(?:what'?s the\s+)?(?:time|date)\s+(?:in|for|at)\s+(.+)\??$/i]);
@@ -175,59 +97,9 @@ export function detectLocalWidgetIntent(text) {
   }
 
   const place = pickMatch([/^(?:find|search for|show me)\s+(.+?)\s+(?:near|in)\s+(.+)$/i]);
-  if (place && /\b(restaurant|coffee|cafe|hotel|clinic|hospital|library|school|museum|landmark|shop|store|atm|bank|park)\b/i.test(place)) {
+  if (place && /\b(park|reserve|wetland|estuary|station|office|landmark|hospital|library|school|museum)\b/i.test(place)) {
     const match = trimmed.match(/^(?:find|search for|show me)\s+(.+?)\s+(?:near|in)\s+(.+)$/i);
-    return { tool: 'search_places', args: { query: stripTrailing(match[1]), near: stripTrailing(match[2]) }, label: 'Searched places.' };
-  }
-
-  if (/^(tell me a joke|another joke|daily humor)$/i.test(lower)) {
-    return { tool: 'tell_joke', args: {}, label: 'Fetched a joke.' };
-  }
-
-  if (/^(give me some advice|words of wisdom|life advice)$/i.test(lower)) {
-    return { tool: 'give_advice', args: {}, label: 'Fetched advice.' };
-  }
-
-  // Movie Suggestions & Release Slate Intent (e.g. "2026 movies", "upcoming 2026 movies", "movies in 2026")
-  const upcomingMatch = trimmed.match(/^(?:what are\s+)?(?:some\s+)?(?:good\s+|upcoming\s+|top\s+)?(?:(\d{4})\s+movies|movies\s+(?:in|for|from|released in)\s+(\d{4}))\??$/i)
-    || trimmed.match(/^(\d{4})\s+movies\??$/i);
-  if (upcomingMatch) {
-    const yr = upcomingMatch[1] || upcomingMatch[2] || '2026';
-    return { tool: 'discover_movies', args: { year: yr, query: `${yr} movies` }, label: `Retrieved ${yr} theatrical release slate & upcoming movies.` };
-  }
-
-  const suggestionMatch = trimmed.match(/^(?:suggest|recommend|find|show me)\s+(?:some\s+)?(?:movies|films)(?:\s+(?:about|like|for|in)?\s*(.+))?$/i);
-  if (suggestionMatch) {
-    const q = (suggestionMatch[1] || '').trim();
-    return { tool: 'discover_movies', args: { query: q || 'upcoming blockbusters' }, label: `Discovered movie recommendations${q ? ` for "${q}"` : ''}.` };
-  }
-
-  // Movie Explorer Intent (Single Film)
-  const movie = pickMatch([
-    /^(?:tell me about|info on|details for|synopsis of|who directed)\s+(?:the\s+movie\s+|the\s+film\s+)?["']?(.+?)["']?\??$/i,
-    /^(?:the\s+)?movie\s+["']?(.+?)["']?\??$/i
-  ]);
-  if (movie && !/\b(joke|scripture|verse|weather|news|code|function|places?|stock)\b/i.test(movie)) {
-    return { tool: 'get_movie_info', args: { title: movie }, label: `Fetched movie intelligence for "${movie}".` };
-  }
-
-  // Stock / Market Chart Intent
-  const stock = pickMatch([
-    /^(?:show me\s+)?(?:stock\s+chart|price\s+chart|market\s+chart|chart)\s+(?:for|of)?\s*(.+)\??$/i,
-    /^(?:show me\s+)?([a-z0-9.:]+)\s+(?:stock\s+chart|chart|stock)\??$/i
-  ]);
-  if (stock && /\b(google|apple|nvidia|nvda|tesla|tsla|microsoft|msft|amazon|amzn|meta|nasdaq|nyse|aapl|googl)\b/i.test(stock)) {
-    return { tool: 'get_stock_chart', args: { query: stock }, label: `Loaded interactive market chart for ${stock.toUpperCase()}.` };
-  }
-
-  // Bitcoin Mempool & Network Fees Intent
-  if (/^(?:what are\s+)?(?:bitcoin|btc)\s+(?:mempool|network)?\s*(?:fees|fee rates)\??$/i.test(trimmed) || /^(?:mempool|btc fees|bitcoin fees)$/i.test(trimmed)) {
-    return { tool: 'get_crypto_terminal', args: { asset: 'btc_fees' }, label: 'Fetched Bitcoin network fees and mempool stats.' };
-  }
-
-  // Crypto Sentiment / Fear & Greed Intent
-  if (/^(?:what is\s+)?(?:the\s+)?(?:crypto\s+)?(?:fear and greed|market sentiment)\??$/i.test(trimmed) || /^(?:fear and greed|crypto sentiment)$/i.test(trimmed)) {
-    return { tool: 'get_crypto_terminal', args: { asset: 'fear_and_greed' }, label: 'Fetched Fear & Greed sentiment index.' };
+    return { tool: 'search_places', args: { query: stripTrailing(match[1]), near: stripTrailing(match[2]) }, label: 'Searched geographic locations.' };
   }
 
   return null;
@@ -246,74 +118,92 @@ export function resolveSlashCommand(prompt) {
   let isWebSearch = false;
   let overrideText = null;
 
-  if (command === 'movies' || command === 'upcoming') {
-    toolToCall = 'discover_movies';
-    argsPayload = { query: arg || '2026 movies', year: arg && /^\d{4}$/.test(arg.trim()) ? arg.trim() : '2026' };
-  } else if (command === 'movie' || command === 'film') {
-    if (/^\d{4}$/.test((arg || '').trim())) {
-      toolToCall = 'discover_movies';
-      argsPayload = { year: arg.trim(), query: `${arg.trim()} movies` };
+  if (command === 'dffe' || command === 'soer' || command === 'programmes' || command === 'nema' || command === 'sop' || command === 'restricted') {
+    const defaultSeriesMap = {
+      dffe: state.dffeFilters?.series || 'all',
+      soer: 'soer',
+      programmes: 'programmes',
+      nema: 'legislation',
+      sop: 'internal_sop',
+      restricted: 'legislation'
+    };
+    const defaultQueryMap = {
+      dffe: 'What environmental programmes is DFFE currently running, and what are the key findings from the latest State of the Environment reports?',
+      soer: 'South Africa State of the Environment Report (SoER) national synthesis and key findings',
+      programmes: 'DFFE EPWP environmental programmes: Working for Water, Working on Fire, Working for Wetlands, Working for the Coast, Working on Waste',
+      nema: 'NEMA Section 24 EIA regulations, Listing Notices 1, 2 and 3, and National Environmental Screening Tool',
+      sop: 'DFFE Internal SOP: Directorate AI Agent Creation, SharePoint Grounding & Ministerial Submissions',
+      restricted: 'EMI Green Scorpions active Section 31L Compliance Notices and Section 24G Enforcement Register'
+    };
+    toolToCall = 'search_dffe_knowledge';
+    argsPayload = {
+      query: arg.trim() || defaultQueryMap[command],
+      series: defaultSeriesMap[command] || 'all',
+      year: state.dffeFilters?.year || 'all',
+      audience: state.dffeFilters?.audience || 'public',
+      accessPhase: state.dffeFilters?.accessPhase || (command === 'sop' ? 'phase1_internal' : command === 'restricted' ? 'phase3_enterprise' : 'phase2_public')
+    };
+  } else if (command === 'eia' || command === 'screening') {
+    toolToCall = 'screen_nema_eia_activity';
+    argsPayload = {
+      projectDescription: arg.trim() || '75 MW Solar PV & Grid Connection in a Renewable Energy Development Zone (REDZ)'
+    };
+  } else if (command === 'climate' || command === 'air' || command === 'saaqis' || command === 'waste' || command === 'sawic' || command === 'indicators') {
+    const domainMap = {
+      climate: 'climate',
+      air: 'saaqis',
+      saaqis: 'saaqis',
+      waste: 'sawic',
+      sawic: 'sawic',
+      indicators: 'all'
+    };
+    toolToCall = 'query_dffe_environmental_indicators';
+    argsPayload = {
+      domain: domainMap[command] || 'all',
+      query: arg.trim() || `DFFE ${command.toUpperCase()} statutory benchmarks and system indicators`
+    };
+  } else if (command === 'agent' || command === 'agents' || command === 'studio') {
+    toolToCall = 'manage_dffe_directorate_agent';
+    if (arg.trim()) {
+      const parts = arg.split('|').map(s => s.trim());
+      argsPayload = {
+        action: 'create_agent',
+        name: parts[0] || 'Custom Directorate Agent',
+        directorate: parts[1] || 'DFFE Directorate',
+        groundingUrl: parts[2] || 'https://www.dffe.gov.za',
+        customText: parts[3] || ''
+      };
     } else {
-      toolToCall = 'get_movie_info';
-      argsPayload = { title: arg || 'Interstellar' };
+      argsPayload = { action: 'overview' };
     }
-  } else if (command === 'stock' || command === 'chart' || command === 'ticker') {
-    toolToCall = 'get_stock_chart';
-    argsPayload = { query: arg || 'Google' };
-  } else if (command === 'mempool') {
-    toolToCall = 'get_crypto_terminal';
-    argsPayload = { asset: 'btc_fees' };
-  } else if (command === 'fear' || command === 'sentiment') {
-    toolToCall = 'get_crypto_terminal';
-    argsPayload = { asset: 'fear_and_greed' };
+  } else if (command === 'ground') {
+    toolToCall = 'manage_dffe_directorate_agent';
+    const isUrl = /^https?:\/\//i.test(arg.trim());
+    argsPayload = {
+      action: 'ground_source',
+      name: isUrl ? `Grounded DFFE URL (${arg.trim()})` : 'Directorate Grounded Policy Extract',
+      groundingUrl: isUrl ? arg.trim() : 'https://www.dffe.gov.za',
+      customText: arg.trim() || 'Grounded DFFE policy reference source.'
+    };
+  } else if (command === 'sensitivity' || command === 'rbac') {
+    toolToCall = 'manage_dffe_directorate_agent';
+    argsPayload = { action: 'sensitivity_audit' };
   } else if (command === 'web') {
     isWebSearch = true;
     overrideText = arg;
   } else if (command === 'define' || command === 'dict') {
     toolToCall = 'define_word';
-    argsPayload = { word: arg || 'intelligence' };
-  } else if (command === 'reddit') {
-    let subStr = (arg || 'news').trim();
-    let limitVal = null;
-    const limitMatch = subStr.match(/(?:--limit|-n|\blimit:)\s*(\d+)/i);
-    if (limitMatch) {
-      limitVal = parseInt(limitMatch[1], 10);
-      subStr = subStr.replace(limitMatch[0], '').trim();
-    }
-    const searchMatch = subStr.match(/^(?:search|find|query)\s+(.+)$/i);
-    if (searchMatch) {
-      toolToCall = 'search_reddit';
-      argsPayload = { query: searchMatch[1].trim() };
-    } else {
-      toolToCall = 'get_reddit_posts';
-      argsPayload = { subreddit: subStr || 'news' };
-    }
-    if (limitVal) argsPayload.limit = limitVal;
+    argsPayload = { word: arg || 'biodiversity' };
   } else if (command === 'weather') {
     toolToCall = 'get_weather';
-    argsPayload = { city: arg || 'London' };
-  } else if (command === 'space' || command === 'spacenews') {
-    toolToCall = 'get_space_news';
-    argsPayload = { topic: arg || '' };
-  } else if (command === 'news' || command === 'headlines') {
-    toolToCall = 'get_news_headlines';
-    argsPayload = { topic: arg || 'top stories' };
-  } else if (command === 'bible' || command === 'verse') {
-    toolToCall = 'get_bible_verse';
-    argsPayload = { reference: arg || 'John 3:16' };
-  } else if (command === 'joke') {
-    toolToCall = 'tell_joke';
-    argsPayload = {};
-  } else if (command === 'advice') {
-    toolToCall = 'give_advice';
-    argsPayload = {};
+    argsPayload = { city: arg || 'Pretoria' };
   } else if (command === 'currency' || command === 'convert') {
     const parts = arg.split(' ').map(p => p.trim()).filter(Boolean);
     toolToCall = 'convert_currency';
     const convertMatch = arg.match(/(\d+(?:\.\d+)?)\s*([a-z]{3})\s+(?:to|in|into)?\s*([a-z]{3})/i);
     argsPayload = convertMatch
       ? { amount: parseFloat(convertMatch[1]), from: convertMatch[2].toUpperCase(), to: convertMatch[3].toUpperCase() }
-      : { amount: parseFloat(parts[0]) || 1, from: parts[1] || 'USD', to: (parts[2] || parts[3]) || 'EUR' };
+      : { amount: parseFloat(parts[0]) || 1, from: parts[1] || 'USD', to: (parts[2] || parts[3]) || 'ZAR' };
   } else if (command === 'math') {
     toolToCall = 'solve_math';
     argsPayload = { expression: arg || '2+2', operation: 'simplify' };
@@ -326,11 +216,11 @@ export function resolveSlashCommand(prompt) {
         query: numMatch[2].trim()
       };
     } else {
-      argsPayload = { query: arg || 'beautiful landscape', limit: 8 };
+      argsPayload = { query: arg || 'South Africa biodiversity conservation', limit: 8 };
     }
   } else if (command === 'qr' || command === 'generateqr') {
     toolToCall = 'generate_qr';
-    argsPayload = { data: arg || 'Atlas Intelligence' };
+    argsPayload = { data: arg || 'https://www.dffe.gov.za' };
   } else if (command === 'scanqr' || command === 'qrscan') {
     toolToCall = 'scan_qr';
     argsPayload = {};
@@ -339,7 +229,7 @@ export function resolveSlashCommand(prompt) {
     argsPayload = {};
   } else if (command === 'time') {
     toolToCall = 'get_current_time';
-    argsPayload = { timezone: arg || '' };
+    argsPayload = { timezone: arg || 'Africa/Johannesburg' };
   } else if (command === 'unit') {
     const unitMatch = arg.match(/(-?\d+(?:\.\d+)?)\s*([a-zA-Z°/ ]{1,22})\s+(?:to|in|into)\s+([a-zA-Z°/ ]{1,22})/i);
     toolToCall = 'convert_units';
@@ -351,27 +241,7 @@ export function resolveSlashCommand(prompt) {
     toolToCall = 'search_places';
     argsPayload = nearMatch
       ? { query: nearMatch[1].trim(), near: nearMatch[2].trim() }
-      : { query: arg || 'coffee shop' };
-  } else if (command === 'dffe' || command === 'soer' || command === 'programmes' || command === 'nema') {
-    const defaultSeriesMap = {
-      dffe: state.dffeFilters?.series || 'all',
-      soer: 'soer',
-      programmes: 'programmes',
-      nema: 'legislation'
-    };
-    const defaultQueryMap = {
-      dffe: 'What environmental programmes is DFFE currently running, and what are the key findings from the latest State of the Environment reports?',
-      soer: 'South Africa State of the Environment Report (SoER) national synthesis and key findings',
-      programmes: 'DFFE EPWP environmental programmes: Working for Water, Working on Fire, Working for Wetlands, Working for the Coast, Working on Waste',
-      nema: 'NEMA Section 24 EIA regulations, Listing Notices 1, 2 and 3, and National Environmental Screening Tool'
-    };
-    toolToCall = 'search_dffe_knowledge';
-    argsPayload = {
-      query: arg.trim() || defaultQueryMap[command],
-      series: defaultSeriesMap[command] || 'all',
-      year: state.dffeFilters?.year || 'all',
-      audience: state.dffeFilters?.audience || 'public'
-    };
+      : { query: arg || 'Environment House Pretoria' };
   } else {
     // Unrecognized slash command; do not hijack, let main reasoning engine handle
     return null;
@@ -383,7 +253,7 @@ export function resolveSlashCommand(prompt) {
     argsPayload,
     isWebSearch,
     overrideText,
-    label: `Executed local command \`/${command}\`.`
+    label: `Executed DFFE operational command \`/${command}\`.`
   };
 }
 
@@ -463,12 +333,12 @@ export async function runLocalWidget(toolToCall, argsPayload, statusText, contex
           try {
             mounter(widgetBox, widgetResult.type, widgetResult.data);
           } catch (mErr) {
-            console.warn('[Atlas Widgets] Widget mount error:', mErr);
+            console.warn('[DFFE Widgets] Widget mount error:', mErr);
           }
         }
       }
     } catch (rErr) {
-      console.warn('[Atlas Widgets] Widget render error:', rErr);
+      console.warn('[DFFE Widgets] Widget render error:', rErr);
     }
   }
 
@@ -492,19 +362,16 @@ export async function runLocalWidget(toolToCall, argsPayload, statusText, contex
 /**
  * Balanced Autonomous Need Classifier
  * Detects if a prompt genuinely requires real-time web grounding or deep reasoning.
- * Carefully guarded with negative exclusions so it never triggers on standard coding, creative writing, or basic Q&A.
  */
 export function detectAutonomousNeed(text) {
   if (!text || typeof text !== 'string') return { needsWeb: false, needsReasoning: false, reason: null };
   const trimmed = text.trim();
   const lower = trimmed.toLowerCase();
 
-  // 1. Exclusions: Never auto-trigger on coding, web design, or programming tasks
   if (state.activeMode === 'build' || /\b(build|write|create|code|html|css|js|javascript|python|component|website|app|portfolio|page|function|class|regex|sql|docker|git|bug|fix)\b/i.test(lower)) {
     return { needsWeb: false, needsReasoning: false, reason: null };
   }
 
-  // 2. Exclusions: Static STEM / historical knowledge definitions / creative / conversational
   if (
     /^(?:explain|what is|how does|define)\s+(?:photosynthesis|gravity|calculus|mitosis|relativity|tcp|http|dns|binary search|recursion|a black hole)\b/i.test(lower) ||
     /^(?:write|compose)\s+(?:a poem|a story|an essay|an email|a letter)\b/i.test(lower) ||
@@ -517,29 +384,15 @@ export function detectAutonomousNeed(text) {
   let needsReasoning = false;
   let reason = null;
 
-  // A. Explicit web search request
   if (/\b(search (?:the )?(?:web|internet|online)|look up (?:online|on the web)|google (?:it|this)|check (?:the )?(?:web|news|internet))\b/i.test(lower)) {
     needsWeb = true;
     reason = 'Explicit web search requested';
   }
 
-  // B. Temporal signals (future or post-cutoff years, current release dates, trailers)
-  const futureOrCurrentYear = /\b(202[5-9]|2030)\b/.test(lower);
-  const temporalStatus = /\b(current(?:ly)?|latest|recent(?:ly)?|today|tonight|this week|this month|breaking news|upcoming)\b/i.test(lower);
-  
-  // C. Highly dynamic real-time domains (release dates, trailers, game announcements, sports scores, live launches, flight tests, upcoming films)
-  const dynamicTopics = /\b(release date|confirmed date|trailer details|trailer|box office|spacex|starship|falcon 9|artemis|gta\s*6|grand theft auto|nfl|nba|premier league|champions league|world cup|election|stock price|earnings report|movies?|films?|theatrical|cinema|releases?)\b/i.test(lower);
-
-  if (!needsWeb && ((futureOrCurrentYear && (dynamicTopics || temporalStatus)) || (temporalStatus && dynamicTopics))) {
-    needsWeb = true;
-    reason = 'Real-time temporal grounding required';
-  }
-
-  // D. Deep Reasoning signals: formal mathematical proofs, complex logic puzzles, multi-step game theory
-  const deepReasoningSignals = /\b(prove that|formal proof|step-by-step proof|derive (?:the|an) equation|solve (?:this|the) (?:logic )?puzzle|game theory equilibrium|knights and knaves|monty hall problem)\b/i.test(lower);
+  const deepReasoningSignals = /\b(prove that|formal proof|step-by-step proof|derive (?:the|an) equation|solve (?:this|the) (?:logic )?puzzle|game theory equilibrium|carbon budget trajectory|gaussian plume)\b/i.test(lower);
   if (deepReasoningSignals) {
     needsReasoning = true;
-    reason = reason ? `${reason} & Complex Multi-Step Reasoning` : 'Complex Multi-Step Reasoning required';
+    reason = reason ? `${reason} & Quantitative Environmental Modelling` : 'Quantitative Environmental Modelling required';
   }
 
   return { needsWeb, needsReasoning, reason };
