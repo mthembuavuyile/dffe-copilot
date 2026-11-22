@@ -148,6 +148,30 @@ export function resolveSlashCommand(prompt) {
     argsPayload = {
       projectDescription: arg.trim() || '75 MW Solar PV & Grid Connection in a Renewable Energy Development Zone (REDZ)'
     };
+  } else if (command === 'service' || command === 'itbs' || command === 'cms' || command === 'pfma' || command === 'efishing' || command === 'permit' || command === 'branches') {
+    const categoryMap = {
+      itbs: 'itbs_equipment_request',
+      cms: 'cms_hr_onboarding_leave',
+      pfma: 'fms_pfma_procurement',
+      efishing: 'efishing_marine_permit',
+      permit: 'forestry_tops_biodiversity_permit',
+      service: 'auto',
+      branches: 'auto'
+    };
+    const defaultDetailMap = {
+      itbs: 'ITBS IT equipment request (laptop, VPN, or Power Platform digital workflow)',
+      cms: 'CMS employee leave policy, new staff onboarding checklist, and SharePoint templates',
+      pfma: 'FMS PFMA Supply Chain Management procurement thresholds and SITA ICT sign-off',
+      efishing: 'e-Fishing online recreational fishing permit and Small-Scale Fisheries (FRAP) guide',
+      permit: 'National Forests Act protected tree cutting permit and NEMBA TOPS/Bioprospecting licence',
+      service: 'ITBS IT equipment request, HR leave SOP, and digital approval workflow',
+      branches: 'ITBS internal service request and DFFE 10-Branch workflow routing'
+    };
+    toolToCall = 'triage_dffe_service_or_permit';
+    argsPayload = {
+      serviceCategory: categoryMap[command] || 'auto',
+      requestDetails: arg.trim() || defaultDetailMap[command]
+    };
   } else if (command === 'climate' || command === 'air' || command === 'saaqis' || command === 'waste' || command === 'sawic' || command === 'indicators') {
     const domainMap = {
       climate: 'climate',

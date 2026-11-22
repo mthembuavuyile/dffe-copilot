@@ -56,28 +56,27 @@ setRenderSessionMessagesCallback(renderSessionMessages);
 setRegenerateCallback(regenerateLastResponse);
 
 const availableSlashCommands = [
-  { cmd: '/dffe', desc: 'Search verified DFFE environmental reports & RAG corpus', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>' },
-  { cmd: '/soer', desc: 'State of the Environment Report (SoER) findings & indicators', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>' },
+  { cmd: '/dffe', desc: 'Search verified DFFE environmental reports & 10-Branch RAG corpus', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>' },
+  { cmd: '/itbs', desc: 'CMS / GITO / ITBS equipment requests, VPN & Power Platform workflows', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>' },
+  { cmd: '/cms', desc: 'CMS HR employee leave policy, onboarding checklist & SharePoint templates', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>' },
+  { cmd: '/pfma', desc: 'FMS PFMA Supply Chain Management (SCM) & SITA ICT procurement thresholds', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/></svg>' },
   { cmd: '/eia', desc: 'NEMA Section 24 EIA & National Screening Tool pathway assessment', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg>' },
+  { cmd: '/efishing', desc: 'Fisheries e-Fishing recreational permits & Small-Scale (FRAP) guide', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 16s3-4 7-4 7 4 11 4"/><path d="M2 12s3-4 7-4 7 4 11 4"/></svg>' },
+  { cmd: '/permit', desc: 'National Forests Act protected tree licences & NEMBA TOPS/Bioprospecting', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' },
   { cmd: '/climate', desc: 'Climate Change Act 22 of 2024 Carbon Budgets & Sector Emission Targets', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>' },
   { cmd: '/air', desc: 'SAAQIS Priority Area Ambient Air Quality (PM2.5, PM10, SO2) telemetry', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>' },
   { cmd: '/waste', desc: 'SAWIC & NEMWA Extended Producer Responsibility (EPR) targets', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>' },
+  { cmd: '/soer', desc: 'State of the Environment Report (SoER) findings & indicators', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>' },
   { cmd: '/programmes', desc: 'DFFE EPWP programmes (Working for Water, Fire, Wetlands, Coast)', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' },
   { cmd: '/nema', desc: 'NEMA legislation, Listing Notices 1–3 & Green Scorpions compliance', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg>' },
   { cmd: '/agent', desc: 'DFFE Directorate Agent Studio & 3-Phase Deployment Roadmap', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="6" r="2"/><line x1="7" y1="7" x2="10" y2="10"/><line x1="17" y1="7" x2="14" y2="10"/></svg>' },
   { cmd: '/ground', desc: 'Ground a custom official URL or policy excerpt into DFFE RAG', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' },
   { cmd: '/sensitivity', desc: 'Audit Information Management (FM/IM) 3-Phase Content Sensitivity Gate', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' },
   { cmd: '/web', desc: 'Search the live web for external environmental intelligence', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>' },
-  { cmd: '/weather', desc: 'Live regional meteorological & climate telemetry', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>' },
-  { cmd: '/places', desc: 'Search reserves, catchments, stations & geographic landmarks', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>' },
-  { cmd: '/math', desc: 'Quantitative environmental & mathematical modelling', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>' },
-  { cmd: '/unit', desc: 'Convert environmental & physical measurement units', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>' },
   { cmd: '/ocr', desc: 'Extract text from scanned permits or environmental reports', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h10"/><path d="M7 12h10"/><path d="M7 17h10"/></svg>' },
   { cmd: '/qr', desc: 'Generate QR code for official DFFE publications or links', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><path d="M7 7h.01M17 7h.01M7 17h.01M17 17h.01"></path></svg>' },
   { cmd: '/clear', desc: 'Clear conversation history', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>' },
-  { cmd: '/exit', desc: 'Start a fresh session', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>' },
-  { cmd: '/settings', desc: 'Open unified settings', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>' },
-  { cmd: '/shortcuts', desc: 'Show keyboard shortcuts', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="7" y1="16" x2="17" y2="16"></line></svg>' }
+  { cmd: '/settings', desc: 'Open unified settings', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>' }
 ];
 
 let slashSelectedIndex = 0;
@@ -286,7 +285,22 @@ function initComposerListeners() {
     }
   };
 
-  // Wire DFFE Environmental Knowledge Filter Bar, 3-Phase FM/IM Switcher & Directorate Agent Studio
+  // Wire 4 DFFE Workflow Quick-Launch Cards & Progressive Disclosure Scope Bar
+  const workflowCardsGrid = document.getElementById('dffeWorkflowCardsGrid');
+  workflowCardsGrid?.querySelectorAll('.dffe-workflow-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const cmd = card.getAttribute('data-workflow-cmd');
+      if (!cmd || !dom.messageInput) return;
+      dom.messageInput.value = cmd;
+      autoResizeTextarea();
+      dom.chatForm?.dispatchEvent(new Event('submit'));
+    });
+  });
+
+  const dffeToggleScopeBtn = document.getElementById('dffeToggleScopeDrawerBtn');
+  const dffeScopeDrawer = document.getElementById('dffeScopeDrawer');
+  const dffeScopeSummaryPill = document.getElementById('dffeScopeSummaryPill');
+
   const dffeSeriesEl = document.getElementById('dffeFilterSeries');
   const dffeYearEl = document.getElementById('dffeFilterYear');
   const dffeAudienceEl = document.getElementById('dffeFilterAudience');
@@ -296,15 +310,36 @@ function initComposerListeners() {
   const dffeRunEiaBtn = document.getElementById('dffeRunEiaBtn');
   const dffeRunStudioBtn = document.getElementById('dffeRunStudioBtn');
 
+  const updateDffeScopeSummaryPill = () => {
+    if (!dffeScopeSummaryPill) return;
+    const seriesLabel = dffeSeriesEl?.options[dffeSeriesEl.selectedIndex]?.text || 'All 10 Branches';
+    const phaseLabel = dffePhaseEl?.options[dffePhaseEl.selectedIndex]?.text?.replace(/\s*\(.*?\)/, '') || 'Phase 1: Internal / Teams';
+    dffeScopeSummaryPill.textContent = `${seriesLabel} · ${phaseLabel}`;
+  };
+
+  dffeToggleScopeBtn?.addEventListener('click', () => {
+    if (!dffeScopeDrawer) return;
+    const isHidden = dffeScopeDrawer.hasAttribute('hidden');
+    if (isHidden) {
+      dffeScopeDrawer.removeAttribute('hidden');
+      dffeToggleScopeBtn.setAttribute('aria-expanded', 'true');
+    } else {
+      dffeScopeDrawer.setAttribute('hidden', '');
+      dffeToggleScopeBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
   if (dffeSeriesEl && state.dffeFilters?.series) dffeSeriesEl.value = state.dffeFilters.series;
   if (dffeYearEl && state.dffeFilters?.year) dffeYearEl.value = state.dffeFilters.year;
   if (dffeAudienceEl && state.dffeFilters?.audience) dffeAudienceEl.value = state.dffeFilters.audience;
   if (dffePhaseEl && state.dffeFilters?.accessPhase) dffePhaseEl.value = state.dffeFilters.accessPhase;
   if (dffeAgentEl && state.dffeFilters?.agentId) dffeAgentEl.value = state.dffeFilters.agentId;
+  updateDffeScopeSummaryPill();
 
   dffeSeriesEl?.addEventListener('change', (e) => {
     state.dffeFilters.series = e.target.value;
     localStorage.setItem('atlas_dffe_series', e.target.value);
+    updateDffeScopeSummaryPill();
   });
 
   dffeYearEl?.addEventListener('change', (e) => {
@@ -320,6 +355,7 @@ function initComposerListeners() {
   dffePhaseEl?.addEventListener('change', (e) => {
     state.dffeFilters.accessPhase = e.target.value;
     localStorage.setItem('atlas_dffe_phase', e.target.value);
+    updateDffeScopeSummaryPill();
   });
 
   dffeAgentEl?.addEventListener('change', (e) => {
@@ -327,6 +363,7 @@ function initComposerListeners() {
     localStorage.setItem('atlas_dffe_agent', e.target.value);
     const agentSeriesMap = {
       'dffe-general-agent': 'all',
+      'dffe-cms-itbs-agent': 'internal_sop',
       'dffe-eia-compliance-agent': 'legislation',
       'dffe-climate-air-agent': 'climate',
       'dffe-epwp-fisheries-agent': 'programmes',
@@ -337,6 +374,7 @@ function initComposerListeners() {
       state.dffeFilters.series = agentSeriesMap[e.target.value];
       localStorage.setItem('atlas_dffe_series', state.dffeFilters.series);
     }
+    updateDffeScopeSummaryPill();
   });
 
   dffeBrowseBtn?.addEventListener('click', () => {

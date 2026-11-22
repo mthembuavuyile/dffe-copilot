@@ -15,6 +15,7 @@ const dffeKnowledgeCapability = require('./dffe/dffe-knowledge.capability');
 const dffeEiaScreeningCapability = require('./dffe/dffe-eia-screening.capability');
 const dffeIndicatorsCapability = require('./dffe/dffe-indicators.capability');
 const dffeAgentStudioCapability = require('./dffe/dffe-agent-studio.capability');
+const dffeServiceTriageCapability = require('./dffe/dffe-service-triage.capability');
 const { LEGACY_TOOLS } = require('./legacy-bridge');
 
 // Primary DFFE Operational Capabilities (Exposed to DFFE Agentic Workspace)
@@ -23,6 +24,7 @@ const DFFE_CAPABILITY_MODULES = [
   dffeEiaScreeningCapability,
   dffeIndicatorsCapability,
   dffeAgentStudioCapability,
+  dffeServiceTriageCapability,
   searchCapability
 ];
 

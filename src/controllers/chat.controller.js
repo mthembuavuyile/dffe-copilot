@@ -159,6 +159,15 @@ class ChatController {
             content: dffeContext
           });
         }
+      } else if (lastUserQueryText) {
+        // Even if not matching a specific report keyword, check if one of the 10 DFFE Branches is referenced
+        const branchOnlyContext = dffeRagService.formatRelevantBranchContext(lastUserQueryText);
+        if (branchOnlyContext) {
+          normalizedMessages.push({
+            role: 'system',
+            content: branchOnlyContext
+          });
+        }
       }
 
       if (dffeFilters?.agentId) {

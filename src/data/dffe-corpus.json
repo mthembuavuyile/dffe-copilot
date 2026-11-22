@@ -125,6 +125,21 @@
         ],
         "description": "Tracks NEMWA Extended Producer Responsibility (EPR) compliance across packaging, e-waste, lighting, and batteries, plus municipal landfill diversion metrics.",
         "deliverableFormat": "NEMWA & EPR Sector Compliance Assessment"
+      },
+      {
+        "id": "dffe-cms-itbs-agent",
+        "name": "CMS / GITO / ITBS Internal Service & Policy Agent",
+        "directorate": "Branch: Corporate Management Services (CMS) — GITO & ITBS",
+        "defaultSeries": "internal_sop",
+        "defaultAudience": "officials",
+        "sensitivity": "internal",
+        "channels": ["Internal Teams", "DFFE SharePoint Intranet", "Power Apps Portal"],
+        "groundingUrls": [
+          "https://www.dffe.gov.za/internal-im-governance",
+          "https://www.dffe.gov.za/tenders"
+        ],
+        "description": "Guides DFFE officials on ITBS IT equipment requests, Power Platform digital workflows, HR leave & onboarding policies, and FMS PFMA / SITA procurement thresholds.",
+        "deliverableFormat": "ITBS Digital Workflow Blueprint & Internal SOP Checklist"
       }
     ]
   },
@@ -337,6 +352,68 @@
         "FM/IM Access Control Directive: Access to active docket numbers, Whistleblower Environmental Crimes Hotline records, and personally identifiable applicant data (POPIA) is strictly restricted to Entra ID-authenticated EMIs and authorized legal officers."
       ],
       "keywords": ["restricted", "enforcement", "docket", "section 31l", "section 24g", "neces", "criminal", "investigation", "fine", "confidential", "sensitive", "green scorpions register"]
+    },
+    {
+      "id": "dffe-cms-itbs-hr-sop-2026",
+      "title": "DFFE Corporate Management Services (CMS): GITO / ITBS Equipment Requests, HR Leave & Onboarding SOP",
+      "series": "internal_sop",
+      "seriesLabel": "Internal Directorate SOPs & Governance",
+      "year": "2026",
+      "branch": "Branch: Corporate Management Services (CMS) — Chief Directorate: GITO / Directorate: IT Business Solutions (ITBS) & HRM",
+      "audiences": ["officials"],
+      "sensitivity": "internal",
+      "governance": "INTERNAL OFFICIAL ONLY — Phase 1 CMS / GITO / SharePoint Intranet",
+      "citation": "DFFE CMS & GITO Operational Manual (2026): ITBS Service Request Portal, IT Asset Management & HR Employee Leave/Onboarding Procedures.",
+      "url": "https://www.dffe.gov.za/internal-cms-gito-itbs",
+      "summary": "Authoritative internal handbook for DFFE employees covering how to request IT equipment (laptops, monitors, VPN, 3G/LTE), log ITBS service requests, access the SharePoint Intranet template library, apply for employee leave, and complete new staff/intern onboarding.",
+      "keyFindings": [
+        "IT Equipment & VPN Requests (GITO / ITBS): Employees submit hardware, software, or VPN requests via the DFFE SharePoint / Power Apps IT Service Portal with their PERSAL number; Power Automate routes the request to the Line Manager (Director) for approval before ITBS and ICT Operations allocate and barcode-tag the asset.",
+        "Employee Leave Policy (CMS Human Resources): Permanent officials receive 22 to 30 working days annual leave per cycle; sick leave exceeding 2 consecutive days requires a certified medical certificate captured on PERSAL via the SharePoint HR portal.",
+        "Employee & Intern Onboarding Portal: New officials and interns complete the CMS digital onboarding checklist on SharePoint, including Z204 security vetting, POPIA/Acceptable ICT Use declaration, Microsoft 365 Entra ID provisioning, and Directorate induction.",
+        "ITBS Innovation & Power Platform Governance: Internal digital workflow prototypes (Power Apps, Power Automate, SharePoint Lists, Power BI, and Copilot Studio agents) developed within ITBS must operate in authorised development environments using synthetic or approved departmental data."
+      ],
+      "keywords": ["cms", "corporate management services", "gito", "itbs", "it business solutions", "equipment request", "laptop", "vpn", "leave policy", "employee leave", "onboarding", "template", "sharepoint", "power apps", "power automate", "power bi", "asset management", "persal", "hr"]
+    },
+    {
+      "id": "dffe-fms-pfma-scm-procurement-2026",
+      "title": "DFFE Financial Management Services (FMS): PFMA Supply Chain Management (SCM), SITA ICT Procurement & 30-Day Invoice SOP",
+      "series": "internal_sop",
+      "seriesLabel": "Internal Directorate SOPs & Governance",
+      "year": "2026",
+      "branch": "Branch: Financial Management Services (FMS) — Office of the CFO & Chief Directorate: Supply Chain Management",
+      "audiences": ["officials", "compliance"],
+      "sensitivity": "internal",
+      "governance": "INTERNAL OFFICIAL ONLY — Phase 1 Financial & SCM Compliance",
+      "citation": "DFFE Financial Management Services Circular FMS-2026/02: PFMA Act 1 of 1999, National Treasury SCM Thresholds & SITA ICT Framework.",
+      "url": "https://www.dffe.gov.za/tenders",
+      "summary": "Internal financial and procurement rules governing DFFE supply chain requisitions, Central Supplier Database (CSD) price quotations, competitive tenders, SITA ICT procurement, and statutory 30-day supplier payment compliance.",
+      "keyFindings": [
+        "PFMA & National Treasury Procurement Thresholds: Petty cash purchases apply up to R2,000; written price quotations (RFQs via the National Treasury Central Supplier Database) apply from R2,000 to R1,000,000; competitive public tenders (RFPs adjudicated by the Bid Adjudication Committee) apply above R1,000,000.",
+        "Mandatory SITA & GITO Alignment for ICT Procurement: All ICT hardware, enterprise software, cloud hosting, and AI/digital services must carry technical sign-off from the GITO / ITBS Directorate and align with SITA transversal contract frameworks.",
+        "Statutory 30-Day Invoice Settlement: Under PFMA Section 38(1)(f), all valid, undisputed supplier invoices must be verified on LOGIS/BAS and paid within 30 days of receipt to prevent audit findings.",
+        "Environmental Donor & Grant Fund Governance: Ring-fenced accounting applies to Global Environment Facility (GEF), Green Climate Fund (GCF), and EPWP Conditional Grant disbursements."
+      ],
+      "keywords": ["financial management services", "fms", "pfma", "supply chain", "scm", "procurement", "tender", "rfq", "quotation", "sita", "csd", "invoice", "30 days", "logis", "bas", "cfo", "budget"]
+    },
+    {
+      "id": "dffe-efishing-permits-Customer-guide-2026",
+      "title": "DFFE e-Fishing Online Permitting, Small-Scale Fisheries ('Fishing for Freedom') & Forestry Tree Licensing Guide",
+      "series": "forestry_fisheries",
+      "seriesLabel": "Forestry, Fisheries & Oceans",
+      "year": "2026",
+      "branch": "Branches: Fisheries Management | Oceans and Coasts | Forestry Management",
+      "audiences": ["public", "officials", "compliance"],
+      "sensitivity": "public",
+      "governance": "PUBLIC — Citizen Digital Service & Permitting Guide",
+      "citation": "DFFE (2026). e-Fishing Citizen Permitting Manual, Small-Scale Fisheries Co-operative Guide & National Forests Act Section 15 Licensing.",
+      "url": "https://www.dffe.gov.za/permits-licences",
+      "summary": "Public and official guide to DFFE's digital permitting platforms across recreational and small-scale fishing (e-Fishing / MLRA), coastal discharge permits (NEM:ICMA), and protected indigenous tree licences (National Forests Act).",
+      "keyFindings": [
+        "e-Fishing Digital Recreational Permits: Citizens apply and pay online via DFFE's e-Fishing platform for recreational angling, West Coast rock lobster, scuba/spearfishing, cast-net, and vessel permits, receiving an instant digital QR-coded permit.",
+        "Small-Scale Fisheries ('Fishing for Freedom'): Supports 315+ declared Small-Scale Fishing Co-operatives across the Western Cape, Eastern Cape, KwaZulu-Natal, and Northern Cape with multi-species basket rights and proclaimed fishing harbour infrastructure.",
+        "National Forests Act Protected Tree Licensing: Under Section 15 of the National Forests Act (Act 84 of 1998), no person may cut, disturb, damage, or transport any listed protected tree (including Yellowwood, Camel Thorn, White Milkwood, Baobab, and Marula) without a DFFE Forestry licence."
+      ],
+      "keywords": ["e-fishing", "efishing", "fishing permit", "recreational fishing", "small-scale fisheries", "fishing for freedom", "rock lobster", "angling", "protected tree", "tree permit", "national forests act", "yellowwood", "camel thorn", "milkwood", "permits", "licences"]
     }
   ]
 }

@@ -512,31 +512,38 @@
             </div>
             <h1 class="welcome-heading">
               <span id="dynamicTimeGreeting">Good morning</span><span class="greeting-punct" id="greetingPunct">,</span>
-              <span class="greeting-action" id="dynamicGreetingAction">what environmental or departmental question can I help with?</span>
+              <span class="greeting-action" id="dynamicGreetingAction">what DFFE branch, policy, or environmental question can I help with?</span>
             </h1>
             <p class="welcome-subtitle" id="welcomeSubtitle">
-              Query published State of the Environment (SoER) reports, EPWP programmes, NEMA/EIA regulations, and climate
-              change targets with verified source citations.
+              Grounded in verified DFFE reports, statutes, and internal SOPs across all 10 departmental branches (CMS/ITBS, Compliance, Climate, Biodiversity, Programmes, Waste, Forestry, Oceans &amp; Fisheries).
             </p>
           </div>
 
-          <div class="mode-selector-heading">Choose how you want to work</div>
-
-          <!-- Optional response modes (Zero Emojis, Pure SVGs) -->
-          <div class="mode-selector-grid" id="modeSelectorGrid">
-            <div class="mode-card-pill active" data-mode="auto">
+          <!-- Focused 3-Mode DFFE Task Lenses (Hick's Law De-Cluttered View — Zero Coder Bloat) -->
+          <div class="mode-selector-grid dffe-focused-modes" id="modeSelectorGrid" role="tablist" aria-label="DFFE Operational Workflow Lenses">
+            <div class="mode-card-pill active" data-mode="auto" role="tab" aria-selected="true">
               <span class="mode-icon">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="9"></circle>
-                  <path d="M8 12h8"></path>
-                  <path d="M12 8v8"></path>
+                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
                 </svg>
               </span>
-              <span class="mode-name">Auto</span>
-              <span class="mode-desc-hint">Adapts to your question</span>
+              <span class="mode-name">Policy &amp; Knowledge</span>
+              <span class="mode-desc-hint">10-Branch RAG &amp; SOPs</span>
             </div>
-            <div class="mode-card-pill" data-mode="research">
+            <div class="mode-card-pill" data-mode="reason" role="tab" aria-selected="false">
+              <span class="mode-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="18" height="18" x="3" y="3" rx="2" />
+                  <path d="M9 12l2 2 4-4" />
+                </svg>
+              </span>
+              <span class="mode-name">Compliance &amp; Screening</span>
+              <span class="mode-desc-hint">NEMA EIA, Permits &amp; PFMA</span>
+            </div>
+            <div class="mode-card-pill" data-mode="research" role="tab" aria-selected="false">
               <span class="mode-icon">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round">
@@ -544,125 +551,82 @@
                   <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
                 </svg>
               </span>
-              <span class="mode-name">Research</span>
-              <span class="mode-desc-hint">Literature & evidence</span>
-            </div>
-            <div class="mode-card-pill" data-mode="solve">
-              <span class="mode-icon">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <rect width="16" height="20" x="4" y="2" rx="2" />
-                  <line x1="8" x2="16" y1="6" y2="6" />
-                  <line x1="16" x2="16" y1="14" y2="18" />
-                  <path d="M16 10h.01" />
-                  <path d="M12 10h.01" />
-                  <path d="M8 10h.01" />
-                  <path d="M12 14h.01" />
-                  <path d="M8 14h.01" />
-                  <path d="M12 18h.01" />
-                  <path d="M8 18h.01" />
-                </svg>
-              </span>
-              <span class="mode-name">Solve</span>
-              <span class="mode-desc-hint">Math & derivations</span>
-            </div>
-            <div class="mode-card-pill" data-mode="build">
-              <span class="mode-icon">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="16 18 22 12 16 6" />
-                  <polyline points="8 6 2 12 8 18" />
-                </svg>
-              </span>
-              <span class="mode-name">Build</span>
-              <span class="mode-desc-hint">Systems & code</span>
-            </div>
-            <div class="mode-card-pill" data-mode="engineer">
-              <span class="mode-icon">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <rect width="18" height="18" x="3" y="3" rx="2" />
-                  <path d="M9 9h6v6H9z" />
-                  <path d="M3 9h3" />
-                  <path d="M3 15h3" />
-                  <path d="M21 9h-3" />
-                  <path d="M21 15h-3" />
-                  <path d="M9 3v3" />
-                  <path d="M15 3v3" />
-                  <path d="M9 21v-3" />
-                  <path d="M15 21v-3" />
-                </svg>
-              </span>
-              <span class="mode-name">Engineer</span>
-              <span class="mode-desc-hint">Architecture & limits</span>
-            </div>
-            <div class="mode-card-pill" data-mode="experiment">
-              <span class="mode-icon">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M10 2v7.31M14 9.3V1.99M8.5 2h7M14 9.3a6.5 6.5 0 1 1-4 0" />
-                </svg>
-              </span>
-              <span class="mode-name">Experiment</span>
-              <span class="mode-desc-hint">Data & simulation</span>
-            </div>
-            <div class="mode-card-pill" data-mode="reason">
-              <span class="mode-icon">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="3" />
-                  <circle cx="19" cy="6" r="2" />
-                  <circle cx="5" cy="6" r="2" />
-                  <circle cx="19" cy="18" r="2" />
-                  <circle cx="5" cy="18" r="2" />
-                  <line x1="7" y1="7" x2="10" y2="10" />
-                  <line x1="17" y1="7" x2="14" y2="10" />
-                  <line x1="7" y1="17" x2="10" y2="14" />
-                  <line x1="17" y1="17" x2="14" y2="14" />
-                </svg>
-              </span>
-              <span class="mode-name">Reason</span>
-              <span class="mode-desc-hint">Logical breakdown</span>
-            </div>
-            <div class="mode-card-pill" data-mode="discover">
-              <span class="mode-icon">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
-                </svg>
-              </span>
-              <span class="mode-name">Discover</span>
-              <span class="mode-desc-hint">Hypothesis generator</span>
+              <span class="mode-name">Briefings &amp; Reports</span>
+              <span class="mode-desc-hint">Ministerial notes &amp; SoER</span>
             </div>
           </div>
 
-          <!-- Active Mode Info Banner -->
-          <div class="active-mode-banner" id="activeModeBanner">
+          <div class="active-mode-banner" id="activeModeBanner" hidden>
             <div class="active-mode-banner-left">
-              <span class="active-mode-tag" id="activeModeTag">Mode: Auto</span>
-              <span id="activeModeDesc">Adapts the response to your question while preserving clear, useful
-                reasoning</span>
+              <span class="active-mode-tag" id="activeModeTag">Mode: Policy &amp; Knowledge</span>
+              <span id="activeModeDesc">Answers DFFE environmental, statutory, and internal CMS / ITBS / FMS questions across all 10 branches</span>
             </div>
           </div>
 
-          <!-- DFFE Directorate Agent Studio, 3-Phase FM/IM Governance & UNEP EnvironmentGPT RAG Scope -->
+          <!-- 4 Focused DFFE Departmental Workflow Cards (Replaces Choice Overload with Clear Operational Entry Points) -->
+          <div class="dffe-workflow-cards-grid" id="dffeWorkflowCardsGrid" aria-label="Primary DFFE Operational Workflows">
+            <button type="button" class="dffe-workflow-card" data-workflow-cmd="/itbs IT equipment request, employee leave SOP, and Power Platform approval flow">
+              <div class="dffe-wf-top">
+                <span class="dffe-wf-badge">Branch 4 &amp; 6 · CMS / ITBS / FMS</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              <div class="dffe-wf-title">Internal ITBS, HR &amp; PFMA Services</div>
+              <div class="dffe-wf-desc">IT equipment/VPN requests, SharePoint leave &amp; onboarding SOPs, and PFMA / SITA procurement thresholds.</div>
+            </button>
+
+            <button type="button" class="dffe-workflow-card" data-workflow-cmd="/eia 75 MW Solar PV &amp; Grid Connection in a Renewable Energy Development Zone (REDZ)">
+              <div class="dffe-wf-top">
+                <span class="dffe-wf-badge">Branch 8 · RCSM &amp; Screening Tool</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+              </div>
+              <div class="dffe-wf-title">NEMA Section 24 EIA Screener</div>
+              <div class="dffe-wf-desc">Evaluate developments against Listing Notices 1–3, Basic Assessment (197d), S&amp;EIR (300d) &amp; REDZ (57d).</div>
+            </button>
+
+            <button type="button" class="dffe-workflow-card" data-workflow-cmd="/climate Climate Change Act 22 of 2024 Carbon Budgets, SAAQIS Priority Air &amp; SAWIC EPR">
+              <div class="dffe-wf-top">
+                <span class="dffe-wf-badge">Branch 2, 3 &amp; 5 · National Systems</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+              </div>
+              <div class="dffe-wf-title">Climate, SAAQIS Air &amp; SAWIC Waste</div>
+              <div class="dffe-wf-desc">Model Act 22 company Carbon Budgets, Highveld/Vaal PM2.5 airshed limits, and EPR waste diversion targets.</div>
+            </button>
+
+            <button type="button" class="dffe-workflow-card" data-workflow-cmd="/efishing e-Fishing recreational permit, Small-Scale Fisheries (FRAP) &amp; Protected Tree licences">
+              <div class="dffe-wf-top">
+                <span class="dffe-wf-badge">Branch 1, 7, 9 &amp; 10 · Permits &amp; Citizens</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+              </div>
+              <div class="dffe-wf-title">e-Fishing, Forestry &amp; TOPS Permits</div>
+              <div class="dffe-wf-desc">Guide citizens &amp; officials on e-Fishing permits, Small-Scale Fishing Co-ops, and Protected Tree / NEMBA licences.</div>
+            </button>
+          </div>
+
+          <!-- Progressive Disclosure Scope Bar (Collapsed by Default to Prevent Choice Overload) -->
           <div class="dffe-knowledge-bar" id="dffeKnowledgeBar" role="region" aria-label="DFFE Environmental Knowledge Scope">
             <div class="dffe-bar-header">
               <div class="dffe-bar-title">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
-                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                 </svg>
-                <span>DFFE Directorate Agent &amp; 3-Phase RAG Governance Scope</span>
+                <span>Active Scope:</span>
+                <span class="dffe-scope-summary-pill" id="dffeScopeSummaryPill">All 10 Branches &bull; Phase 1: Internal / Teams</span>
               </div>
-              <a href="/dffe" class="dffe-portal-launch-link" title="Open DFFE 3-Phase Agent Studio, Teams, Web &amp; WhatsApp Simulator">3-Phase Agent Studio &amp; Channel Simulator &rarr;</a>
+              <div class="dffe-bar-header-actions">
+                <button type="button" id="dffeToggleScopeDrawerBtn" class="dffe-scope-toggle-btn" aria-expanded="false" aria-controls="dffeScopeDrawer">
+                  <span>Filter Scope</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <a href="/dffe" class="dffe-portal-launch-link" title="Open DFFE 3-Phase Agent Studio, Teams, Web &amp; WhatsApp Simulator">Agent Studio &rarr;</a>
+              </div>
             </div>
-            <div class="dffe-bar-controls">
+            <div class="dffe-bar-controls" id="dffeScopeDrawer" hidden>
               <div class="dffe-control-item">
                 <label for="dffeFilterAgent">Directorate Agent</label>
                 <select id="dffeFilterAgent" class="dffe-filter-select">
-                  <option value="dffe-general-agent">DFFE Environmental Intelligence Agent</option>
+                  <option value="dffe-general-agent">DFFE 10-Branch Intelligence Agent</option>
+                  <option value="dffe-cms-itbs-agent">CMS / GITO / ITBS Internal Service Agent</option>
                   <option value="dffe-eia-compliance-agent">NEMA Section 24 EIA &amp; Screening Agent</option>
                   <option value="dffe-climate-air-agent">Climate Change Act &amp; SAAQIS Air Agent</option>
                   <option value="dffe-epwp-fisheries-agent">EPWP Programmes &amp; Fisheries (FRAP) Agent</option>
@@ -680,14 +644,14 @@
               <div class="dffe-control-item">
                 <label for="dffeFilterSeries">Report Series</label>
                 <select id="dffeFilterSeries" class="dffe-filter-select">
-                  <option value="all">All DFFE Sources</option>
+                  <option value="all">All 10 DFFE Branches</option>
+                  <option value="internal_sop">CMS / ITBS / FMS Internal SOPs</option>
                   <option value="soer">State of the Environment (SoER)</option>
                   <option value="programmes">Environmental Programmes (EPWP)</option>
-                  <option value="legislation">Legislation &amp; EIA (NEMA)</option>
-                  <option value="climate">Climate Change &amp; Air Quality</option>
-                  <option value="forestry_fisheries">Forestry, Fisheries &amp; Oceans</option>
-                  <option value="waste">Chemicals, Waste &amp; Circular Economy</option>
-                  <option value="internal_sop">Internal Directorate SOPs</option>
+                  <option value="legislation">Legislation &amp; EIA (NEMA / NEMBA)</option>
+                  <option value="climate">Climate Change &amp; Air Quality (SAAQIS)</option>
+                  <option value="forestry_fisheries">Forestry, Fisheries (e-Fishing) &amp; Oceans</option>
+                  <option value="waste">Chemicals, Waste (SAWIC) &amp; EPR</option>
                 </select>
               </div>
               <div class="dffe-control-item">
@@ -702,10 +666,10 @@
               <div class="dffe-control-item">
                 <label for="dffeFilterAudience">Target Audience</label>
                 <select id="dffeFilterAudience" class="dffe-filter-select">
-                  <option value="public">General Public</option>
                   <option value="officials">DFFE Officials &amp; Directorates</option>
-                  <option value="researchers">Researchers &amp; Policy Analysts</option>
+                  <option value="public">General Public &amp; Citizens</option>
                   <option value="compliance">Compliance &amp; EIA Practitioners</option>
+                  <option value="researchers">Researchers &amp; Policy Analysts</option>
                 </select>
               </div>
               <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:end;">
@@ -724,14 +688,14 @@
 
           <!-- Mode-Tailored Suggested Prompts -->
           <div class="welcome-suggestions">
-            <span class="suggestion-label">Suggested Prompts</span>
+            <span class="suggestion-label">Quick Questions</span>
             <div class="suggestion-pills" id="suggestionPillsContainer">
+              <button class="prompt-card suggestion-pill"
+                data-prompt="How do I request IT equipment or VPN access in ITBS, where is the employee leave policy, and how can Power Platform automate internal approvals?">Internal
+                ITBS &amp; CMS Workflows</button>
               <button class="prompt-card suggestion-pill"
                 data-prompt="What environmental programmes is DFFE currently running, and what are the key findings from the latest State of the Environment reports?">DFFE
                 Programmes &amp; SoER Findings</button>
-              <button class="prompt-card suggestion-pill"
-                data-prompt="Explain NEMA Section 24 EIA Listing Notices 1, 2 and 3, the mandatory DFFE National Screening Tool, and REDZ fast-track timeframes.">NEMA
-                EIA &amp; Screening Tool</button>
               <button class="prompt-card suggestion-pill"
                 data-prompt="Synthesize the Climate Change Act (Act 22 of 2024) Sector Emission Targets (SETs), mandatory company Carbon Budgets, and municipal adaptation duties.">Climate
                 Change Act &amp; Carbon Budgets</button>

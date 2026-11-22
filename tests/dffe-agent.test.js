@@ -65,14 +65,15 @@ describe('DFFE 3-Phase Conversational Agentic Platform & RAG Suite (UNEP Environ
     assert.strictEqual(phase3.sensitivityAudit.withheldCount, 0);
   });
 
-  test('DFFE_AGENT_TOOLS strips consumer entertainment bloat while registering all 4 DFFE operational capabilities', async () => {
+  test('DFFE_AGENT_TOOLS strips consumer entertainment bloat while registering all 5 DFFE operational capabilities', async () => {
     const dffeToolNames = DFFE_AGENT_TOOLS.map(t => t.function?.name);
 
-    // Must include all 4 DFFE operational capabilities
+    // Must include all 5 DFFE operational capabilities
     assert.ok(dffeToolNames.includes('search_dffe_knowledge'));
     assert.ok(dffeToolNames.includes('screen_nema_eia_activity'));
     assert.ok(dffeToolNames.includes('query_dffe_environmental_indicators'));
     assert.ok(dffeToolNames.includes('manage_dffe_directorate_agent'));
+    assert.ok(dffeToolNames.includes('triage_dffe_service_or_permit'));
 
     // Must exclude Vylex Atlas consumer entertainment bloat from LLM chat tools
     const forbiddenBloat = ['get_movie_info', 'discover_movies', 'get_stock_chart', 'get_crypto_terminal', 'get_crypto_price', 'get_bible_verse', 'tell_joke', 'give_advice', 'get_reddit_posts', 'search_reddit'];
@@ -80,7 +81,7 @@ describe('DFFE 3-Phase Conversational Agentic Platform & RAG Suite (UNEP Environ
       assert.ok(!dffeToolNames.includes(bloatTool), `DFFE_AGENT_TOOLS must not expose consumer bloat tool: ${bloatTool}`);
     }
 
-    // Verify deterministic execution of all 4 DFFE capabilities
+    // Verify deterministic execution of all 5 DFFE capabilities
     const ragRes = await capabilityRegistry.execute('search_dffe_knowledge', {
       query: 'Working for Water and Working on Fire',
       series: 'programmes'
@@ -111,8 +112,43 @@ describe('DFFE 3-Phase Conversational Agentic Platform & RAG Suite (UNEP Environ
       action: 'overview'
     });
     assert.strictEqual(studioRes.type, 'dffe_agent_studio');
-    assert.ok(studioRes.data.agents.length >= 5);
+    assert.ok(studioRes.data.agents.length >= 6);
     assert.strictEqual(studioRes.data.phases.length, 3);
+
+    const itbsTriageRes = await capabilityRegistry.execute('triage_dffe_service_or_permit', {
+      requestDetails: 'How do I request a developer laptop and VPN access in ITBS with Power Automate manager approval?'
+    });
+    assert.strictEqual(itbsTriageRes.type, 'dffe_service_triage');
+    assert.strictEqual(itbsTriageRes.data.category, 'itbs_equipment_request');
+    assert.strictEqual(itbsTriageRes.data.branchNumber, 4);
+    assert.ok(itbsTriageRes.data.powerPlatformBlueprint.automationLayer.includes('Power Automate'));
+
+    const efishingTriageRes = await capabilityRegistry.execute('triage_dffe_service_or_permit', {
+      requestDetails: 'Apply for an online e-Fishing recreational rock lobster permit'
+    });
+    assert.strictEqual(efishingTriageRes.type, 'dffe_service_triage');
+    assert.strictEqual(efishingTriageRes.data.category, 'efishing_marine_permit');
+    assert.strictEqual(efishingTriageRes.data.branchNumber, 10);
+  });
+
+  test('10-Branch token-efficient dynamic routing classifies queries across all 10 DFFE Branches without prompt bloat', () => {
+    const branches = dffeRagService.getBranches();
+    assert.strictEqual(branches.length, 10, 'Must define all 10 core DFFE Branches');
+
+    const cmsMatch = dffeRagService.detectRelevantBranches('How do I submit an IT equipment request in GITO / ITBS or check the HR leave policy on SharePoint?');
+    assert.ok(cmsMatch.some(b => b.number === 4 && b.shortCode === 'CMS'), 'Must dynamically detect Branch 4: Corporate Management Services (CMS)');
+
+    const fmsMatch = dffeRagService.detectRelevantBranches('What are the PFMA Supply Chain Management quotation thresholds and SITA ICT procurement rules?');
+    assert.ok(fmsMatch.some(b => b.number === 6 && b.shortCode === 'FMS'), 'Must dynamically detect Branch 6: Financial Management Services (FMS)');
+
+    const fishMatch = dffeRagService.detectRelevantBranches('Where do small-scale fishing co-operatives and recreational anglers apply on e-Fishing under FRAP?');
+    assert.ok(fishMatch.some(b => b.number === 10 && b.shortCode === 'FISH'), 'Must dynamically detect Branch 10: Fisheries Management');
+
+    const lazyContext = dffeRagService.formatRelevantBranchContext('Request laptop in ITBS and check PFMA procurement rules');
+    assert.ok(lazyContext.includes('[DFFE DYNAMIC BRANCH & DIRECTORATE CONTEXT (TOKEN-EFFICIENT LAZY ROUTING)]'));
+    assert.ok(lazyContext.includes('Branch 4: Corporate Management Services'));
+    assert.ok(lazyContext.includes('Branch 6: Financial Management Services'));
+    assert.ok(!lazyContext.includes('Branch 9: Oceans and Coasts'), 'Must NOT inject unrelated branch profiles into turn context');
   });
 
   test('HTTP endpoints /api/dffe/corpus, /api/dffe/search, /api/dffe/agents, /api/dffe/ground, /api/dffe/eia-screen, /api/dffe/indicators, and /dffe respond cleanly', async () => {
@@ -177,6 +213,24 @@ describe('DFFE 3-Phase Conversational Agentic Platform & RAG Suite (UNEP Environ
       const indData = await indRes.json();
       assert.strictEqual(indData.type, 'dffe_indicators');
 
+      // Test GET /api/dffe/branches
+      const branchesRes = await fetch(`http://127.0.0.1:${port}/api/dffe/branches?q=ITBS+laptop+request`);
+      assert.strictEqual(branchesRes.status, 200);
+      const branchesData = await branchesRes.json();
+      assert.strictEqual(branchesData.branchCount, 10);
+      assert.ok(branchesData.matchedBranches.some(b => b.number === 4));
+
+      // Test POST /api/dffe/service-triage
+      const triageRes = await fetch(`http://127.0.0.1:${port}/api/dffe/service-triage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ requestDetails: 'PFMA quotation threshold for R250,000 ICT software' })
+      });
+      assert.strictEqual(triageRes.status, 200);
+      const triageData = await triageRes.json();
+      assert.strictEqual(triageData.type, 'dffe_service_triage');
+      assert.strictEqual(triageData.data.category, 'fms_pfma_procurement');
+
       const portalRes = await fetch(`http://127.0.0.1:${port}/dffe`);
       assert.strictEqual(portalRes.status, 200);
       const portalHtml = await portalRes.text();
@@ -193,7 +247,8 @@ describe('DFFE 3-Phase Conversational Agentic Platform & RAG Suite (UNEP Environ
       dffeWidget,
       dffeEiaScreeningWidget,
       dffeIndicatorsWidget,
-      dffeAgentStudioWidget
+      dffeAgentStudioWidget,
+      dffeServiceTriageWidget
     } = await import('../public/js/widgets/components/dffe-widget.js');
     const { resolveSlashCommand } = await import('../public/js/services/intent-router.js');
 
@@ -219,7 +274,19 @@ describe('DFFE 3-Phase Conversational Agentic Platform & RAG Suite (UNEP Environ
     const studioHtml = dffeAgentStudioWidget.render(studioPayload.data);
     assert.ok(studioHtml.includes('Active DFFE Directorate Agents'));
 
+    const triagePayload = await capabilityRegistry.execute('triage_dffe_service_or_permit', { requestDetails: 'ITBS laptop request' });
+    const triageHtml = dffeServiceTriageWidget.render(triagePayload.data);
+    assert.ok(triageHtml.includes('ITBS / Microsoft 365 &amp; Power Platform Enterprise Architecture'));
+    assert.ok(triageHtml.includes('Open Workflow Form &amp; SOP in Canvas'));
+
     // Verify DFFE slash commands
+    const slashItbs = resolveSlashCommand('/itbs Request laptop and VPN');
+    assert.strictEqual(slashItbs.toolToCall, 'triage_dffe_service_or_permit');
+    assert.strictEqual(slashItbs.argsPayload.serviceCategory, 'itbs_equipment_request');
+
+    const slashEfishing = resolveSlashCommand('/efishing rock lobster permit');
+    assert.strictEqual(slashEfishing.toolToCall, 'triage_dffe_service_or_permit');
+    assert.strictEqual(slashEfishing.argsPayload.serviceCategory, 'efishing_marine_permit');
     const slashDffe = resolveSlashCommand('/dffe Working for Water');
     assert.strictEqual(slashDffe.toolToCall, 'search_dffe_knowledge');
 
@@ -246,6 +313,9 @@ describe('DFFE 3-Phase Conversational Agentic Platform & RAG Suite (UNEP Environ
 
     const indexHtml = fs.readFileSync(path.join(__dirname, '..', 'public', 'index.html'), 'utf8');
     assert.ok(indexHtml.includes('id="dffeKnowledgeBar"'), 'Main workspace must include DFFE Knowledge Filter Bar');
+    assert.ok(indexHtml.includes('id="dffeWorkflowCardsGrid"'), 'De-cluttered homescreen must include 4 focused DFFE Workflow Cards');
+    assert.ok(indexHtml.includes('id="dffeToggleScopeDrawerBtn"'), 'De-cluttered homescreen must collapse 5 dropdowns behind progressive disclosure toggle');
+    assert.ok(!indexHtml.includes('data-mode="build"'), 'De-cluttered homescreen must not expose developer Build mode card on landing screen');
     assert.ok(indexHtml.includes('id="dffeFilterAgent"'), 'Main workspace must include Directorate Agent selector');
     assert.ok(indexHtml.includes('id="dffeFilterPhase"'), 'Main workspace must include 3-Phase FM/IM selector');
     assert.ok(indexHtml.includes('data-preset="dffe"'), 'Personalization settings must include DFFE Environmental Specialist preset');

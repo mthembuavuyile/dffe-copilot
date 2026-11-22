@@ -4709,13 +4709,92 @@ body.is-resizing-canvas .artifacts-canvas-panel {
 }
 
 /* ==========================================================================
-   DFFE Environmental Knowledge Scope Bar (UNEP EnvironmentGPT Reference)
+   DFFE De-Cluttered Homescreen: 4 Workflow Cards & Progressive Scope Bar
    ========================================================================== */
+.mode-selector-grid.dffe-focused-modes {
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 4px;
+}
+
+.mode-selector-grid.dffe-focused-modes .mode-card-pill {
+  flex: 1 1 160px;
+  max-width: 215px;
+  min-width: 140px;
+}
+
+.dffe-workflow-cards-grid {
+  width: 100%;
+  max-width: 680px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 0 auto 12px auto;
+  text-align: left;
+}
+
+.dffe-workflow-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 11px 13px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 7px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.12s ease;
+}
+
+.dffe-workflow-card:hover {
+  border-color: var(--accent-primary);
+  background: var(--pill-active-bg);
+}
+
+.dffe-wf-top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 5px;
+  color: var(--accent-primary);
+}
+
+.dffe-wf-badge {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.64rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--accent-primary);
+  background: var(--surface-subtle);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.dffe-wf-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 3px;
+  line-height: 1.25;
+}
+
+.dffe-wf-desc {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
 .dffe-knowledge-bar {
   width: 100%;
-  max-width: 720px;
-  margin: 0 auto 14px auto;
-  padding: 10px 14px;
+  max-width: 680px;
+  margin: 0 auto 12px auto;
+  padding: 8px 12px;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 6px;
@@ -4727,7 +4806,6 @@ body.is-resizing-canvas .artifacts-canvas-panel {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin-bottom: 8px;
   flex-wrap: wrap;
 }
 
@@ -4735,31 +4813,80 @@ body.is-resizing-canvas .artifacts-canvas-panel {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.75rem;
+  font-size: 0.73rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+}
+
+.dffe-scope-summary-pill {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.7rem;
+  font-weight: 600;
   color: var(--accent-primary);
+  background: var(--pill-active-bg);
+  border: 1px solid var(--border-medium);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.dffe-bar-header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dffe-scope-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.dffe-scope-toggle-btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--text-main);
 }
 
 .dffe-portal-launch-link {
-  font-size: 0.74rem;
-  font-weight: 500;
-  color: var(--text-secondary);
+  font-size: 0.73rem;
+  font-weight: 600;
+  color: var(--accent-primary);
   text-decoration: none;
   transition: color 0.15s ease;
 }
 
 .dffe-portal-launch-link:hover {
-  color: var(--accent-primary);
   text-decoration: underline;
 }
 
 .dffe-bar-controls {
   display: grid;
-  grid-template-columns: 1.4fr 0.8fr 1.2fr auto;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
   gap: 8px;
   align-items: end;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.dffe-bar-controls[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 580px) {
+  .dffe-workflow-cards-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .dffe-control-item {

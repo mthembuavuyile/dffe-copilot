@@ -8,6 +8,7 @@
  */
 
 const corpus = require('../data/dffe-corpus.json');
+const branchesManifest = require('../data/dffe-branches.json');
 
 const STOP_WORDS = new Set([
   'what', 'which', 'where', 'when', 'who', 'whom', 'whose', 'why', 'how',
@@ -97,7 +98,7 @@ class DffeRagService {
   }
 
   /**
-   * Return corpus metadata (series list, years, audiences, governance policy, phases, agents)
+   * Return corpus metadata (series list, years, audiences, governance policy, phases, agents, branches)
    */
   getMetadata() {
     const allDocs = this.getAllDocuments();
@@ -105,8 +106,74 @@ class DffeRagService {
       ...corpus.metadata,
       documentCount: allDocs.length,
       customDocumentCount: this.customDocuments.length,
+      branchCount: branchesManifest.branches.length,
+      branches: branchesManifest.branches,
       directorateAgents: this.getDirectorateAgents()
     };
+  }
+
+  /**
+   * Return all 10 DFFE Branches from the structured manifest
+   */
+  getBranches() {
+    return Array.isArray(branchesManifest.branches) ? branchesManifest.branches : [];
+  }
+
+  /**
+   * Zero-token deterministic classifier that matches a user query to the 1 or 2 most relevant
+   * DFFE Branches out of the 10 departmental branches, avoiding token bloat from hardcoding all 10.
+   * @param {string} query
+   * @param {number} [maxBranches=2]
+   * @returns {Array<object>}
+   */
+  detectRelevantBranches(query, maxBranches = 2) {
+    if (!query || typeof query !== 'string') return [];
+    const lower = query.trim().toLowerCase();
+    const tokens = this.tokenize(lower);
+    const branches = this.getBranches();
+
+    const scored = branches.map(branch => {
+      let score = 0;
+      const nameLower = branch.name.toLowerCase();
+      if (lower.includes(nameLower)) score += 20;
+      if (branch.shortCode && new RegExp(`\\b${branch.shortCode.toLowerCase()}\\b`).test(lower)) score += 14;
+
+      for (const kw of (branch.keywords || [])) {
+        const kwLower = kw.toLowerCase();
+        if (lower.includes(kwLower)) {
+          score += kwLower.includes(' ') ? 12 : 6;
+        }
+      }
+
+      const combinedText = `${branch.mandate} ${(branch.chiefDirectorates || []).join(' ')} ${(branch.statutes || []).join(' ')} ${(branch.systemsAndPortals || []).join(' ')}`.toLowerCase();
+      for (const t of tokens) {
+        if (combinedText.includes(t)) score += 2;
+      }
+
+      return { branch, score };
+    }).filter(item => item.score > 0).sort((a, b) => b.score - a.score);
+
+    return scored.slice(0, maxBranches).map(item => item.branch);
+  }
+
+  /**
+   * Format matched DFFE Branch micro-cards for lazy injection (~150-300 tokens only when relevant)
+   */
+  formatRelevantBranchContext(query) {
+    const matched = this.detectRelevantBranches(query, 2);
+    if (!matched || matched.length === 0) return '';
+
+    const lines = [
+      '[DFFE DYNAMIC BRANCH & DIRECTORATE CONTEXT (TOKEN-EFFICIENT LAZY ROUTING)]'
+    ];
+    matched.forEach(b => {
+      lines.push(`- Branch ${b.number}: ${b.name} (${b.shortCode}) — Mandate: ${b.mandate}`);
+      lines.push(`  * Chief Directorates: ${(b.chiefDirectorates || []).join(' | ')}`);
+      lines.push(`  * Core Statutes & Frameworks: ${(b.statutes || []).join('; ')}`);
+      lines.push(`  * Enterprise Systems & Portals: ${(b.systemsAndPortals || []).join('; ')}`);
+      lines.push(`  * Key Operational Workflows: ${(b.coreWorkflows || []).join('; ')}`);
+    });
+    return lines.join('\n');
   }
 
   /**
@@ -302,7 +369,7 @@ class DffeRagService {
     const lower = text.trim().toLowerCase();
     if (lower.length < 4) return false;
 
-    return /\b(dffe|department of forestry|state of the environment|soer|saeo|environmental programmes?|working for water|working on fire|working for wetlands|working for the coast|working on waste|groen sebenza|ten million trees|nema|nemba|nemwa|nemaqa|nempaa|saaqis|sawic|ocims|frap|fishing rights|green scorpions|climate change act|sector emission targets|carbon budgets|basic assessment|environmental authorisation|environmental impact assessment|circular economy|extended producer responsibility|section 31l|section 24g|ministerial briefing|directorate agent)\b/i.test(lower);
+    return /\b(dffe|department of forestry|state of the environment|soer|saeo|environmental programmes?|working for water|working on fire|working for wetlands|working for the coast|working on waste|groen sebenza|ten million trees|nema|nemba|nemwa|nemaqa|nempaa|saaqis|sawic|ocims|frap|e-fishing|efishing|fishing rights|fishing permit|green scorpions|climate change act|sector emission targets|carbon budgets|basic assessment|environmental authorisation|environmental impact assessment|circular economy|extended producer responsibility|section 31l|section 24g|ministerial briefing|directorate agent|gito|itbs|it business solutions|corporate management services|cms|financial management services|fms|pfma|supply chain|sita|leave policy|equipment request|onboarding|sharepoint|power apps|power automate|protected tree|national forests act)\b/i.test(lower);
   }
 
   /**
@@ -434,6 +501,15 @@ class DffeRagService {
       if (/\b(internal|sop|ministerial briefing|sharepoint|teams|directorate agent)\b/i.test(queryLower) && doc.id === 'dffe-internal-directorate-sop-2026') {
         score += 20;
       }
+      if (/\b(cms|corporate management|gito|itbs|it business solutions|equipment request|laptop|vpn|leave policy|employee leave|onboarding|template|power apps|power automate|asset management)\b/i.test(queryLower) && doc.id === 'dffe-cms-itbs-hr-sop-2026') {
+        score += 22;
+      }
+      if (/\b(fms|financial management|pfma|supply chain|scm|procurement|tender|rfq|quotation|sita|csd|invoice|30 days)\b/i.test(queryLower) && doc.id === 'dffe-fms-pfma-scm-procurement-2026') {
+        score += 22;
+      }
+      if (/\b(e-fishing|efishing|fishing permit|recreational fishing|protected tree|tree permit|national forests act|yellowwood|camel thorn)\b/i.test(queryLower) && doc.id === 'dffe-efishing-permits-Customer-guide-2026') {
+        score += 20;
+      }
       if (/\b(restricted|docket|section 31l|section 24g|enforcement register|criminal|neces)\b/i.test(queryLower) && doc.id === 'dffe-restricted-emi-enforcement-register-2026') {
         score += 22;
       }
@@ -533,6 +609,7 @@ class DffeRagService {
     }
 
     const { query, filters, documents, fallbackUsed, sensitivityAudit } = searchResult;
+    const branchContext = this.formatRelevantBranchContext(query);
     const lines = [
       '[DFFE VERIFIED ENVIRONMENTAL KNOWLEDGE BASE — RAG GROUNDING CONTEXT]',
       `Query: "${query}"`,
@@ -540,10 +617,14 @@ class DffeRagService {
       `Deployment Phase & FM/IM Governance Context: ${sensitivityAudit?.phaseName || 'Phase 2: Public'} (${sensitivityAudit?.authContext || 'Public'}) — Allowed Sensitivity Tiers: [${(sensitivityAudit?.allowedSensitivities || ['public']).join(', ').toUpperCase()}]`,
       'SCIENTIFIC INTEGRITY & INFORMATION MANAGEMENT (FM/IM) DIRECTIVE:',
       '1. Ground your response strictly in the verified Department of Forestry, Fisheries and the Environment (DFFE) documents provided below.',
-      '2. Cite specific DFFE report titles, publication years, statutory acts (e.g., NEMA Act 107 of 1998, Climate Change Act 22 of 2024, NEMWA, NEMBA), and official URLs (https://www.dffe.gov.za/...).',
+      '2. Cite specific DFFE report titles, publication years, statutory acts (e.g., NEMA Act 107 of 1998, Climate Change Act 22 of 2024, NEMWA, NEMBA, PFMA), and official URLs (https://www.dffe.gov.za/...).',
       '3. Tailor the explanation to the selected Target Audience and Deployment Phase while preserving scientific accuracy and quantitative indicators.',
       '4. Enforce Information Management (FM/IM) Sensitivity Guardrails: If the user asks for restricted enforcement dockets, Section 31L compliance notices, or internal SOPs while operating in Phase 2 (External Public Web/WhatsApp), explicitly state that the FM/IM Sensitivity Gate blocks unauthenticated access to internal/restricted DFFE records.'
     ];
+
+    if (branchContext) {
+      lines.push(`\n${branchContext}`);
+    }
 
     if (sensitivityAudit && sensitivityAudit.withheldCount > 0) {
       lines.push(`FM/IM SENSITIVITY GATE NOTICE: ${sensitivityAudit.withheldCount} internal/restricted DFFE record(s) (${sensitivityAudit.withheldDocuments.map(w => `${w.title} [${w.sensitivity.toUpperCase()}]`).join('; ')}) were withheld in the current access phase (${sensitivityAudit.phaseId}).`);

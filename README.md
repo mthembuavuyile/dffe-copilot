@@ -30,8 +30,11 @@ DFFE Copilot is an in-house **3-Phase Conversational Agentic Platform, Directora
    - Evaluates proposed developments against **Listing Notices 1, 2, and 3 (GNR 983–985)**, determines whether **Basic Assessment (197 days)**, **Scoping & EIR (300 days)**, **REDZ Fast-Track (57 days)**, or **Section 24G Rectification** applies, identifies the Competent Authority, and generates a mandatory **National Web-Based Environmental Screening Tool (`screening.environment.gov.za`)** checklist in the Canvas.
 4. **DFFE National Environmental Systems Telemetry & Carbon Budget Engine (`query_dffe_environmental_indicators` / `/climate`, `/air`, `/waste`)**:
    - Provides deterministic benchmarks and quantitative modelling across **Climate Change Act (Act 22 of 2024)** (2030 NDC $350\text{–}420\text{ Mt CO}_2\text{-eq}$ trajectory, Sector Emission Targets, and 5-year company Carbon Budget reduction modelling), **SAAQIS** (Highveld, Vaal Triangle, and Waterberg-Bojanala Priority Area $\text{PM}_{2.5}/\text{PM}_{10}/\text{SO}_2$ telemetry), **SAWIC** (Extended Producer Responsibility recycling targets), and **EPWP / FRAP** metrics.
-5. **Client-Side Document Intelligence & Deliverable Canvas**:
-   - Parse attached `.pdf` reports and `.csv` environmental monitoring tables directly in the browser and generate structured **Ministerial Briefing Notes**, **EIA Screening Checklists**, and **Compliance Assessments** in the side-by-side Canvas.
+5. **DFFE 10-Branch Dynamic Routing & Service / Permit / ITBS Workflow Engine (`triage_dffe_service_or_permit` / `/itbs`, `/cms`, `/pfma`, `/efishing`, `/permit`)**:
+   - Token-efficient lazy-loading architecture across all **10 DFFE Branches** (*Biodiversity & Conservation*, *Chemicals & Waste*, *Climate Change & Air Quality*, *Corporate Management Services [CMS / GITO / ITBS]*, *Environmental Programmes [EPWP]*, *Financial Management Services [FMS]*, *Forestry Management*, *Regulatory Compliance & Sector Monitoring [RCSM]*, *Oceans & Coasts*, and *Fisheries Management*).
+   - Deterministically triages internal **GITO / ITBS IT equipment & VPN requests** (with SharePoint / Power Apps / Power Automate blueprints), **CMS HR leave & onboarding SOPs**, **FMS PFMA & SITA ICT procurement thresholds**, **e-Fishing recreational & Small-Scale Fisheries (FRAP) permits**, and **National Forests Act / NEMBA TOPS permits**.
+6. **Client-Side Document Intelligence & Deliverable Canvas**:
+   - Parse attached `.pdf` reports and `.csv` environmental monitoring tables directly in the browser and generate structured **Ministerial Briefing Notes**, **EIA Screening Checklists**, **ITBS Digital Workflow Blueprints**, and **Compliance Assessments** in the side-by-side Canvas.
 
 ---
 
@@ -67,12 +70,14 @@ npm test
 | :--- | :--- | :--- |
 | `GET` | `/` | Main DFFE Copilot Workspace & Deliverable Canvas |
 | `GET` | `/dffe` | 3-Phase Agent Studio, EIA Simulator & Multi-Channel (`Web` · `WhatsApp` · `Teams`) Hub |
-| `GET` | `/api/dffe/corpus` | Verified DFFE RAG corpus metadata, series catalogue, phases & directorate agents |
+| `GET` | `/api/dffe/corpus` | Verified DFFE RAG corpus metadata, series catalogue, 10 branches, phases & directorate agents |
+| `GET` | `/api/dffe/branches` | 10-Branch DFFE organisational directory & zero-token dynamic branch classifier |
 | `POST` | `/api/dffe/search` | UNEP EnvironmentGPT-aligned RAG search with 3-Phase FM/IM Sensitivity Gate |
 | `GET` | `/api/dffe/agents` | List predefined & custom DFFE Directorate Agents and 3-Phase governance profiles |
 | `POST` | `/api/dffe/agents` | Provision a new custom Directorate Agent grounded on specific URLs/documents |
 | `POST` | `/api/dffe/ground` | Dynamically ingest an official URL or policy extract into the session RAG corpus |
 | `POST` | `/api/dffe/eia-screen` | Deterministic NEMA Section 24 EIA & National Screening Tool pathway engine |
 | `POST` | `/api/dffe/indicators` | Deterministic Climate Change Act Carbon Budget, SAAQIS, SAWIC & EPWP indicators |
+| `POST` | `/api/dffe/service-triage` | Deterministic CMS/GITO/ITBS equipment, HR leave, PFMA/SITA procurement & e-Fishing permit workflow triage |
 | `POST` | `/api/chat` | Mode & Agent-aware SSE streaming chat completion with DFFE operational tool loop |
 | `POST` | `/api/widget/execute` | Direct deterministic DFFE capability & widget execution |

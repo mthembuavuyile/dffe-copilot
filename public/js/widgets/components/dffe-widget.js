@@ -594,3 +594,127 @@ export const dffeAgentStudioWidget = {
     );
   }
 };
+
+export const dffeServiceTriageWidget = {
+  type: 'dffe_service_triage',
+
+  render(data) {
+    if (!data) return '';
+    if (data.error) return `<div class="atlas-widget error">${escapeHtml(data.error)}</div>`;
+
+    const stepsHtml = (data.steps || []).map(s => `
+      <div style="padding: 8px 10px; border-radius: 5px; background: var(--bg-app, #fff); border: 1px solid var(--border-subtle, #dce6df); margin-bottom: 6px;">
+        <div style="display:flex; justify-content:space-between; font-weight:600; font-size:0.8rem; gap:8px; flex-wrap:wrap;">
+          <span>${escapeHtml(s.step)}</span>
+          <span style="color:var(--accent-primary, #006633); font-family:var(--font-mono, monospace); font-size:0.74rem;">${escapeHtml(s.actor)}</span>
+        </div>
+        <div style="font-size:0.76rem; color:var(--text-secondary, #3b4d42); margin-top:2px;">${escapeHtml(s.detail)}</div>
+      </div>
+    `).join('');
+
+    const checklistHtml = (data.requiredChecklist || []).map(item => `<li>${escapeHtml(item)}</li>`).join('');
+
+    const bp = data.powerPlatformBlueprint;
+    const blueprintHtml = bp
+      ? `
+        <div style="margin: 10px 0; padding: 9px 11px; border-radius: 5px; background: rgba(0, 102, 51, 0.06); border: 1px solid rgba(0, 102, 51, 0.22); font-size: 0.76rem;">
+          <div style="font-weight: 700; text-transform: uppercase; color: var(--accent-primary, #006633); margin-bottom: 4px;">ITBS / Microsoft 365 &amp; Power Platform Enterprise Architecture</div>
+          <div><strong>Data Layer:</strong> ${escapeHtml(bp.dataLayer)}</div>
+          <div><strong>App Layer:</strong> ${escapeHtml(bp.appLayer)}</div>
+          <div><strong>Automation:</strong> ${escapeHtml(bp.automationLayer)}</div>
+          <div><strong>BI &amp; Reporting:</strong> ${escapeHtml(bp.reportingLayer)}</div>
+        </div>
+      `
+      : '';
+
+    const payloadAttr = escapeHtml(JSON.stringify(data));
+    const metaRight = `<span class="atlas-widget-count-badge">BRANCH ${escapeHtml(String(data.branchNumber || 4))} WORKFLOW</span>`;
+
+    const content = `
+      <div class="atlas-dffe-service-root">
+        <div class="atlas-dffe-doc-card">
+          <div class="atlas-dffe-doc-badges">
+            <span class="atlas-dffe-series-tag">${escapeHtml(data.branchName)}</span>
+            <span class="atlas-dffe-year-tag">${escapeHtml(data.turnaroundSla)}</span>
+            <span class="atlas-dffe-gov-tag">${escapeHtml(data.sensitivity)}</span>
+          </div>
+          <h4 class="atlas-dffe-doc-title">${escapeHtml(data.title)}</h4>
+          <div class="atlas-dffe-doc-branch"><strong>Responsible Directorate:</strong> ${escapeHtml(data.directorate)}</div>
+          <p class="atlas-dffe-doc-summary">${escapeHtml(data.summary)}</p>
+
+          <div style="margin: 10px 0;">
+            <div style="font-size:0.76rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px;">Step-by-Step Operational Workflow</div>
+            ${stepsHtml}
+          </div>
+
+          <div style="margin: 10px 0;">
+            <div style="font-size:0.76rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px;">Mandatory Requirements &amp; Compliance Checklist</div>
+            <ul class="atlas-dffe-findings-list">${checklistHtml}</ul>
+          </div>
+
+          ${blueprintHtml}
+
+          <div class="atlas-dffe-doc-actions">
+            <a href="${escapeHtml(data.portalUrl || 'https://www.dffe.gov.za')}" target="_blank" rel="noopener noreferrer" class="atlas-dffe-action-btn primary">
+              <span>${escapeHtml(data.portalOrSystem || 'Official DFFE Portal')}</span>
+              ${WIDGET_ICONS.externalLink}
+            </a>
+            <button type="button" class="atlas-dffe-action-btn js-service-open-canvas" data-service="${payloadAttr}">
+              <span>Open Workflow Form &amp; SOP in Canvas</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    return createWidgetShell(
+      'dffe_service_triage',
+      WIDGET_ICONS.dffe,
+      'DFFE Internal ITBS / CMS & Citizen Service Workflow Engine',
+      content,
+      metaRight
+    );
+  },
+
+  mount(container) {
+    if (!container) return;
+    container.querySelectorAll('.js-service-open-canvas').forEach(btn => {
+      btn.addEventListener('click', () => {
+        try {
+          const d = JSON.parse(btn.getAttribute('data-service') || '{}');
+          const bp = d.powerPlatformBlueprint;
+          const md = [
+            `# ${d.title || 'DFFE Operational Workflow & Checklist'}`,
+            ``,
+            `- **Request / Scenario:** ${d.requestDetails}`,
+            `- **Responsible DFFE Branch:** ${d.branchName}`,
+            `- **Chief Directorate / Directorate:** ${d.directorate}`,
+            `- **FM/IM Sensitivity Classification:** ${d.sensitivity}`,
+            `- **Turnaround SLA / Statutory Window:** ${d.turnaroundSla}`,
+            `- **Target System / Portal:** [${d.portalOrSystem}](${d.portalUrl || 'https://www.dffe.gov.za'})`,
+            ``,
+            `## 1. Executive Summary`,
+            `${d.summary}`,
+            ``,
+            `## 2. Step-by-Step Operational Procedure`,
+            ...(d.steps || []).map(s => `- **${s.step}** (*${s.actor}*): ${s.detail}`),
+            ``,
+            `## 3. Mandatory Submission Checklist`,
+            ...(d.requiredChecklist || []).map(c => `- [ ] ${c}`),
+            ...(bp ? [
+              ``,
+              `## 4. ITBS Enterprise M365 & Power Platform Implementation Blueprint`,
+              `- **Data Layer:** ${bp.dataLayer}`,
+              `- **Application Layer:** ${bp.appLayer}`,
+              `- **Automation Layer:** ${bp.automationLayer}`,
+              `- **Reporting Layer:** ${bp.reportingLayer}`
+            ] : [])
+          ].join('\n');
+          openReportInCanvas(d.title || 'DFFE Service Workflow & Checklist', md);
+        } catch (e) {
+          console.warn('[DFFE Service Triage Widget] Canvas open error:', e);
+        }
+      });
+    });
+  }
+};

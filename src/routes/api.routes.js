@@ -11,6 +11,7 @@ const elevenlabsService = require('../services/elevenlabs.service');
 const dffeRagService = require('../services/dffe-rag.service');
 const dffeEiaScreeningCapability = require('../capabilities/dffe/dffe-eia-screening.capability');
 const dffeIndicatorsCapability = require('../capabilities/dffe/dffe-indicators.capability');
+const dffeServiceTriageCapability = require('../capabilities/dffe/dffe-service-triage.capability');
 
 // Security & Rate Limiting Middlewares
 const { chatLimiter, titleLimiter, toolLimiter } = require('../middleware/rateLimiter');
@@ -108,6 +109,24 @@ router.post('/dffe/eia-screen', toolLimiter, async (req, res) => {
 // Deterministic SAAQIS, SAWIC, Climate Change Act & EPWP Indicators endpoint
 router.post('/dffe/indicators', toolLimiter, async (req, res) => {
   const result = await dffeIndicatorsCapability.execute(req.body || {});
+  res.json(result);
+});
+
+// DFFE 10-Branch Directory & Dynamic Branch Classifier endpoint
+router.get('/dffe/branches', (req, res) => {
+  const q = req.query.q || req.query.query || '';
+  const matched = q ? dffeRagService.detectRelevantBranches(q, 3) : [];
+  res.json({
+    department: 'Department of Forestry, Fisheries and the Environment (DFFE)',
+    branchCount: dffeRagService.getBranches().length,
+    branches: dffeRagService.getBranches(),
+    matchedBranches: matched
+  });
+});
+
+// Deterministic DFFE Service, Permit & Internal ITBS Workflow Triage endpoint
+router.post('/dffe/service-triage', toolLimiter, async (req, res) => {
+  const result = await dffeServiceTriageCapability.execute(req.body || {});
   res.json(result);
 });
 

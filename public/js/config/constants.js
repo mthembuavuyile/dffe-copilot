@@ -11,24 +11,38 @@ export const API_BASE = (typeof window !== 'undefined' && window.location && win
 export const INVESTIGATION_MODES = {
   auto: {
     id: 'auto',
-    name: 'Auto',
-    desc: 'Adapts the response to your environmental, policy, or technical question with source citations',
-    actionHint: 'what environmental or departmental question can I help with?',
+    name: 'Policy & Knowledge',
+    desc: 'Answers DFFE environmental, statutory, and internal CMS / ITBS / FMS questions across all 10 branches with verified source citations',
+    actionHint: 'what DFFE branch, policy, or environmental question can I help with?',
     suggestions: [
-      { label: 'DFFE Programmes & SoER Findings', prompt: 'What environmental programmes is DFFE currently running, and what are the key findings from the latest State of the Environment reports?' },
-      { label: 'NEMA EIA & Screening Tool', prompt: 'Explain NEMA Section 24 EIA Listing Notices 1, 2 and 3, the mandatory DFFE National Screening Tool, and REDZ fast-track timeframes.' },
+      { label: 'Internal ITBS & CMS Workflows', prompt: 'How do I request IT equipment or VPN access in ITBS, where is the employee leave policy, and how can Power Platform automate internal approvals?' },
+      { label: 'NEMA EIA & e-Fishing Permits', prompt: 'Explain NEMA Section 24 EIA Listing Notices 1, 2 and 3, the mandatory DFFE National Screening Tool, REDZ 57-day timeframes, and e-Fishing permits.' },
+      { label: 'DFFE Programmes & SoER Findings', prompt: 'What environmental programmes is DFFE currently running across its 10 branches, and what are the key findings from the latest State of the Environment reports?' },
       { label: 'Climate Change Act & Carbon Budgets', prompt: 'Synthesize the Climate Change Act (Act 22 of 2024) Sector Emission Targets (SETs), mandatory company Carbon Budgets, and municipal adaptation duties.' }
     ]
   },
   research: {
     id: 'research',
-    name: 'Research',
-    desc: 'State of the Environment synthesis, evidence evaluation, biodiversity & climate research maps',
-    actionHint: 'what environmental report or scientific evidence shall we explore?',
+    name: 'Briefings & Reports',
+    desc: 'State of the Environment synthesis, Ministerial Briefing Notes, DG submissions, and 10-Branch evidence maps',
+    actionHint: 'what departmental briefing note or State of the Environment report shall we draft?',
     suggestions: [
+      { label: 'Draft Ministerial Briefing Note', prompt: 'Draft a structured DFFE Ministerial Briefing Note on the 2025–2030 Strategic Plan priorities across Climate Change, Biodiversity (30x30), Oceans/Fisheries, and Regulatory Efficiency.' },
       { label: 'State of the Environment Synthesis', prompt: 'Synthesize the latest South Africa State of the Environment Report (SoER) findings across biodiversity (30x30), inland water, air quality (SAAQIS), and waste (SAWIC).' },
-      { label: 'Biodiversity White Paper & NEMBA', prompt: 'Synthesize the four strategic pillars of DFFE\'s White Paper on Conservation and Sustainable Use of South Africa\'s Biodiversity and the National Biodiversity Economy Strategy.' },
+      { label: 'ITBS Digital Transformation Proposal', prompt: 'Draft an internal GITO / ITBS Innovation Initiative proposal for digitising equipment requests and departmental knowledge discovery using SharePoint, Power Platform, and RAG.' },
       { label: 'Oceans, Coasts & FRAP Stock Outlook', prompt: 'Evaluate DFFE\'s Marine Protected Areas (MPAs), OCIMS satellite monitoring, and Small-Scale Fisheries co-operative allocations under the Marine Living Resources Act.' }
+    ]
+  },
+  reason: {
+    id: 'reason',
+    name: 'Compliance & Screening',
+    desc: 'Statutory & policy decomposition, NEMA Section 24 EIA screening, Green Scorpions enforcement, and PFMA / SCM rules',
+    actionHint: 'what NEMA EIA activity, permit, or PFMA compliance rule shall we evaluate?',
+    suggestions: [
+      { label: 'Screen NEMA Section 24 EIA Activity', prompt: '/eia 75 MW Solar PV & Grid Connection in a Renewable Energy Development Zone (REDZ)' },
+      { label: 'PFMA & SITA ICT Procurement Rules', prompt: 'Explain DFFE Financial Management Services (FMS) procurement thresholds under the PFMA, SITA ICT sign-off requirements, and the 30-day invoice payment rule.' },
+      { label: 'NEMA Section 28 & Green Scorpions', prompt: 'Deconstruct the legal elements, strict liability principles, and Environmental Management Inspector (Green Scorpions) enforcement powers under NEMA Section 28, 31L, and 24G.' },
+      { label: 'FM/IM 3-Phase Sensitivity Audit', prompt: 'Challenge this proposal: "DFFE should deploy a single unsegmented AI chatbot connected to both internal SharePoint and the public website." Identify FM/IM governance and POPIA risks.' }
     ]
   },
   solve: {

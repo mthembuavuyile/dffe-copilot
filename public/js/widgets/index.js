@@ -31,7 +31,8 @@ import {
   dffeWidget,
   dffeEiaScreeningWidget,
   dffeIndicatorsWidget,
-  dffeAgentStudioWidget
+  dffeAgentStudioWidget,
+  dffeServiceTriageWidget
 } from './components/dffe-widget.js';
 
 const WIDGET_REGISTRY = new Map();
@@ -80,6 +81,7 @@ registerComponent(dffeWidget);
 registerComponent(dffeEiaScreeningWidget);
 registerComponent(dffeIndicatorsWidget);
 registerComponent(dffeAgentStudioWidget);
+registerComponent(dffeServiceTriageWidget);
 
 /**
  * Render widget HTML by type and data

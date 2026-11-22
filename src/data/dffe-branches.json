@@ -1,0 +1,318 @@
+{
+  "department": "Department of Forestry, Fisheries and the Environment (DFFE)",
+  "jurisdiction": "Republic of South Africa",
+  "headquarters": "Environment House, 473 Steve Biko Road, Arcadia, Pretoria, South Africa",
+  "compactDirectoryIndex": [
+    "1. Biodiversity & Conservation (NEMBA, NEMPAA, TOPS permits, SANParks/SANBI, 30x30 target, Nagoya Bioprospecting, NISCWT anti-poaching)",
+    "2. Chemicals & Waste Management (NEMWA, SAWIC/SAWIS telemetry, Section 18 EPR, Circular Economy, hazardous waste, Stockholm/Minamata POPs)",
+    "3. Climate Change & Air Quality (Climate Change Act 22 of 2024, Sector Emission Targets, Carbon Budgets, 2030 NDC, NEMAQA, SAAQIS, NAEIS)",
+    "4. Corporate Management Services [CMS] (Chief Directorate: GITO -> Directorate: IT Business Solutions [ITBS], SharePoint/M365 Intranet, Power Platform, HR Leave/Onboarding, Legal Services)",
+    "5. Environmental Programmes [EPWP] (Working for Water, Working on Fire, Working for Wetlands, Working for the Coast, Working on Waste, Ten Million Trees, Groen Sebenza)",
+    "6. Financial Management Services [FMS] (PFMA Act 1 of 1999 compliance, Supply Chain Management [SCM], SITA ICT procurement, RFQs/Tenders, GEF/Green Climate Fund)",
+    "7. Forestry Management (National Forests Act 84 of 1998, Commercial Forestry Masterplan, Indigenous State Forests, Champion & Protected Trees licensing, NVFFA wildfire standards)",
+    "8. Regulatory Compliance & Sector Monitoring [RCSM] (NEMA Section 24 EIA Listing Notices 1-3, National Environmental Screening Tool, REDZ 57-day fast-track, Green Scorpions [EMIs], Section 24G & 31L)",
+    "9. Oceans & Coasts (NEM:ICMA, OCIMS satellite VMS & SAR surveillance, Marine Spatial Planning, 42 Marine Protected Areas, Operation Phakisa Blue Economy, Estuaries)",
+    "10. Fisheries Management (Marine Living Resources Act [MLRA], FRAP 22 commercial sectors, e-Fishing permits, 315+ Small-Scale Fishing Co-operatives, TAC/TAE stock assessments)"
+  ],
+  "branches": [
+    {
+      "id": "branch-1-biodiversity",
+      "number": 1,
+      "name": "Biodiversity and Conservation",
+      "shortCode": "B&C",
+      "mandate": "Conserve and manage South Africa's biodiversity, protected areas, ecosystems, and wildlife heritage while advancing inclusive biodiversity economy growth and equitable benefit-sharing.",
+      "chiefDirectorates": [
+        "Biodiversity Planning and Management",
+        "Conservation Areas and Protected Areas Management",
+        "Biodiversity Economy and Sustainable Use",
+        "Transfrontier Conservation Areas (TFCAs)"
+      ],
+      "statutes": [
+        "National Environmental Management: Biodiversity Act (NEMBA, Act 10 of 2004)",
+        "National Environmental Management: Protected Areas Act (NEMPAA, Act 57 of 2003)",
+        "White Paper on Conservation and Sustainable Use of South Africa's Biodiversity (2023/2025)"
+      ],
+      "systemsAndPortals": [
+        "National Bioprospecting & TOPS Permitting Registry",
+        "SANBI Biodiversity Advisor & Protected Areas Register (SAPAD)",
+        "National Integrated Strategy to Combat Wildlife Trafficking (NISCWT)"
+      ],
+      "coreWorkflows": [
+        "Threatened or Protected Species (TOPS) and CITES import/export permit evaluations",
+        "Nagoya Protocol Access and Benefit-Sharing (ABS) / Bioprospecting agreements (Rooibos, Buchu, Honeybush, Aloe ferox)",
+        "Kunming-Montreal 30x30 Protected Areas expansion and Biosphere Reserve declarations",
+        "Alien and Invasive Species (AIS) statutory listing and control regulations"
+      ],
+      "keywords": ["biodiversity", "conservation", "nemba", "nempaa", "tops", "cites", "bioprospecting", "nagoya", "sanparks", "sanbi", "30x30", "protected area", "wildlife", "rhino", "poaching", "tfca", "white paper", "nbes"]
+    },
+    {
+      "id": "branch-2-chemicals-waste",
+      "number": 2,
+      "name": "Chemicals and Waste Management",
+      "shortCode": "CWM",
+      "mandate": "Regulate chemicals, hazardous waste, municipal waste diversion, and circular economy producer responsibility under the National Waste Management Strategy.",
+      "chiefDirectorates": [
+        "Chemicals Management",
+        "Hazardous Waste Management and Licensing",
+        "General Waste and Municipal Support (Circular Economy & EPR)",
+        "Waste Information and Policy (SAWIC / SAWIS)"
+      ],
+      "statutes": [
+        "National Environmental Management: Waste Act (NEMWA, Act 59 of 2008)",
+        "Section 18 Extended Producer Responsibility (EPR) Regulations",
+        "National Waste Management Strategy (NWMS)"
+      ],
+      "systemsAndPortals": [
+        "South African Waste Information Centre (SAWIC — https://sawic.environment.gov.za)",
+        "South African Waste Information System (SAWIS Monthly Tonnage Reporting)",
+        "Waste Management Licensing (WML) Portal"
+      ],
+      "coreWorkflows": [
+        "Waste Management Licence (WML) applications for treatment, recycling, and landfill facilities",
+        "Section 18 Extended Producer Responsibility (EPR) PRO registration and target auditing (Paper & Packaging, E-Waste, Lighting, Batteries, Oils, Pesticides)",
+        "SAWIS mandatory 90-day waste generation and landfill diversion reporting",
+        "Basel, Stockholm, Rotterdam, and Minamata convention chemicals and PCB compliance"
+      ],
+      "keywords": ["chemicals", "waste", "nemwa", "sawic", "sawis", "epr", "extended producer responsibility", "circular economy", "recycling", "landfill", "e-waste", "packaging", "hazardous waste", "pcb", "mercury", "dumping", "wml"]
+    },
+    {
+      "id": "branch-3-climate-air",
+      "number": 3,
+      "name": "Climate Change and Air Quality",
+      "shortCode": "CCAQ",
+      "mandate": "Lead South Africa's just transition to a low-carbon, climate-resilient economy under the Climate Change Act and enforce ambient air quality standards across national priority airsheds.",
+      "chiefDirectorates": [
+        "Climate Change Mitigation and Specialist Monitoring (Carbon Budgets & SETs)",
+        "Climate Change Adaptation and National Climate Resilience",
+        "Air Quality Management (SAAQIS & NAEIS)",
+        "International Climate Change Relations and Negotiations (UNFCCC / NDC)"
+      ],
+      "statutes": [
+        "Climate Change Act (Act 22 of 2024)",
+        "National Environmental Management: Air Quality Act (NEMAQA, Act 39 of 2004)",
+        "National Greenhouse Gas Emission Reporting Regulations (NGER)"
+      ],
+      "systemsAndPortals": [
+        "South African Air Quality Information System (SAAQIS — https://saaqis.environment.gov.za)",
+        "National Atmospheric Emission Inventory System (NAEIS)",
+        "National Climate Change Information System (NCCIS)"
+      ],
+      "coreWorkflows": [
+        "Mandatory Company Carbon Budget allocation and 5-year GHG Mitigation Plan reviews",
+        "Sector Emission Targets (SETs) tracking toward the 2030 NDC (350–420 Mt CO2-eq) trajectory",
+        "Atmospheric Emission Licence (AEL) Section 21 Minimum Emission Standards (MES) verification",
+        "Priority Area Air Quality Management Plans (Highveld, Vaal Triangle, Waterberg-Bojanala)"
+      ],
+      "keywords": ["climate", "climate change", "act 22", "carbon budget", "sector emission target", "ndc", "ghg", "emissions", "just transition", "adaptation", "air quality", "saaqis", "naeis", "nemaqa", "pm2.5", "pm10", "so2", "highveld", "vaal", "waterberg", "ael"]
+    },
+    {
+      "id": "branch-4-cms",
+      "number": 4,
+      "name": "Corporate Management Services",
+      "shortCode": "CMS",
+      "mandate": "Deliver enterprise ICT governance (GITO), internal digital business solutions (ITBS), human resources, legal services, communications, and records/information management (FM/IM) across DFFE.",
+      "chiefDirectorates": [
+        "Office of the Government Information Technology Officer (GITO) — Directorate: IT Business Solutions (ITBS) & Directorate: ICT Infrastructure & Operations",
+        "Human Resource Management and Development (Leave, Onboarding, Wellness, PMDS)",
+        "Information Management and Records Governance (FM/IM, EDMS, SharePoint & PAIA/POPIA)",
+        "Legal Services, Corporate Communications and Facilities Management (Environment House)"
+      ],
+      "statutes": [
+        "Protection of Personal Information Act (POPIA, Act 4 of 2013)",
+        "Promotion of Access to Information Act (PAIA, Act 2 of 2000)",
+        "Public Service Act & Corporate Governance of ICT Policy Framework (CGICTPF)"
+      ],
+      "systemsAndPortals": [
+        "DFFE SharePoint Online Intranet & Microsoft 365 Collaboration Environment",
+        "ITBS Internal Service Request, Asset Management & Digital Workflow Portal (Power Apps / Power Automate)",
+        "DFFE Copilot & Directorate Agent Studio (Microsoft Copilot Studio / Azure AI / OpenRouter Hybrid)",
+        "Electronic Document and Records Management System (EDMS)"
+      ],
+      "coreWorkflows": [
+        "ITBS IT Equipment Requests (laptops, monitors, 3G/LTE, VPN access) with line-manager Power Automate approval",
+        "IT Service Desk incident logging, ICT asset lifecycle tracking, and software provisioning",
+        "Directorate AI Agent creation, SharePoint document library grounding, and 3-Phase FM/IM content sensitivity classification",
+        "HR Employee Leave Applications, New Employee Onboarding Checklists, and PMDS performance agreements"
+      ],
+      "keywords": ["cms", "corporate management", "gito", "itbs", "it business solutions", "sharepoint", "intranet", "power apps", "power automate", "power bi", "microsoft 365", "teams", "copilot", "laptop", "equipment request", "vpn", "it support", "service desk", "asset management", "leave", "leave policy", "onboarding", "hr", "human resources", "popia", "paia", "edms", "template", "internal process", "fm/im"]
+    },
+    {
+      "id": "branch-5-programmes",
+      "number": 5,
+      "name": "Environmental Programmes",
+      "shortCode": "EP",
+      "mandate": "Execute labour-intensive Expanded Public Works Programme (EPWP) environmental restoration, wildfire suppression, ecological infrastructure rehabilitation, and green youth employment.",
+      "chiefDirectorates": [
+        "Natural Resource Management (Working for Water, Working on Fire, Working for Forests/Ecosystems)",
+        "Environmental Protection and Infrastructure Programmes (Working for Wetlands, Working for the Coast, Working on Waste)",
+        "Expanded Public Works Programme (EPWP) Coordination, Ten Million Trees & Groen Sebenza Youth Pipeline",
+        "Information Management and Spatial Mapping (NRM GIS)"
+      ],
+      "statutes": [
+        "Expanded Public Works Programme (EPWP) Ministerial Determination & Code of Good Practice",
+        "Conservation of Agricultural Resources Act (CARA) & NEMBA Invasive Species Mandates",
+        "National Veld and Forest Fire Act (NVFFA, Act 101 of 1998)"
+      ],
+      "systemsAndPortals": [
+        "DFFE Environmental Programmes Project Management & EPWP Participant Registry",
+        "Working on Fire (WoF) National Wildfire Dispatch & Early Warning Telemetry",
+        "Presidential Ten Million Trees Geo-Verification Tracker"
+      ],
+      "coreWorkflows": [
+        "Working for Water (WfW) invasive alien plant clearing contracts and catchment water-yield tracking",
+        "Working on Fire (WoF) wildland firefighter deployment, firebreak preparation, and FPA support",
+        "Working for Wetlands and Working for the Coast rehabilitation project verification",
+        "EPWP beneficiary recruitment quotas (55% women, 65% youth, 2% persons with disabilities) and Groen Sebenza placements"
+      ],
+      "keywords": ["environmental programmes", "epwp", "working for water", "wfw", "working on fire", "wof", "working for wetlands", "working for the coast", "working on waste", "ten million trees", "10 million trees", "groen sebenza", "green jobs", "invasive alien", "wildfire", "wetland rehabilitation"]
+    },
+    {
+      "id": "branch-6-fms",
+      "number": 6,
+      "name": "Financial Management Services",
+      "shortCode": "FMS",
+      "mandate": "Ensure sound public financial management, PFMA compliance, transparent Supply Chain Management (SCM), SITA ICT procurement alignment, and environmental donor fund governance.",
+      "chiefDirectorates": [
+        "Financial Administration and Accounting",
+        "Budget Management and Strategic Financial Planning",
+        "Supply Chain Management (SCM — Demand, Acquisition, Logistics & Asset Verification)",
+        "Donor Funding, GEF & Green Climate Fund Financial Governance"
+      ],
+      "statutes": [
+        "Public Finance Management Act (PFMA, Act 1 of 1999) & National Treasury Regulations",
+        "Preferential Procurement Policy Framework Act (PPPFA, Act 5 of 2000)",
+        "State Information Technology Agency (SITA) Act & Transversal ICT Contract Frameworks"
+      ],
+      "systemsAndPortals": [
+        "National Treasury Central Supplier Database (CSD) & e-Tender Portal",
+        "DFFE Internal Supply Chain Requisition & Digital Approval Workflow",
+        "BAS (Basic Accounting System) & LOGIS Asset/Procurement Integration"
+      ],
+      "coreWorkflows": [
+        "Price quotation (RFQ) and competitive tender (RFP) procurement thresholds under PFMA / National Treasury instructions",
+        "SITA transversal ICT hardware, software, and cloud service procurement approvals (in collaboration with GITO/ITBS)",
+        "Subsistence and Travel (S&T) claims, supplier invoice 30-day payment tracking, and irregular expenditure prevention",
+        "Financial reporting for EPWP grants, public entities (SANBI, SANParks, SAWS, iSimangaliso), and international climate funds"
+      ],
+      "keywords": ["financial management", "fms", "finance", "pfma", "scm", "supply chain", "procurement", "tender", "rfq", "quotation", "sita", "csd", "invoice", "30 days", "budget", "expenditure", "travel claim", "s&t", "logis", "bas", "cfo"]
+    },
+    {
+      "id": "branch-7-forestry",
+      "number": 7,
+      "name": "Forestry Management",
+      "shortCode": "FOR",
+      "mandate": "Promote sustainable management of South Africa's indigenous state forests, woodlands, and commercial timber plantations while implementing the Commercial Forestry Sector Masterplan.",
+      "chiefDirectorates": [
+        "Forestry Operations and Regional State Forests Management",
+        "Forestry Development, Community Forestry and Masterplan Implementation",
+        "Forestry Regulation, Protected Tree Licensing and Veld Fire Compliance"
+      ],
+      "statutes": [
+        "National Forests Act (NFA, Act 84 of 1998)",
+        "National Veld and Forest Fire Act (NVFFA, Act 101 of 1998)",
+        "Commercial Forestry Sector Masterplan"
+      ],
+      "systemsAndPortals": [
+        "National Forests Act Protected Tree & Forest Produce Licensing System",
+        "National Veld and Forest Fire Danger Rating & Fire Protection Association (FPA) Registry"
+      ],
+      "coreWorkflows": [
+        "Section 7 & Section 15 National Forests Act licence applications to cut, disturb, or transport protected indigenous trees (e.g., Camel Thorn, Yellowwood, White Milkwood)",
+        "State plantation transfers and community-private forestry partnerships under the Forestry Masterplan",
+        "Participatory Forest Management (PFM) and non-timber forest product access (medicinal plants, honey, firewood)",
+        "Fire Protection Association (FPA) registration and statutory firebreak compliance"
+      ],
+      "keywords": ["forestry", "forest", "national forests act", "nfa", "nvffa", "protected tree", "champion tree", "yellowwood", "camel thorn", "milkwood", "plantation", "timber", "forestry masterplan", "firebreak", "fpa", "woodland", "tree cutting permit"]
+    },
+    {
+      "id": "branch-8-rcsm",
+      "number": 8,
+      "name": "Regulatory Compliance and Sector Monitoring",
+      "shortCode": "RCSM",
+      "mandate": "Streamline Environmental Impact Assessments (EIAs) and integrated environmental authorisations while leading intelligence-driven compliance and enforcement through the Green Scorpions (EMIs).",
+      "chiefDirectorates": [
+        "Integrated Environmental Authorisations (NEMA Section 24 EIA & National Screening Tool)",
+        "Compliance Monitoring and Sector Audit",
+        "Environmental Enforcement (Green Scorpions / Environmental Management Inspectors — EMIs)",
+        "Law Reform, Section 43 Appeals and Legal Support"
+      ],
+      "statutes": [
+        "National Environmental Management Act (NEMA, Act 107 of 1998) — Section 24, Section 24G, Section 28, Section 31L",
+        "NEMA EIA Regulations (2014, as amended) & Listing Notices 1, 2, and 3 (GNR 983–985)",
+        "Renewable Energy Development Zones (REDZs) & Strategic Transmission Corridor Notices"
+      ],
+      "systemsAndPortals": [
+        "DFFE National Web-Based Environmental Screening Tool (https://screening.environment.gov.za)",
+        "National Environmental Compliance and Enforcement System (NECES)",
+        "Environmental Crimes & Incidents Hotline (0800 205 005)"
+      ],
+      "coreWorkflows": [
+        "NEMA Section 24 EIA pathway determination: Basic Assessment (197 days), Scoping & EIR (300 days), or REDZ Fast-Track (57 days)",
+        "Mandatory site sensitivity report verification via the National Environmental Screening Tool",
+        "NEMA Section 24G unlawful commencement rectification and administrative fine assessment (up to R10 million)",
+        "Green Scorpions (EMI) Section 31L Compliance Notices, Section 28 Duty of Care directives, and criminal docket triage"
+      ],
+      "keywords": ["regulatory compliance", "rcsm", "nema", "eia", "environmental impact assessment", "screening tool", "listing notice", "basic assessment", "bar", "scoping", "redz", "environmental authorisation", "green scorpions", "emi", "section 24", "section 24g", "section 28", "section 31l", "neces", "enforcement", "environmental crime", "appeal"]
+    },
+    {
+      "id": "branch-9-oceans-coasts",
+      "number": 9,
+      "name": "Oceans and Coasts",
+      "shortCode": "O&C",
+      "mandate": "Manage and protect South Africa's 1.54 million km² Exclusive Economic Zone (EEZ), 42 Marine Protected Areas (MPAs), estuaries, and coastal zone while coordinating the Operation Phakisa Blue Economy.",
+      "chiefDirectorates": [
+        "Oceans and Coastal Research (Marine Biodiversity, Climate & Ecosystem Monitoring)",
+        "Integrated Coastal Management and Conservation (Estuaries, Coastal Public Property & MPAs)",
+        "Ocean Economy, Marine Spatial Planning (MSP) and Operation Phakisa",
+        "Specialist Monitoring Services (OCIMS, Polar Research / SANAP & SA Agulhas II)"
+      ],
+      "statutes": [
+        "National Environmental Management: Integrated Coastal Management Act (NEM:ICMA, Act 24 of 2008)",
+        "Marine Spatial Planning Act (Act 16 of 2018)",
+        "Antarctic Treaties Act & NEMPAA Marine Protected Area Regulations"
+      ],
+      "systemsAndPortals": [
+        "Oceans and Coasts Information Management System (OCIMS — VMS Vessel Tracking, SAR Oil Spill & HAB Early Warning)",
+        "National Coastal Access, Estuarine Management & Coastal Discharge Permitting System"
+      ],
+      "coreWorkflows": [
+        "Coastal Waters Discharge Permit (CWDP) and Dumping at Sea permit evaluations under NEM:ICMA",
+        "OCIMS satellite Synthetic Aperture Radar (SAR) oil-spill, bilge dumping, and illegal vessel tracking",
+        "Marine Spatial Planning (MSP) sector zoning and Marine Protected Area (MPA) management",
+        "South African National Antarctic Programme (SANAP) expeditions (Marion Island, Gough Island, Antarctica)"
+      ],
+      "keywords": ["oceans", "coasts", "oceans and coasts", "icma", "ocims", "marine spatial planning", "msp", "mpa", "marine protected area", "blue economy", "operation phakisa", "estuary", "coastal", "oil spill", "hab", "algal bloom", "sanap", "antarctica", "marion island", "eez"]
+    },
+    {
+      "id": "branch-10-fisheries",
+      "number": 10,
+      "name": "Fisheries Management",
+      "shortCode": "FISH",
+      "mandate": "Ensure sustainable utilisation and equitable allocation of marine living resources across 22 commercial fishing sectors, 315+ small-scale fishing co-operatives, recreational anglers, and aquaculture.",
+      "chiefDirectorates": [
+        "Marine Resources Management (FRAP Commercial Fishing Rights & e-Fishing Permits)",
+        "Small-Scale Fisheries Management ('Fishing for Freedom' & Co-operative Support)",
+        "Fisheries Research and Development (Stock Assessments, TAC & TAE Scientific Working Groups)",
+        "Monitoring, Control and Surveillance (MCS — Anti-Poaching, Fishery Control Officers & Patrol Vessels)",
+        "Aquaculture and Economic Development (Proclaimed Fishing Harbours)"
+      ],
+      "statutes": [
+        "Marine Living Resources Act (MLRA, Act 18 of 1998)",
+        "Small-Scale Fisheries Policy & Regulations",
+        "Aquaculture Development Framework"
+      ],
+      "systemsAndPortals": [
+        "DFFE e-Fishing Online Permit & Recreational Angling System",
+        "Fishing Rights Allocation Process (FRAP) Online Application & Appeals Portal",
+        "Catch Statistics & Electronic Monitoring / Vessel Monitoring System (VMS)"
+      ],
+      "coreWorkflows": [
+        "e-Fishing online recreational fishing permit applications and renewal",
+        "Small-Scale Fishing Co-operative basket allocation, community permit issuance, and harbour support",
+        "Fishing Rights Allocation Process (FRAP) commercial rights scoring and Section 80 appeal reviews",
+        "Annual Total Allowable Catch (TAC) and Total Applied Effort (TAE) determinations for hake, abalone, rock lobster, sardine, anchovy, and linefish"
+      ],
+      "keywords": ["fisheries", "fishing", "mlra", "frap", "e-fishing", "efishing", "fishing permit", "recreational fishing", "small-scale fisheries", "small scale fishing", "fishing for freedom", "tac", "tae", "abalone", "hake", "rock lobster", "kreef", "sardine", "anchovy", "linefish", "aquaculture", "fishing harbour", "fishery control"]
+    }
+  ]
+}
