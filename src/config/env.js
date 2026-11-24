@@ -26,6 +26,8 @@ const env = {
   OPENROUTER_API_KEYS: openRouterKeys,
   DEFAULT_MODEL: process.env.OPENROUTER_MODEL || 'openrouter/free',
   OPENROUTER_BASE_URL: process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1',
+  OPENROUTER_ZDR: process.env.OPENROUTER_ZDR === 'true',
+  OPENROUTER_EMBEDDING_MODEL: process.env.OPENROUTER_EMBEDDING_MODEL || 'openai/text-embedding-3-small',
   APP_TITLE: APP.shortTitle,
   APP_URL: process.env.APP_URL || APP.url,
   UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_ACCESS_KEY || '',

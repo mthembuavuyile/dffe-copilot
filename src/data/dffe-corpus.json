@@ -13,7 +13,8 @@
       { "id": "climate", "label": "Climate Change & Air Quality" },
       { "id": "forestry_fisheries", "label": "Forestry, Fisheries & Oceans" },
       { "id": "waste", "label": "Chemicals, Waste & Circular Economy" },
-      { "id": "internal_sop", "label": "Internal Directorate SOPs & Governance" }
+      { "id": "internal_sop", "label": "Internal Directorate SOPs & Governance" },
+      { "id": "gito_ict", "label": "GITO & ICT Governance / Organogram" }
     ],
     "audiences": [
       { "id": "public", "label": "General Public" },
@@ -414,6 +415,61 @@
         "National Forests Act Protected Tree Licensing: Under Section 15 of the National Forests Act (Act 84 of 1998), no person may cut, disturb, damage, or transport any listed protected tree (including Yellowwood, Camel Thorn, White Milkwood, Baobab, and Marula) without a DFFE Forestry licence."
       ],
       "keywords": ["e-fishing", "efishing", "fishing permit", "recreational fishing", "small-scale fisheries", "fishing for freedom", "rock lobster", "angling", "protected tree", "tree permit", "national forests act", "yellowwood", "camel thorn", "milkwood", "permits", "licences"]
+    },
+    {
+      "id": "dffe-gito-organogram-source-a-2026",
+      "title": "DFFE Corporate Management Services (CMS) & Revised ICT Organogram (Source A — Proposed GITO Capability Structure)",
+      "series": "gito_ict",
+      "seriesLabel": "GITO & ICT Governance / Organogram",
+      "collection": "ICT Organogram",
+      "collectionId": "ict_organogram",
+      "status": "Proposed",
+      "page": "Page 1",
+      "sourceId": "SOURCE_A",
+      "year": "2026",
+      "branch": "Branch 4: Corporate Management Services (CMS) — Chief Directorate: Government Information Technology Office (GITO)",
+      "audiences": ["public", "officials", "researchers", "compliance"],
+      "sensitivity": "public",
+      "governance": "PROPOSED STRUCTURE (SOURCE A, Page 1) — Official CMS Placement + Proposed GITO Capability Areas",
+      "citation": "DFFE Corporate Management Services Webpage (Official) & Revised_ICT_Organogram.pdf, Page 1 ('DPSA-Aligned Proposed Government ICT Organogram for a Small Organisation' — Structure status: Proposed).",
+      "url": "https://www.dffe.gov.za/corporate-management-services",
+      "summary": "Distinguishes the official public departmental fact that the Chief Directorate: Government Information Technology Office (GITO) sits within the Corporate Management Services (CMS) branch under the DDG: CMS from the supplied one-page proposed Revised ICT Organogram (Source A, Page 1), which outlines four functional capability areas and four governance/advisory forums.",
+      "keyFindings": [
+        "Official Public Departmental Placement (Approved Fact): The official DFFE Corporate Management Services webpage identifies the Chief Directorate: Government Information Technology Office (GITO) within the CMS branch under the Deputy Director-General (DDG): Corporate Management Services.",
+        "Proposed Capability Area 1 — ICT Governance, Architecture & Risk Management (Source A, Page 1): Strategy, Policy & Performance; Enterprise & Solution Architecture; ICT Service Continuity & Disaster Recovery; Risk Management & Compliance.",
+        "Proposed Capability Area 2 — Digital Solutions, Data & Business Enablement (Source A, Page 1): Business Relationship & Demand Management; Applications Development & Support; Integration, Automation & Artificial Intelligence; Data Governance, BI & Analytics; Digital Adoption & Benefits.",
+        "Proposed Capability Area 3 — ICT Infrastructure, Operations & User Services (Source A, Page 1): Networks, Hosting & Cloud; Systems, Platforms & Identity Administration; Service Desk & End-User Support; ICT Assets, Configuration & Availability; Service Management.",
+        "Proposed Capability Area 4 — Cybersecurity & Information Security (Source A, Page 1): Cybersecurity Operations & Engineering; Security Monitoring & Incident Response; Identity & Access Security; Vulnerability & Threat Management; Security Governance.",
+        "Governance Forums & Mandatory Status Caveat (Source A, Page 1): Shows ICT Steering Committee (business-led governance forum), Architecture & Security Review Forum, Data Governance Forum, and ICT Operational Committee via dashed governance/advisory lines. Footnote caveat: Functional sub-units do NOT constitute posts; final posts, grades and establishment are subject to an approved business case, consultation, affordability, job evaluation and DPSA organisational-design processes."
+      ],
+      "keywords": ["gito", "government information technology office", "government information technology officer", "what directorates", "sub-directorates", "fall under gito", "revised ict organogram", "four capability areas", "cybersecurity", "digital solutions", "applications development", "ict governance", "ict infrastructure", "service desk", "proposed structure", "source a"]
+    },
+    {
+      "id": "dffe-gito-operating-model-source-b-2026",
+      "title": "DFFE Government ICT Proposed Operating Model & GITO Structure (Source B — Alternative 4-Unit Model, Hybrid 4IR Layer & DPSA CGICTPF v2)",
+      "series": "gito_ict",
+      "seriesLabel": "GITO & ICT Governance / Organogram",
+      "collection": "ICT Governance",
+      "collectionId": "ict_governance",
+      "status": "Proposed",
+      "page": "Pages 1–7",
+      "sourceId": "SOURCE_B",
+      "year": "2026",
+      "branch": "Branch 4: Corporate Management Services (CMS) — Chief Directorate: GITO",
+      "audiences": ["public", "officials", "researchers", "compliance"],
+      "sensitivity": "public",
+      "governance": "PROPOSED OPERATING MODEL (SOURCE B, Pages 1–7) — Subject to 11 Pre-Implementation Validation Steps",
+      "citation": "DFFE Government ICT Proposed Operating Model and GITO Structure(1).pdf, Pages 1–7 (Structure status: Proposed) & DPSA Corporate Governance of ICT Policy Framework (CGICTPF Version 2, March 2022).",
+      "url": "https://www.dpsa.gov.za/dpsa2g/documents/psictm/2022/CGICTPF%20version%202.pdf",
+      "summary": "Seven-page proposed operating model assessing the GITO structure against the DPSA Corporate Governance of ICT Policy Framework (Version 2, March 2022), proposing 8 design principles, an alternative 4-unit consolidated structure (where Unit 4 is ICT Portfolio, Commercial and Service Management and Cybersecurity sits within Unit 1), an optional Hybrid 4IR Delivery Layer, functional boundaries, and 11 pre-implementation validation requirements.",
+      "keyFindings": [
+        "Alternative 4 Consolidated Capability Units (Source B, Pages 2–4): (Unit 1) ICT Governance, Architecture, Risk and Security [includes Cybersecurity, Risk & Compliance]; (Unit 2) Digital Solutions, Data and Business Enablement; (Unit 3) ICT Infrastructure, Operations and User Services; (Unit 4) ICT Portfolio, Commercial and Service Management [Portfolio/PMO, Financial Planning & Procurement, Contracts/Licences/Vendors, SITA & SLA Management, Quality Assurance & Benefits Tracking].",
+        "Four Key Differences Between Source A (1-Page Organogram) and Source B (7-Page Operating Model): (1) Cybersecurity is a standalone 4th area in Source A vs. inside Unit 1 in Source B; (2) The 4th unit is Cybersecurity in Source A vs. ICT Portfolio, Commercial & Service Management in Source B; (3) Source A shows DDG: CMS above GITO whereas Source B's diagram shows Accounting Officer / HoD above GITO; (4) Service Management sits under Unit 3 in Source A vs. standalone Unit 4 in Source B.",
+        "Provider-Neutral Accountability & Functional Boundaries (Source B, Pages 2, 6): Use of SITA or external service providers does NOT transfer DFFE's accountability; GITO retains accountability for architecture, SLAs, security, cost, performance, information governance, and benefits. Segregation of duties requires separating initiation, approval, and verification of high-risk changes.",
+        "Optional Hybrid 4IR Delivery Layer (Source B, Pages 5–6): Proposes multidisciplinary product teams, product/service portfolio management, communities of practice, controlled AI/tech experimentation, and joint GITO-HRM digital capability development without replacing permanent line authority.",
+        "11 Mandatory Pre-Implementation Requirements (Source B, Page 7): Before implementation, DFFE must complete an Organisational Functionality Assessment, Service-Delivery Model, Functional Analysis, Business Case, Organisational Architecture confirmation, Job Design, Automated Job Evaluation/Grading (no grade inferred from organogram), Consultation, Fiscal Controls, Lawful Approval, and Performance Measurement."
+      ],
+      "keywords": ["operating model", "source b", "cgictpf", "dpsa", "portfolio commercial and service management", "hybrid 4ir", "communities of practice", "design principles", "segregation of duties", "sita accountability", "job evaluation", "functionality assessment", "decentralised delivery"]
     }
   ]
 }

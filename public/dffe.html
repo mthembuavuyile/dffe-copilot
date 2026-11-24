@@ -631,6 +631,7 @@
           <label for="explorerSeries">Report Series</label>
           <select id="explorerSeries" class="dffe-select">
             <option value="all">All DFFE Sources</option>
+            <option value="gito_ict">GITO &amp; ICT Governance / Organogram</option>
             <option value="soer">State of the Environment (SoER)</option>
             <option value="programmes">Environmental Programmes (EPWP)</option>
             <option value="legislation">Legislation &amp; EIA (NEMA)</option>
@@ -638,6 +639,31 @@
             <option value="forestry_fisheries">Forestry, Fisheries &amp; Oceans</option>
             <option value="waste">Chemicals, Waste &amp; Circular Economy</option>
             <option value="internal_sop">Internal Directorate SOPs</option>
+          </select>
+        </div>
+        <div class="dffe-field">
+          <label for="explorerCollection">Knowledge Collection (9)</label>
+          <select id="explorerCollection" class="dffe-select">
+            <option value="all">All 9 Collections</option>
+            <option value="dffe_overview">1. DFFE Overview</option>
+            <option value="cms">2. CMS</option>
+            <option value="gito">3. GITO</option>
+            <option value="ict_governance">4. ICT Governance</option>
+            <option value="ict_organogram">5. ICT Organogram</option>
+            <option value="digital_solutions">6. Digital Solutions</option>
+            <option value="infrastructure">7. Infrastructure</option>
+            <option value="cybersecurity">8. Cybersecurity</option>
+            <option value="ict_operations">9. ICT Operations</option>
+          </select>
+        </div>
+        <div class="dffe-field">
+          <label for="explorerStatus">Structure Status</label>
+          <select id="explorerStatus" class="dffe-select">
+            <option value="all">All (Official &amp; Proposed)</option>
+            <option value="Official">Official (Approved Fact)</option>
+            <option value="Proposed">Proposed (Source A / B)</option>
+            <option value="Statutory">Statutory (DPSA CGICTPF)</option>
+            <option value="Historical">Historical (Pre-2021)</option>
           </select>
         </div>
         <div class="dffe-field">
@@ -669,6 +695,8 @@
         <button type="button" id="explorerSearchBtn" class="dffe-btn primary">Search RAG Corpus</button>
       </div>
 
+      <div id="sourceExplorerDetailBox" style="display:none; margin-bottom: 16px;" aria-live="polite"></div>
+      <div id="explorerChunksGrid" class="dffe-results-grid" style="margin-bottom: 16px;" aria-live="polite"></div>
       <div id="explorerResultsGrid" class="dffe-results-grid" aria-live="polite"></div>
     </section>
 
@@ -727,9 +755,13 @@
 
   <script>
     const resultsGrid = document.getElementById('explorerResultsGrid');
+    const chunksGrid = document.getElementById('explorerChunksGrid');
+    const sourceExplorerDetailBox = document.getElementById('sourceExplorerDetailBox');
     const agentsGrid = document.getElementById('directorateAgentsGrid');
     const queryInput = document.getElementById('explorerQuery');
     const seriesSelect = document.getElementById('explorerSeries');
+    const collectionSelect = document.getElementById('explorerCollection');
+    const statusSelect = document.getElementById('explorerStatus');
     const yearSelect = document.getElementById('explorerYear');
     const audienceSelect = document.getElementById('explorerAudience');
     const phaseSelect = document.getElementById('explorerPhase');
@@ -821,6 +853,8 @@
       const payload = {
         query: queryInput.value.trim(),
         series: seriesSelect.value,
+        collection: collectionSelect ? collectionSelect.value : 'all',
+        status: statusSelect ? statusSelect.value : 'all',
         year: yearSelect.value,
         audience: audienceSelect.value,
         accessPhase: phaseSelect.value,
@@ -834,6 +868,8 @@
         });
         const data = await res.json();
         const docs = data.documents || [];
+        const chunks = data.chunks || [];
+        const conflictRules = data.sourceConflictRules || [];
         const audit = data.sensitivityAudit;
         if (audit && auditBanner) {
           const allowed = (audit.allowedSensitivities || ['public']).map(s => s.toUpperCase()).join(' · ');
@@ -844,6 +880,81 @@
             <span><strong>Active Governance Context:</strong> ${escapeHtml(audit.phaseName)} &bull; Permitted Tiers: <code>${escapeHtml(allowed)}</code></span>
             <span>${withheldMsg}</span>
           `;
+        }
+
+        if (chunksGrid) {
+          chunksGrid.innerHTML = chunks.slice(0, 6).map(chunk => {
+            const meta = chunk.metadata || {};
+            const st = meta.status || 'Proposed';
+            const chunkJsonAttr = escapeHtml(JSON.stringify(chunk));
+            const rulesJsonAttr = escapeHtml(JSON.stringify(conflictRules));
+            return `
+              <article class="dffe-source-card" data-chunk-id="${escapeHtml(chunk.chunkId)}">
+                <div>
+                  <div class="dffe-badge-row">
+                    <span class="dffe-tag">Collection: ${escapeHtml(chunk.collection)}</span>
+                    <span class="dffe-tag">Page: ${escapeHtml(String(meta.page || '1'))}</span>
+                    <span class="dffe-tag ${st === 'Proposed' ? 'restricted' : 'gov'}">Structure status: ${escapeHtml(st)}</span>
+                  </div>
+                  <h3>${escapeHtml(chunk.title)}</h3>
+                  <div class="dffe-source-branch"><strong>Source:</strong> ${escapeHtml(meta.source)} &bull; <strong>Directorate:</strong> ${escapeHtml(meta.directorate || 'GITO')}</div>
+                  <p class="dffe-source-summary" style="white-space:pre-line;">${escapeHtml(chunk.content)}</p>
+                </div>
+                <div>
+                  <div class="dffe-citation-box" style="margin-bottom: 8px;">${escapeHtml(meta.approvalCaveat || meta.source)}</div>
+                  <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <button type="button" class="dffe-btn primary js-portal-source-explorer" style="font-size:0.75rem; padding:5px 10px;" data-chunk="${chunkJsonAttr}" data-rules="${rulesJsonAttr}">Inspect in Source Explorer (Page ${escapeHtml(String(meta.page || '1'))})</button>
+                    <a class="dffe-btn" style="font-size:0.75rem; padding:5px 10px;" href="${escapeHtml(meta.url || 'https://www.dffe.gov.za/corporate-management-services')}" target="_blank" rel="noopener">View Source</a>
+                  </div>
+                </div>
+              </article>
+            `;
+          }).join('');
+
+          chunksGrid.querySelectorAll('.js-portal-source-explorer').forEach(btn => {
+            btn.addEventListener('click', () => {
+              try {
+                const c = JSON.parse(btn.getAttribute('data-chunk') || '{}');
+                const rules = JSON.parse(btn.getAttribute('data-rules') || '[]');
+                const m = c.metadata || {};
+                if (!sourceExplorerDetailBox) return;
+                sourceExplorerDetailBox.style.display = 'block';
+                sourceExplorerDetailBox.innerHTML = `
+                  <div class="dffe-source-card" style="border: 2px solid var(--accent-primary); background: #EAF4EE;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                      <div class="dffe-badge-row" style="margin:0;">
+                        <span class="dffe-tag">SOURCE EXPLORER</span>
+                        <span class="dffe-tag">COLLECTION: ${escapeHtml(c.collection)}</span>
+                        <span class="dffe-tag">PAGE: ${escapeHtml(String(m.page || '1'))}</span>
+                        <span class="dffe-tag ${m.status === 'Proposed' ? 'restricted' : 'gov'}">STRUCTURE STATUS: ${escapeHtml(m.status || 'Proposed')}</span>
+                      </div>
+                      <button type="button" class="dffe-btn" id="closePortalSourceExplorerBtn" style="padding:3px 8px; font-size:0.74rem;">Close Source Explorer</button>
+                    </div>
+                    <h3 style="margin-top:8px;">${escapeHtml(c.title)}</h3>
+                    <div class="dffe-source-branch"><strong>Source Document:</strong> ${escapeHtml(m.source)} &bull; <strong>Section:</strong> ${escapeHtml(m.section)} &bull; <strong>Category:</strong> ${escapeHtml(m.category)} &bull; <strong>Department:</strong> ${escapeHtml(m.department || 'DFFE')} &bull; <strong>Directorate:</strong> ${escapeHtml(m.directorate || 'GITO')}</div>
+                    <div class="dffe-citation-box" style="margin: 8px 0;"><strong>Status &amp; Approval Caveat:</strong> ${escapeHtml(m.approvalCaveat || '')}</div>
+                    <div style="background: var(--bg-app); border: 1px solid var(--border-subtle); border-radius: 5px; padding: 10px 12px; font-size: 0.82rem; white-space: pre-line;"><strong>Exact Verbatim Passage Used to Ground AI Answer:</strong>\n${escapeHtml(c.content)}</div>
+                    ${rules.length > 0 ? `
+                      <div style="margin-top: 10px; font-size: 0.78rem;">
+                        <strong>Source A (1-Page Revised ICT Organogram) vs. Source B (7-Page Proposed Operating Model) Disambiguation:</strong>
+                        <ul class="dffe-source-findings" style="margin-top:4px;">
+                          ${rules.map(r => `<li><strong>${escapeHtml(r.dimension)}:</strong> ${escapeHtml(r.sourceA)} <em>vs.</em> ${escapeHtml(r.sourceB)}</li>`).join('')}
+                        </ul>
+                      </div>
+                    ` : ''}
+                    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+                      <a class="dffe-btn primary" style="font-size:0.75rem; padding:5px 10px;" href="/?q=${encodeURIComponent('Using DFFE Knowledge Assistant rules, explain ' + c.title + ' and clearly distinguish official departmental facts from proposed structure.')}&send=1">Ask AI About This Passage in Workspace &rarr;</a>
+                      <a class="dffe-btn" style="font-size:0.75rem; padding:5px 10px;" href="${escapeHtml(m.url || 'https://www.dffe.gov.za/corporate-management-services')}" target="_blank" rel="noopener">Open Official Reference (${escapeHtml(m.url || 'dffe.gov.za')})</a>
+                    </div>
+                  </div>
+                `;
+                document.getElementById('closePortalSourceExplorerBtn')?.addEventListener('click', () => {
+                  sourceExplorerDetailBox.style.display = 'none';
+                });
+                sourceExplorerDetailBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              } catch (_) {}
+            });
+          });
         }
 
         resultsGrid.innerHTML = docs.map(doc => `
@@ -907,6 +1018,8 @@
 
     searchBtn.addEventListener('click', loadCorpusResults);
     seriesSelect.addEventListener('change', loadCorpusResults);
+    collectionSelect?.addEventListener('change', loadCorpusResults);
+    statusSelect?.addEventListener('change', loadCorpusResults);
     yearSelect.addEventListener('change', loadCorpusResults);
     audienceSelect.addEventListener('change', loadCorpusResults);
     phaseSelect.addEventListener('change', () => setPhase(phaseSelect.value));

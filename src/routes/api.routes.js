@@ -45,6 +45,8 @@ router.get('/dffe/search', toolLimiter, (req, res) => {
   const result = dffeRagService.searchKnowledge({
     query: req.query.q || req.query.query || '',
     series: req.query.series || 'all',
+    collection: req.query.collection || 'all',
+    status: req.query.status || 'all',
     year: req.query.year || 'all',
     audience: req.query.audience || 'public',
     accessPhase: req.query.accessPhase || req.query.phase || null,
@@ -58,10 +60,37 @@ router.post('/dffe/search', toolLimiter, (req, res) => {
   const result = dffeRagService.searchKnowledge({
     query: body.query || body.q || '',
     series: body.series || 'all',
+    collection: body.collection || 'all',
+    status: body.status || 'all',
     year: body.year || 'all',
     audience: body.audience || 'public',
     accessPhase: body.accessPhase || body.phase || null,
     limit: body.limit || 4
+  });
+  res.json(result);
+});
+
+// DFFE & GITO 9-Collection Chunk Search & Collections Catalogue endpoints
+router.get('/dffe/collections', (req, res) => {
+  res.json({
+    department: 'Department of Forestry, Fisheries and the Environment (DFFE)',
+    directorate: 'Chief Directorate: Government Information Technology Office (GITO)',
+    collectionCount: dffeRagService.getCollections().length,
+    collections: dffeRagService.getCollections(),
+    statuses: dffeRagService.getStatuses(),
+    sourceConflictRules: dffeRagService.getSourceConflictRules(),
+    totalChunks: dffeRagService.getAllChunks().length
+  });
+});
+
+router.post('/dffe/chunks/search', toolLimiter, (req, res) => {
+  const body = req.body || {};
+  const result = dffeRagService.searchChunks({
+    query: body.query || body.q || '',
+    collection: body.collection || 'all',
+    status: body.status || 'all',
+    accessPhase: body.accessPhase || body.phase || null,
+    limit: body.limit || 6
   });
   res.json(result);
 });

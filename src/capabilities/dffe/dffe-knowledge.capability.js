@@ -24,8 +24,18 @@ const schema = {
         },
         series: {
           type: 'string',
-          enum: ['all', 'soer', 'programmes', 'legislation', 'climate', 'forestry_fisheries', 'waste', 'internal_sop'],
-          description: 'Optional DFFE report series filter: "all", "soer" (State of the Environment), "programmes" (EPWP), "legislation" (NEMA/EIA), "climate" (Climate Change & Air Quality), "forestry_fisheries" (Forestry, Fisheries & Oceans), "waste" (Chemicals, Waste & Circular Economy), or "internal_sop" (Internal Directorate SOPs).'
+          enum: ['all', 'soer', 'programmes', 'legislation', 'climate', 'forestry_fisheries', 'waste', 'internal_sop', 'gito_ict'],
+          description: 'Optional DFFE report series filter: "all", "soer" (State of the Environment), "programmes" (EPWP), "legislation" (NEMA/EIA), "climate" (Climate Change & Air Quality), "forestry_fisheries" (Forestry, Fisheries & Oceans), "waste" (Chemicals, Waste & Circular Economy), "internal_sop" (Internal Directorate SOPs), or "gito_ict" (GITO, CMS & ICT Governance/Organogram).'
+        },
+        collection: {
+          type: 'string',
+          enum: ['all', 'dffe_overview', 'cms', 'gito', 'ict_governance', 'ict_organogram', 'digital_solutions', 'infrastructure', 'cybersecurity', 'ict_operations'],
+          description: 'Optional 9-collection filter: "all", "dffe_overview", "cms", "gito", "ict_governance", "ict_organogram", "digital_solutions", "infrastructure", "cybersecurity", or "ict_operations".'
+        },
+        status: {
+          type: 'string',
+          enum: ['all', 'Official', 'Proposed', 'Statutory', 'Historical'],
+          description: 'Optional structure status filter: "all", "Official" (Approved Departmental Fact), "Proposed" (Proposed ICT Organogram / Operating Model), "Statutory" (DPSA CGICTPF / Act), or "Historical" (pre-April 2021 context).'
         },
         year: {
           type: 'string',
@@ -50,14 +60,18 @@ const schema = {
 async function execute(args = {}) {
   const query = typeof args.query === 'string' ? args.query.trim() : '';
   const series = args.series || 'all';
+  const collection = args.collection || 'all';
+  const status = args.status || 'all';
   const year = args.year || 'all';
   const audience = args.audience || 'public';
   const accessPhase = args.accessPhase || null;
 
   try {
     const result = dffeRagService.searchKnowledge({
-      query: query || 'DFFE environmental programmes and State of the Environment findings',
+      query: query || 'DFFE environmental programmes, GITO structure, and State of the Environment findings',
       series,
+      collection,
+      status,
       year,
       audience,
       accessPhase,

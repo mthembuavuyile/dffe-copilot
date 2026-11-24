@@ -1,0 +1,454 @@
+{
+  "metadata": {
+    "title": "DFFE & GITO Reference, Orientation & ICT Operating Model Chunk Corpus",
+    "version": "1.0.0",
+    "preparedDate": "2026-11-24",
+    "department": "Department of Forestry, Fisheries and the Environment (DFFE)",
+    "directorate": "Chief Directorate: Government Information Technology Office (GITO)",
+    "collections": [
+      {
+        "id": "dffe_overview",
+        "name": "DFFE Overview",
+        "description": "Mandate (Section 24 of Constitution), April 2021 history/rename, Director-General & branches"
+      },
+      {
+        "id": "cms",
+        "name": "CMS",
+        "description": "Corporate Management Services branch structure, DDG: CMS, and corporate support functions"
+      },
+      {
+        "id": "gito",
+        "name": "GITO",
+        "description": "Chief Directorate: Government Information Technology Office overview, reporting context & provider-neutral accountability"
+      },
+      {
+        "id": "ict_governance",
+        "name": "ICT Governance",
+        "description": "DPSA CGICTPF Version 2 (March 2022), 8 design principles, governance/advisory forums & segregation of duties"
+      },
+      {
+        "id": "ict_organogram",
+        "name": "ICT Organogram",
+        "description": "Capability areas, functional responsibilities, Source A vs. Source B comparison & 11 pre-implementation validation requirements"
+      },
+      {
+        "id": "digital_solutions",
+        "name": "Digital Solutions",
+        "description": "Unit 2 (BRM, Applications Development, Integration/Automation/AI, Data/BI, Digital Adoption), Decentralisation option & Hybrid 4IR Delivery Layer"
+      },
+      {
+        "id": "infrastructure",
+        "name": "Infrastructure",
+        "description": "Unit 3 (Networks, Hosting & Cloud; Systems, Platforms & Identity; Service Desk & End-User Support; ICT Assets & Availability)"
+      },
+      {
+        "id": "cybersecurity",
+        "name": "Cybersecurity",
+        "description": "Security governance, monitoring, incident response, identity/access security & Source A Unit 4 vs. Source B Unit 1.3 placement"
+      },
+      {
+        "id": "ict_operations",
+        "name": "ICT Operations",
+        "description": "Assets, configuration, availability, service management & Source B Unit 4 (ICT Portfolio, Commercial and Service Management)"
+      }
+    ],
+    "statuses": [
+      {
+        "id": "Official",
+        "label": "Official Public Departmental Fact",
+        "description": "Confirmed on official DFFE, South African Government or DPSA websites."
+      },
+      {
+        "id": "Proposed",
+        "label": "Proposed Internal ICT Structure",
+        "description": "Derived from supplied internal proposals (Source A or Source B). Subject to business case, consultation, affordability, job evaluation and DPSA organisational-design approval."
+      },
+      {
+        "id": "Statutory",
+        "label": "Statutory & Public-Service Policy Framework",
+        "description": "Constitutional provisions, DPSA Corporate Governance of ICT Policy Framework (CGICTPF v2), Public Service Regulations, and fiscal directives."
+      },
+      {
+        "id": "Historical",
+        "label": "Historical Context",
+        "description": "Pre-April 2021 departmental names (DEFF, former DAFF) preserved strictly for historical context."
+      }
+    ],
+    "sourceConflictRules": [
+      {
+        "dimension": "1. Cybersecurity Placement",
+        "sourceA": "SOURCE A (Revised_ICT_Organogram.pdf, Page 1): Cybersecurity & Information Security is a standalone fourth capability area (Unit A4).",
+        "sourceB": "SOURCE B (DFFE Government ICT Proposed Operating Model and GITO Structure(1).pdf, Page 2): Cybersecurity, Risk and Compliance is a sub-function within Unit 1 (ICT Governance, Architecture, Risk and Security)."
+      },
+      {
+        "dimension": "2. Fourth Capability Area",
+        "sourceA": "SOURCE A (Page 1): Fourth capability area is Cybersecurity & Information Security.",
+        "sourceB": "SOURCE B (Pages 3–4): Fourth consolidated capability unit is ICT Portfolio, Commercial and Service Management."
+      },
+      {
+        "dimension": "3. Governance & Top-Level Reporting Hierarchy",
+        "sourceA": "SOURCE A (Page 1): Shows DDG Corporate Management Services above the Government Information Technology Officer (GITO), who is labelled 'Member of Executive Management'.",
+        "sourceB": "SOURCE B (Pages 1, 4): Shows Accounting Officer / Head of Department (HoD) above the GITO in its proposed organogram, while citing the CGICTPF accountability structure involving ExCo, ICT Steering Committee, HoD, CMS and GITO."
+      },
+      {
+        "dimension": "4. Service Management Placement",
+        "sourceA": "SOURCE A (Page 1): Service Management appears as a sub-function under Unit A3 (ICT Infrastructure, Operations & User Services).",
+        "sourceB": "SOURCE B (Pages 3–4): ICT Portfolio, Commercial and Service Management is a separate consolidated fourth capability unit, including SITA and Service-Level Management and Quality Assurance and Benefits Tracking."
+      }
+    ]
+  },
+  "chunks": [
+    {
+      "chunkId": "dffe-ov-01-mandate-constitution",
+      "collection": "DFFE Overview",
+      "collectionId": "dffe_overview",
+      "title": "DFFE Core Mandate & Section 24 Constitutional Foundation",
+      "content": "Full name: Department of Forestry, Fisheries and the Environment (DFFE). DFFE is a national government department in the Republic of South Africa. Its core mandate is to manage, protect and conserve South Africa's environment and natural resources. The Department's mandate is informed by section 24 of the Constitution of the Republic of South Africa, 1996. Section 24 recognises the right to an environment that is not harmful to health or well-being and the right to have the environment protected for the benefit of present and future generations through reasonable legislative and other measures. In practical terms, DFFE's work covers policy, regulation, oversight, conservation, environmental management and the sustainable use of natural resources. Its areas of responsibility include forestry, fisheries, biodiversity and conservation, oceans and coasts, climate change, air quality, chemicals and waste, environmental programmes, and regulatory compliance.",
+      "metadata": {
+        "source": "DFFE Official Website — Overview",
+        "sourceId": "OFFICIAL_PUBLIC",
+        "page": "Webpage (Section 2)",
+        "section": "2. What is DFFE?",
+        "category": "Departmental Mandate",
+        "status": "Official",
+        "approvalCaveat": "Authoritative public departmental fact published on dffe.gov.za and gov.za.",
+        "department": "DFFE",
+        "branch": "All DFFE Branches",
+        "directorate": "Departmental Executive",
+        "sensitivity": "public",
+        "url": "https://www.dffe.gov.za/index.php/overview"
+      },
+      "keywords": ["what is dffe", "dffe stand for", "mandate", "section 24", "constitution", "forestry", "fisheries", "environment", "responsibilities", "overview"]
+    },
+    {
+      "chunkId": "dffe-ov-02-history-name-change",
+      "collection": "DFFE Overview",
+      "collectionId": "dffe_overview",
+      "title": "DFFE History, April 2021 Name Change & Former DAFF Reorganisation",
+      "content": "The South African Government's public information records that in April 2021 the Department of Environment, Forestry and Fisheries (DEFF) changed its name to the Department of Forestry, Fisheries and the Environment (DFFE). The same government information explains that forestry and fisheries functions previously located in the former Department of Agriculture, Forestry and Fisheries (DAFF) were shifted to the DFFE as part of the reorganisation of national government functions. For historical context, do not use the former DAFF or DEFF name as if it were the current name of DFFE. Historical references must be labelled by the period to which they relate.",
+      "metadata": {
+        "source": "South African Government — Forestry, Fisheries and the Environment",
+        "sourceId": "OFFICIAL_PUBLIC",
+        "page": "Webpage (Section 3)",
+        "section": "3. DFFE's History and Name",
+        "category": "Departmental History",
+        "status": "Historical",
+        "approvalCaveat": "Official historical record; always use DFFE for the current department post-April 2021.",
+        "department": "DFFE",
+        "branch": "All DFFE Branches",
+        "directorate": "Departmental Executive",
+        "sensitivity": "public",
+        "url": "https://www.gov.za/about-sa/forestry-fisheries-and-environment"
+      },
+      "keywords": ["history", "april 2021", "name change", "deff", "daff", "former department", "agriculture forestry and fisheries", "reorganisation"]
+    },
+    {
+      "chunkId": "dffe-ov-03-organisation-dg-branches",
+      "collection": "DFFE Overview",
+      "collectionId": "dffe_overview",
+      "title": "How DFFE is Organised — Director-General (Accounting Officer) & Branches",
+      "content": "DFFE is headed administratively by the Director-General (DG), who is responsible for the Department's operations and serves as its Accounting Officer, according to the DFFE overview page. The Department is organised into branches and other organisational components (10 core branches: Biodiversity and Conservation; Chemicals and Waste Management; Climate Change and Air Quality; Corporate Management Services [CMS]; Environmental Programmes [EPWP]; Financial Management Services [FMS]; Forestry Management; Regulatory Compliance and Sector Monitoring [RCSM]; Oceans and Coasts; and Fisheries Management). The DFFE public structure page lists the Department's leadership and branches, including Corporate Management Services (CMS).",
+      "metadata": {
+        "source": "DFFE Structure of the Department",
+        "sourceId": "OFFICIAL_PUBLIC",
+        "page": "Webpage (Section 4)",
+        "section": "4. How DFFE is Organised",
+        "category": "Organisational Structure",
+        "status": "Official",
+        "approvalCaveat": "Check live official web pages when current office holders or contact details are material.",
+        "department": "DFFE",
+        "branch": "Office of the Director-General & All Branches",
+        "directorate": "Office of the Director-General",
+        "sensitivity": "public",
+        "url": "https://www.dffe.gov.za/structure-department"
+      },
+      "keywords": ["director-general", "dg", "accounting officer", "how dffe is organised", "branches", "structure of the department", "leadership"]
+    },
+    {
+      "chunkId": "cms-01-branch-purpose-and-gito-placement",
+      "collection": "CMS",
+      "collectionId": "cms",
+      "title": "Corporate Management Services (CMS) Branch Mandate & Official GITO Placement",
+      "content": "The official DFFE Corporate Management Services (CMS) webpage identifies the Deputy Director-General (DDG): Corporate Management Services and lists the Chief Directorate: Government Information Technology Office (GITO) as part of the Corporate Management Services (CMS) branch structure. The DFFE CMS page describes the purpose of CMS as coordinating and managing the strategic functions and operations of the Department. Its listed functions include strategic and operational support, planning, risk management, organisational performance management, governance, administrative and executive support, human resource management, information management, legal services, and other corporate functions. Hierarchy: DFFE (Department) -> Corporate Management Services / CMS (Branch) -> Chief Directorate: Government Information Technology Office / GITO (Chief Directorate).",
+      "metadata": {
+        "source": "DFFE Corporate Management Services — Official Departmental Webpage",
+        "sourceId": "OFFICIAL_PUBLIC",
+        "page": "Webpage (Section 5)",
+        "section": "5. Where GITO Fits in DFFE",
+        "category": "Organisational Structure",
+        "status": "Official",
+        "approvalCaveat": "Confirmed official public-facing departmental placement on dffe.gov.za.",
+        "department": "DFFE",
+        "branch": "Corporate Management Services (CMS)",
+        "directorate": "GITO",
+        "sensitivity": "public",
+        "url": "https://www.dffe.gov.za/corporate-management-services"
+      },
+      "keywords": ["cms", "corporate management services", "ddg", "deputy director-general", "where gito fits", "branch", "chief directorate", "strategic and operational support"]
+    },
+    {
+      "chunkId": "gito-01-role-and-accountability",
+      "collection": "GITO",
+      "collectionId": "gito",
+      "title": "What is a GITO? Role, Mandate & Provider-Neutral SITA Accountability",
+      "content": "GITO stands for Government Information Technology Officer (and the Chief Directorate: Government Information Technology Office). In the South African public-service context, the GITO function is associated with departmental ICT leadership, governance and the alignment of information and communication technology with the Department's objectives and service-delivery needs. The supplied DFFE operating-model proposal (Source B, Page 1 & Page 6) describes the GITO function as needing to support an integrated, accountable and service-oriented ICT function that: (1) Supports the entire Department, (2) Protects information assets, and (3) Enables delivery of the Department's mandate. Crucially, the proposal states that the GITO retains departmental accountability for architecture, service levels, security, cost, performance, information governance and benefits even where SITA (State Information Technology Agency) or another service provider performs delivery activities.",
+      "metadata": {
+        "source": "DFFE Government ICT Proposed Operating Model and GITO Structure(1).pdf (Source B) & DPSA CGICTPF",
+        "sourceId": "SOURCE_B",
+        "page": 1,
+        "section": "Section 1 & Section 6 — Purpose, Intended Outcome & Service Providers",
+        "category": "GITO Leadership & Accountability",
+        "status": "Proposed",
+        "approvalCaveat": "GITO placement as a Chief Directorate under CMS is an Official Public Fact; detailed operating-model accountability statements are from Source B (Pages 1, 6).",
+        "department": "DFFE",
+        "branch": "Corporate Management Services (CMS)",
+        "directorate": "GITO",
+        "sensitivity": "public",
+        "url": "https://www.dffe.gov.za/corporate-management-services"
+      },
+      "keywords": ["gito", "government information technology officer", "what is gito", "purpose of gito", "sita", "accountability", "service provider", "member of executive management"]
+    },
+    {
+      "chunkId": "ict-gov-01-dpsa-cgictpf-framework",
+      "collection": "ICT Governance",
+      "collectionId": "ict_governance",
+      "title": "DPSA Public Service Corporate Governance of ICT Policy Framework (CGICTPF Version 2, March 2022)",
+      "content": "The Department of Public Service and Administration (DPSA) publishes the Public Service Corporate Governance of ICT Policy Framework (CGICTPF). The supplied DFFE operating-model document (Source B, Page 1) refers to Version 2, March 2022. The framework ensures that ICT is governed as an organisational and business enabler rather than treated only as a technical support function, and that executive management is responsible for establishing corporate governance arrangements and incorporating ICT governance to oversee ICT performance. Source B also aligns in principle with: (1) CGICTPF Version 2 (March 2022) accountability structure for the Executive Committee, ICT Steering Committee, Head of Department, CMS and GITO; (2) DPSA Guide and Toolkit on Organisational Design; (3) Regulation 35 of the Public Service Regulations, 2016; (4) Directive on Organisational Functionality Assessment issued on 1 April 2022; (5) Applicable Public Service Handbook provisions; (6) 2024 fiscal control measures governing the creation and filling of posts; and (7) Determination and Directive on the automated Public Service job-evaluation and job-grading system effective from 1 August 2024.",
+      "metadata": {
+        "source": "DPSA Corporate Governance of ICT Policy Framework (Version 2, March 2022) & Source B",
+        "sourceId": "DPSA_FRAMEWORK",
+        "page": 1,
+        "section": "Section 1 & Section 7 — Public-Service ICT Governance Framework",
+        "category": "ICT Governance & Regulatory Instruments",
+        "status": "Statutory",
+        "approvalCaveat": "DPSA CGICTPF v2 (March 2022) is an official public-service policy framework; Source B cites these instruments as design alignment benchmarks.",
+        "department": "DFFE",
+        "branch": "Corporate Management Services (CMS)",
+        "directorate": "GITO",
+        "sensitivity": "public",
+        "url": "https://www.dpsa.gov.za/dpsa2g/documents/psictm/2022/CGICTPF%20version%202.pdf"
+      },
+      "keywords": ["dpsa", "cgictpf", "corporate governance of ict", "policy framework", "march 2022", "version 2", "regulation 35", "job evaluation", "fiscal control", "functionality assessment"]
+    },
+    {
+      "chunkId": "ict-gov-02-eight-design-principles",
+      "collection": "ICT Governance",
+      "collectionId": "ict_governance",
+      "title": "Eight Design Principles for the Revised DFFE GITO Structure (Source B, Pages 1–2)",
+      "content": "Source B (DFFE Government ICT Proposed Operating Model and GITO Structure, Pages 1–2) identifies eight design principles for the revised GITO structure: (1) Governance distinct from operations — Strategic direction, policy, architecture, investment oversight, risk and assurance must be clearly distinguished from day-to-day technology delivery; (2) Enterprise-wide service orientation — Shared ICT capabilities must serve the whole Department through common standards, transparent priorities and measurable service levels; (3) Single-point accountability — Each service, platform, data domain and control must have a named accountable owner; (4) Business alignment — Demand must be shaped with branches through business relationship management, portfolio governance and benefits realisation; (5) Security and resilience by design — Cybersecurity, continuity, disaster recovery, privacy and access controls must be embedded throughout the technology lifecycle; (6) Interoperability and reuse — Architecture and solution decisions must promote integration, standardisation and reuse before new development or procurement; (7) Proportionate structure — The number and level of units must be justified by mandate, workload, affordability, spans of control and organisational-design requirements; (8) Provider-neutral accountability — Use of SITA or another service provider does not transfer the Department's accountability for governance, performance, security or value.",
+      "metadata": {
+        "source": "DFFE Government ICT Proposed Operating Model and GITO Structure(1).pdf (Source B)",
+        "sourceId": "SOURCE_B",
+        "page": 2,
+        "section": "Section 2 — Design Principles",
+        "category": "ICT Governance Principles",
+        "status": "Proposed",
+        "approvalCaveat": "Proposed operating-model design principles requiring formal departmental validation and approval.",
+        "department": "DFFE",
+        "branch": "Corporate Management Services (CMS)",
+        "directorate": "GITO",
+        "sensitivity": "internal",
+        "url": "https://www.dffe.gov.za/corporate-management-services"
+      },
+      "keywords": ["eight design principles", "8 design principles", "design principles", "governance distinct from operations", "single-point accountability", "provider-neutral", "segregation of duties", "interoperability"]
+    },
+    {
+      "chunkId": "ict-gov-03-governance-forums-and-segregation",
+      "collection": "ICT Governance",
+      "collectionId": "ict_governance",
+      "title": "ICT Governance & Advisory Forums and Segregation of Duties (Source A p. 1 & Source B p. 6)",
+      "content": "The one-page proposed organogram (Source A: Revised_ICT_Organogram.pdf, Page 1) distinguishes solid lines (approved line-management reporting) from dashed lines (governance/advisory relationships) and shows four governance/advisory forums: (1) ICT Steering Committee — described in Source A as a business-led governance forum, and in Source B (Page 5) as recommending priorities and monitoring value while the Accounting Officer or delegated authority retains formal approval; (2) Architecture & Security Review Forum — shown as a governance/advisory relationship in Source A relating to architecture and security review; (3) Data Governance Forum — shown as a governance/advisory relationship in Source A, while Source B (Page 6) states business data ownership remains with relevant business executives; (4) ICT Operational Committee — shown as a governance/advisory relationship in Source A. Note: Do not assume a governance forum is a line-management unit or a funded post, and the supplied documents do not provide full terms of reference or membership lists. Segregation of duties (Source B, Page 6): No individual should initiate, approve and verify the same high-risk transaction or change; compensating controls include formal approvals, access reviews, change records, audit trails and periodic independent assurance.",
+      "metadata": {
+        "source": "Revised_ICT_Organogram.pdf (Source A, Page 1) & DFFE Government ICT Proposed Operating Model (Source B, Pages 5–6)",
+        "sourceId": "SOURCE_A_AND_B",
+        "page": 1,
+        "section": "Section 6 & Section 9 — Governance Forums and Control Principles",
+        "category": "ICT Governance Committees & Controls",
+        "status": "Proposed",
+        "approvalCaveat": "Governance forums are advisory/governance relationships (dashed lines), not line-management units or funded posts. Terms of reference and membership lists are not specified in the supplied documents.",
+        "department": "DFFE",
+        "branch": "Corporate Management Services (CMS)",
+        "directorate": "GITO",
+        "sensitivity": "internal",
+        "url": "https://www.dffe.gov.za/corporate-management-services"
+      },
+      "keywords": ["ict steering committee", "architecture & security review forum", "data governance forum", "ict operational committee", "governance forums", "committees", "segregation of duties", "dashed line", "solid line"]
+    },
+    {
+      "chunkId": "ict-org-01-source-a-revised-organogram",
+      "collection": "ICT Organogram",
+      "collectionId": "ict_organogram",
+      "title": "SOURCE A: Revised ICT Organogram — Four Functional Capability Areas under GITO (Page 1)",
+      "content": "The supplied one-page diagram (Source A: Revised_ICT_Organogram.pdf, Page 1, titled 'DPSA-Aligned Proposed Government ICT Organogram for a Small Organisation') shows DDG Corporate Management Services above the Government Information Technology Officer (GITO, labelled 'Member of Executive Management'), and identifies four functional capability areas under GITO:\n1. ICT Governance, Architecture, & Risk Management: Strategy, Policy & Performance; Enterprise & Solution Architecture; ICT Service Continuity & Disaster Recovery; Risk Management & Compliance.\n2. Digital Solutions, Data & Business Enablement: Business Relationship & Demand Management; Applications Development & Support; Integration, Automation & Artificial Intelligence; Data Governance, BI & Analytics; Digital Adoption & Benefits.\n3. ICT Infrastructure, Operations & User Services: Networks, Hosting & Cloud; Systems, Platforms & Identity Administration; Service Desk & End-User Support; ICT Assets, Configuration & Availability; Service Management.\n4. Cybersecurity & Information Security: Cybersecurity Operations & Engineering; Security Monitoring & Incident Response; Identity & Access Security; Vulnerability & Threat Management; Security Governance.\nCRITICAL CAVEAT (Source A Footnote, Page 1): Functional sub-units do not constitute posts. Final posts, grades and establishment are subject to an approved business case, consultation, affordability, job evaluation and DPSA organisational-design processes.",
+      "metadata": {
+        "source": "Revised ICT Organogram (Revised_ICT_Organogram.pdf)",
+        "sourceId": "SOURCE_A",
+        "page": 1,
+        "section": "Section 3 — Source A: Revised ICT Organogram",
+        "category": "Organisational structure",
+        "status": "Proposed",
+        "approvalCaveat": "Structure status: Proposed. These four capability areas are from a proposed organogram and must never be presented as confirmed approved directorates, sub-directorates, or funded posts.",
+        "department": "DFFE",
+        "branch": "Corporate Management Services (CMS)",
+        "directorate": "GITO",
+        "sensitivity": "internal",
+        "url": "https://www.dffe.gov.za/corporate-management-services"
+      },
+      "keywords": ["organogram", "revised ict organogram", "four capability areas", "4 capability areas", "directorates under gito", "sub-directorates under gito", "functional structure", "source a", "small organisation"]
+    },
+    {
+      "chunkId": "ict-org-02-source-b-four-unit-model-and-conflicts",
+      "collection": "ICT Organogram",
+      "collectionId": "ict_organogram",
+      "title": "SOURCE B: Alternative Four-Unit Operating Model & Key Differences from Source A (Pages 1–4)",
+      "content": "The seven-page document 'DFFE Government ICT Proposed Operating Model and GITO Structure(1).pdf' (Source B, Pages 1–4) also recommends four consolidated capability units under GITO to reduce management layers and combine related functions, but differs from the one-page Revised ICT Organogram (Source A) in four critical ways:\nSource B's Four Consolidated Units:\n- Unit 1: ICT Governance, Architecture, Risk and Security (includes Strategy, Policy & Performance; Enterprise & Solution Architecture; Cybersecurity, Risk and Compliance; and Business Continuity and Disaster Recovery).\n- Unit 2: Digital Solutions, Data and Business Enablement (includes Business Relationship & Demand Management; Applications Development & Support; Integration, Automation & AI; Data Governance, BI & Analytics; and Digital Adoption & Benefits).\n- Unit 3: ICT Infrastructure, Operations and User Services (includes Networks, Hosting & Cloud; Systems, Platforms & Identity Administration; Service Desk & End-User Support; and ICT Assets, Configuration & Availability).\n- Unit 4: ICT Portfolio, Commercial and Service Management (includes Portfolio, Programme & Project Management; Financial Planning & Procurement Coordination; Contracts, Licences & Vendor Management; SITA & Service-Level Management; and Quality Assurance & Benefits Tracking).\nFOUR KEY DIFFERENCES BETWEEN SOURCE A AND SOURCE B:\n1. Cybersecurity placement: Standalone 4th unit in Source A vs. sub-function inside Unit 1 in Source B.\n2. Fourth capability unit: Cybersecurity & Information Security in Source A vs. ICT Portfolio, Commercial and Service Management in Source B.\n3. Top-level reporting shown in diagram: DDG Corporate Management Services above GITO in Source A vs. Accounting Officer / Head of Department (HoD) above GITO in Source B.\n4. Service Management placement: Under Unit 3 (Infrastructure, Operations & User Services) in Source A vs. part of standalone Unit 4 (Portfolio, Commercial & Service Management) in Source B.\nNeither document establishes which proposed alternative has been finally approved.",
+      "metadata": {
+        "source": "DFFE Government ICT Proposed Operating Model and GITO Structure(1).pdf (Source B) vs. Revised_ICT_Organogram.pdf (Source A)",
+        "sourceId": "SOURCE_A_AND_B",
+        "page": 4,
+        "section": "Section 4 & Important Source-Conflict Rule",
+        "category": "Organisational structure comparison",
+        "status": "Proposed",
+        "approvalCaveat": "Structure status: Proposed. Always state the differences between Source A and Source B rather than silently combining them.",
+        "department": "DFFE",
+        "branch": "Corporate Management Services (CMS)",
+        "directorate": "GITO",
+        "sensitivity": "internal",
+        "url": "https://www.dffe.gov.za/corporate-management-services"
+      },
+      "keywords": ["source b", "operating model", "difference", "conflict", "compare", "four consolidated capability units", "4 units", "portfolio commercial and service management", "hod", "accounting officer"]
+    },
+    {
+      "chunkId": "ict-org-03-implementation-validation-11-requirements",
+      "collection": "ICT Organogram",
+      "collectionId": "ict_organogram",
+      "title": "11 Pre-Implementation & Validation Requirements Before Approving the GITO Structure (Source B, Page 7)",
+      "content": "Source B (Page 7, Section 8: Implementation and Validation Requirements) states that the supplied documents do NOT prove that the proposed organogram has been approved, funded, or graded. Before implementation, 11 mandatory steps must be completed:\n1. Organisational functionality assessment (using prescribed DPSA process to assess capacity, resource utilisation, and institutionalisation, potentially repurposing posts and reskilling staff).\n2. Service-delivery model definition (defining services, customers, channels, processes, geographic reach, and work allocation between DFFE, SITA, and other providers).\n3. Functional analysis (mapping current/proposed functions, workflows, decision rights, volumes, dependencies, duplication, gaps, and incompatible duties).\n4. Business case (documenting problem statement, options considered, preferred model, benefits, risks, implementation costs, compensation implications, and medium-term affordability).\n5. Organisational architecture confirmation (confirming management layers, grouping of functions, reporting lines, spans of control, governance interfaces, and distinction between line units and committees).\n6. Job design and establishment (standardised job descriptions, competency requirements, and proposed post establishment based on demonstrable workload).\n7. Job evaluation and grading (evaluating affected/new jobs through the prescribed Public Service job-evaluation and job-grading system; no grade may be inferred from the organogram).\n8. Consultation (consulting affected employees, business branches, corporate services, and finance).\n9. Fiscal controls (confirming funding and complying with post-creation and compensation-budget measures).\n10. Approval and implementation (obtaining lawful approval, updating delegations/systems, managing workforce migration and labour-relations impacts, and executing change management).\n11. Measurement and review (setting service, performance, and functionality indicators monitored by executive management).",
+      "metadata": {
+        "source": "DFFE Government ICT Proposed Operating Model and GITO Structure(1).pdf (Source B)",
+        "sourceId": "SOURCE_B",
+        "page": 7,
+        "section": "Section 8 — Implementation and Validation Requirements",
+        "category": "Organisational Design & Approval Process",
+        "status": "Proposed",
+        "approvalCaveat": "Structure status: Proposed. No post, job title, salary level, or grade may be inferred until these 11 requirements are fulfilled.",
+        "department": "DFFE",
+        "branch": "Corporate Management Services (CMS)",
+        "directorate": "GITO",
+        "sensitivity": "internal",
+        "url": "https://www.dffe.gov.za/corporate-management-services"
+      },
+      "keywords": ["implementation", "validation", "approved", "funded posts", "grades", "salary levels", "business case", "job evaluation", "consultation", "fiscal controls", "functionality assessment"]
+    },
+    {
+      "chunkId": "dig-sol-01-unit2-responsibilities",
+      "collection": "Digital Solutions",
+      "collectionId": "digital_solutions",
+      "title": "Unit 2: Digital Solutions, Data and Business Enablement — Sub-Functions & Responsibilities (Source A p. 1 & Source B pp. 2–3)",
+      "content": "In both Source A (Page 1, Unit A2) and Source B (Pages 2–3, Unit 2), 'Digital Solutions, Data and Business Enablement' translates departmental business needs into integrated digital services and trusted data capabilities that deliver measurable value. Its five functional areas and responsibilities are:\n1. Business Relationship and Demand Management: Branch engagement, demand intake, business analysis, process improvement, prioritisation support, and requirements management.\n2. Applications Development and Support: Solution design, development, testing, release, maintenance, and application-level support.\n3. Integration, Automation and Artificial Intelligence: Interfaces, interoperability, workflow automation, responsible artificial intelligence, and technical innovation.\n4. Data Governance, Business Intelligence (BI) and Analytics: Data ownership arrangements, data stewardship, data architecture, data standards, data quality, metadata, reporting, and analytics. (Functional boundary rule on Page 6: Business data ownership must nevertheless remain with the relevant business executives.)\n5. Digital Adoption and Benefits: User readiness, change adoption, training coordination, benefits definition, and outcome monitoring.\nDecentralised Delivery Option (Source B, Page 4): Source B notes that the Digital Solutions unit could be decentralised further so teams/groupings serve specific branches or groups of branches, subject to functional analysis, workload evidence, affordability, consultation, job evaluation, and the DPSA organisational-design process.",
+      "metadata": {
+        "source": "DFFE Government ICT Proposed Operating Model and GITO Structure(1).pdf (Source B, Pages 2–4, 6) & Revised_ICT_Organogram.pdf (Source A, Page 1)",
+        "sourceId": "SOURCE_A_AND_B",
+        "page": 3,
+        "section": "Section 4 (Unit 2) & Section 7 (Decentralised Delivery Option)",
+        "category": "Applications, Development, Integration, Data & AI",
+        "status": "Proposed",
+        "approvalCaveat": "Structure status: Proposed. Sub-units describe functional responsibilities and do not automatically constitute separate funded posts.",
+        "department": "DFFE",
+        "branch": "Corporate Management Services (CMS)",
+        "directorate": "GITO",
+        "sensitivity": "internal",
+        "url": "https://www.dffe.gov.za/corporate-management-services"
+      },
+      "keywords": ["digital solutions", "business enablement", "applications development and support", "business relationship", "demand management", "integration", "automation", "artificial intelligence", "data governance", "business intelligence", "bi", "analytics", "digital adoption", "decentralised"]
+    },
+    {
+      "chunkId": "dig-sol-02-hybrid-4ir-delivery-layer",
+      "collection": "Digital Solutions",
+      "collectionId": "digital_solutions",
+      "title": "Optional Hybrid 4IR Delivery Layer — Product Teams, Communities of Practice & Controlled AI Innovation (Source B, Pages 5–6)",
+      "content": "Source B (Pages 5–6, Section 5) states that an optional 'Hybrid 4IR Delivery Layer' can be considered to optimise service delivery without replacing the permanent organisational structure or its accountability safeguards:\n5.1 Multidisciplinary product and digital service teams: Formed around a priority public or internal service (including a business product owner, service/UX designer, business analyst, application/integration specialist, data specialist, cybersecurity representative, infrastructure/cloud specialist, and change/benefits support). Safeguard: Business product owner is accountable for outcomes/prioritisation; specialists report to permanent line managers; architecture, security, data, procurement and financial controls remain mandatory.\n5.2 Product and service portfolio management: Balances enduring digital products with programmes/projects based on strategic value, citizen/user need, risk, affordability, dependencies, readiness and benefits. Safeguard: ICT Steering Committee recommends priorities; GITO integrates portfolio; Accounting Officer retains formal approval.\n5.3 Communities of practice: Professional networks for enterprise architecture, cybersecurity, data stewardship & AI, service design & agile delivery, and cloud engineering. Safeguard: Communities do not allocate budgets, approve posts, or replace line authority.\n5.4 Controlled innovation and experimentation: Prototypes and proofs of value in controlled test environments with entry criteria, time/cost limits, responsible-AI reviews, security reviews, and scale/terminate decisions. Safeguard: No experiment bypasses procurement, privacy, cybersecurity, records, architecture or financial controls; material AI use cases require data-governance and responsible-AI review.\n5.5 Digital capability development: GITO and Human Resource Management jointly coordinate digital leadership, data/AI literacy, cybersecurity awareness, product management, agile delivery, service design, and specialist career pathways linked to approved workforce plans.",
+      "metadata": {
+        "source": "DFFE Government ICT Proposed Operating Model and GITO Structure(1).pdf (Source B)",
+        "sourceId": "SOURCE_B",
+        "page": 5,
+        "section": "Section 5 — Optional Hybrid 4IR Delivery Layer (Pages 5–6)",
+        "category": "Agile Delivery, Communities of Practice & Responsible AI",
+        "status": "Proposed",
+        "approvalCaveat": "Structure status: Proposed (Optional Delivery Layer). Does not create posts outside the approved establishment or bypass governance controls.",
+        "department": "DFFE",
+        "branch": "Corporate Management Services (CMS)",
+        "directorate": "GITO",
+        "sensitivity": "internal",
+        "url": "https://www.dffe.gov.za/corporate-management-services"
+      },
+      "keywords": ["hybrid 4ir", "4ir", "delivery layer", "multidisciplinary", "product teams", "communities of practice", "controlled innovation", "experimentation", "responsible ai", "digital capability development"]
+    },
+    {
+      "chunkId": "infra-01-unit3-networks-systems-servicedesk",
+      "collection": "Infrastructure",
+      "collectionId": "infrastructure",
+      "title": "Unit 3: ICT Infrastructure, Operations and User Services — Networks, Cloud, Identity & Service Desk (Source A p. 1 & Source B pp. 3, 6)",
+      "content": "In both Source A (Page 1, Unit A3) and Source B (Page 3, Unit 3), 'ICT Infrastructure, Operations and User Services' delivers the primary organisational outcome that stable, scalable and responsive ICT services are available to all authorised departmental users. Functional boundary rule (Source B, Page 6): Should provide a single operational service chain from monitoring and hosting through to service desk and end-user support, while privileged access must be controlled and periodically reviewed outside the operational team.\nSub-functions and responsibilities (Source B, Page 3):\n1. Networks, Hosting and Cloud: Connectivity, hosting, cloud platforms, capacity, availability, and technical supplier coordination.\n2. Systems, Platforms and Identity Administration: Server and platform administration, directory services, privileged access administration, patching, and operational monitoring.\n3. Service Desk and End-User Support: Incident management, request management, desktop support, field support, user communication, and knowledge management.\n4. ICT Assets, Configuration and Availability: Asset lifecycle, configuration records, software deployment, availability controls, and operational reporting.\n(Note: Source A on Page 1 also lists 'Service Management' as a fifth sub-function under Unit A3, whereas Source B moves Service Management into standalone Unit 4: ICT Portfolio, Commercial and Service Management.)",
+      "metadata": {
+        "source": "DFFE Government ICT Proposed Operating Model and GITO Structure(1).pdf (Source B, Pages 3, 6) & Revised_ICT_Organogram.pdf (Source A, Page 1)",
+        "sourceId": "SOURCE_A_AND_B",
+        "page": 3,
+        "section": "Section 3 (A3) & Section 4 (Unit 3)",
+        "category": "Networks, Hosting, Platforms & Service Desk",
+        "status": "Proposed",
+        "approvalCaveat": "Structure status: Proposed. Note the difference between Source A and Source B regarding Service Management placement.",
+        "department": "DFFE",
+        "branch": "Corporate Management Services (CMS)",
+        "directorate": "GITO",
+        "sensitivity": "internal",
+        "url": "https://www.dffe.gov.za/corporate-management-services"
+      },
+      "keywords": ["infrastructure", "networks", "hosting", "cloud", "systems", "platforms", "identity administration", "directory services", "patching", "service desk", "end-user support", "desktop support", "privileged access"]
+    },
+    {
+      "chunkId": "cyber-01-security-governance-and-placement-comparison",
+      "collection": "Cybersecurity",
+      "collectionId": "cybersecurity",
+      "title": "Cybersecurity & Information Security — Functions, Controls & Source A vs. Source B Placement (Source A p. 1 & Source B pp. 2, 6)",
+      "content": "Cybersecurity focuses on protecting departmental systems and information, monitoring threats, managing incidents, controlling access and supporting security governance. The two supplied proposed documents structure cybersecurity differently:\n1. SOURCE A (Revised_ICT_Organogram.pdf, Page 1 — Standalone Fourth Capability Area A4 'Cybersecurity & Information Security'):\n   - Cybersecurity Operations & Engineering\n   - Security Monitoring & Incident Response\n   - Identity & Access Security\n   - Vulnerability & Threat Management\n   - Security Governance\n2. SOURCE B (DFFE Government ICT Proposed Operating Model and GITO Structure(1).pdf, Page 2 — Sub-function 3 'Cybersecurity, Risk and Compliance' inside Unit 1 'ICT Governance, Architecture, Risk and Security'):\n   - Security governance\n   - Monitoring\n   - Access-risk oversight\n   - Incident coordination\n   - Vulnerability management\n   - Awareness\n   - Compliance\n   (Unit 1 in Source B also houses Strategy, Policy & Performance; Enterprise & Solution Architecture; and Business Continuity and Disaster Recovery.)\nRequired Functional Boundary (Source B, Page 6): Even when governance, architecture, risk and security are combined in one small unit (as in Source B Unit 1), architecture approval, security assurance, and operational administration must be assigned to different individuals or subjected to independent review where staffing permits.",
+      "metadata": {
+        "source": "Revised_ICT_Organogram.pdf (Source A, Page 1) & DFFE Government ICT Proposed Operating Model (Source B, Pages 2, 6)",
+        "sourceId": "SOURCE_A_AND_B",
+        "page": 1,
+        "section": "Section 3 (A4), Section 4 (Unit 1.3) & Section 6 (Functional Boundaries)",
+        "category": "Security Governance, Monitoring & Incident Response",
+        "status": "Proposed",
+        "approvalCaveat": "Structure status: Proposed. Explicitly distinguish Source A (standalone 4th unit) from Source B (sub-function within Unit 1).",
+        "department": "DFFE",
+        "branch": "Corporate Management Services (CMS)",
+        "directorate": "GITO",
+        "sensitivity": "internal",
+        "url": "https://www.dffe.gov.za/corporate-management-services"
+      },
+      "keywords": ["cybersecurity", "information security", "security monitoring", "incident response", "vulnerability", "threat management", "identity and access security", "security governance", "unit 1", "unit 4", "disaster recovery", "business continuity"]
+    },
+    {
+      "chunkId": "ict-ops-01-assets-portfolio-commercial-service-management",
+      "collection": "ICT Operations",
+      "collectionId": "ict_operations",
+      "title": "ICT Operations, Assets, Availability & Unit 4: ICT Portfolio, Commercial and Service Management (Source A p. 1 & Source B pp. 3–4, 6)",
+      "content": "ICT Operations and Service Management cover operational asset lifecycle, configuration, availability, project portfolio delivery, commercial vendor/licence governance, and SITA service-level management:\n1. ICT Assets, Configuration and Availability (Unit 3.4 in both Source A p. 1 and Source B p. 3): Asset lifecycle, configuration records, software deployment, availability controls, and operational reporting.\n2. Service Management Placement Difference: In Source A (Page 1), 'Service Management' is a sub-function under Unit A3 (ICT Infrastructure, Operations & User Services). In Source B (Pages 3–4), it is elevated into a standalone fourth consolidated capability unit: Unit 4 — 'ICT Portfolio, Commercial and Service Management'.\n3. Source B Unit 4 — ICT Portfolio, Commercial and Service Management (Pages 3–4): Primary outcome is that a prioritised and affordable ICT portfolio is delivered through controlled projects, contracts and measurable services:\n   - Portfolio, Programme and Project Management: Portfolio planning, project delivery, prioritisation, dependencies, risks, milestones, governance reporting.\n   - Financial Planning and Procurement Coordination: Budgeting, expenditure monitoring, business cases, demand planning, procurement support.\n   - Contracts, Licences and Vendor Management: Contract performance, licensing, renewals, obligations, supplier governance, commercial records.\n   - SITA and Service-Level Management: Service catalogue, service-level agreements (SLAs), performance reviews, escalations, coordination of mandatory and contracted services.\n   - Quality Assurance and Benefits Tracking: Delivery assurance, acceptance criteria, post-implementation reviews, benefits tracking, lessons learned.\nRequired Functional Boundary (Source B, Page 6): Portfolio, commercial and service management provides independent oversight of projects, budgets, contracts, licences, SITA performance, service levels and benefits; it must NOT directly operate the services it assesses.",
+      "metadata": {
+        "source": "DFFE Government ICT Proposed Operating Model and GITO Structure(1).pdf (Source B, Pages 3–4, 6) & Revised_ICT_Organogram.pdf (Source A, Page 1)",
+        "sourceId": "SOURCE_A_AND_B",
+        "page": 4,
+        "section": "Section 3 (A3), Section 4 (Unit 3.4 & Unit 4) & Section 6 (Boundary 4)",
+        "category": "Assets, Configuration, Availability, Portfolio & Service Management",
+        "status": "Proposed",
+        "approvalCaveat": "Structure status: Proposed. Highlight whether Service Management is being discussed under Source A (Unit 3) or Source B (Unit 4).",
+        "department": "DFFE",
+        "branch": "Corporate Management Services (CMS)",
+        "directorate": "GITO",
+        "sensitivity": "internal",
+        "url": "https://www.dffe.gov.za/corporate-management-services"
+      },
+      "keywords": ["ict operations", "service management", "portfolio", "commercial", "contracts", "licences", "vendor management", "sita", "service-level management", "sla", "assets", "configuration", "availability", "quality assurance", "benefits tracking"]
+    }
+  ]
+}

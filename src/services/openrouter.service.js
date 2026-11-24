@@ -91,6 +91,13 @@ class OpenRouterService {
       payload.reasoning = reasoning;
     }
 
+    // POPIA & Departmental Information Security: Zero Data Retention (ZDR) routing when enabled
+    if (env.OPENROUTER_ZDR) {
+      payload.provider = {
+        data_collection: 'deny'
+      };
+    }
+
     let response;
     try {
       // 30s per-attempt timeout guard to allow high-load reasoning models to begin streaming
@@ -276,6 +283,55 @@ class OpenRouterService {
     );
     exhaustedErr.status = status;
     throw exhaustedErr;
+  }
+
+  /**
+   * Generate vector embeddings via OpenRouter Embeddings endpoint (/api/v1/embeddings)
+   * Used for indexing and querying DFFE & GITO knowledge chunks in Supabase pgvector.
+   * @param {Object} options
+   * @param {string|string[]} options.input
+   * @param {string} [options.model]
+   * @param {string} [options.apiKey]
+   */
+  async createEmbedding({
+    input,
+    model = env.OPENROUTER_EMBEDDING_MODEL || 'openai/text-embedding-3-small',
+    apiKey = null
+  }) {
+    const activeKey = (apiKey && apiKey.trim()) || env.OPENROUTER_API_KEY;
+    if (!this.hasApiKey(activeKey)) {
+      const keyErr = new Error('OpenRouter API Key not configured for embeddings.');
+      keyErr.status = 401;
+      throw keyErr;
+    }
+
+    const payload = {
+      model,
+      input
+    };
+    if (env.OPENROUTER_ZDR) {
+      payload.provider = { data_collection: 'deny' };
+    }
+
+    const response = await fetch(`${env.OPENROUTER_BASE_URL}/embeddings`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${activeKey}`,
+        'HTTP-Referer': env.APP_URL || APP.url,
+        'X-Title': env.APP_TITLE,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      const err = new Error(`OpenRouter Embeddings API error (${response.status}): ${errText}`);
+      err.status = response.status;
+      throw err;
+    }
+
+    return response.json();
   }
 }
 

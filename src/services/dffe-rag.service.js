@@ -9,6 +9,7 @@
 
 const corpus = require('../data/dffe-corpus.json');
 const branchesManifest = require('../data/dffe-branches.json');
+const gitoChunksStore = require('../data/dffe-gito-chunks.json');
 
 const STOP_WORDS = new Set([
   'what', 'which', 'where', 'when', 'who', 'whom', 'whose', 'why', 'how',
@@ -50,7 +51,55 @@ const SERIES_ALIASES = {
   sawic: 'waste',
   internal_sop: 'internal_sop',
   internal: 'internal_sop',
-  sop: 'internal_sop'
+  sop: 'internal_sop',
+  gito_ict: 'gito_ict',
+  gito: 'gito_ict',
+  ict: 'gito_ict',
+  organogram: 'gito_ict',
+  cms: 'gito_ict'
+};
+
+const COLLECTION_ALIASES = {
+  all: 'all',
+  dffe_overview: 'dffe_overview',
+  'dffe overview': 'dffe_overview',
+  overview: 'dffe_overview',
+  cms: 'cms',
+  'corporate management services': 'cms',
+  gito: 'gito',
+  'government information technology office': 'gito',
+  'government information technology officer': 'gito',
+  ict_governance: 'ict_governance',
+  'ict governance': 'ict_governance',
+  governance: 'ict_governance',
+  dpsa: 'ict_governance',
+  cgictpf: 'ict_governance',
+  ict_organogram: 'ict_organogram',
+  'ict organogram': 'ict_organogram',
+  organogram: 'ict_organogram',
+  digital_solutions: 'digital_solutions',
+  'digital solutions': 'digital_solutions',
+  applications: 'digital_solutions',
+  infrastructure: 'infrastructure',
+  'ict infrastructure': 'infrastructure',
+  cybersecurity: 'cybersecurity',
+  security: 'cybersecurity',
+  ict_operations: 'ict_operations',
+  'ict operations': 'ict_operations',
+  operations: 'ict_operations',
+  portfolio: 'ict_operations'
+};
+
+const STATUS_ALIASES = {
+  all: 'all',
+  official: 'Official',
+  approved: 'Official',
+  proposed: 'Proposed',
+  draft: 'Proposed',
+  statutory: 'Statutory',
+  policy: 'Statutory',
+  historical: 'Historical',
+  history: 'Historical'
 };
 
 const AUDIENCE_ALIASES = {
@@ -87,6 +136,7 @@ const PHASE_ALIASES = {
 class DffeRagService {
   constructor() {
     this.customDocuments = [];
+    this.customChunks = [];
     this.customAgents = [];
   }
 
@@ -98,14 +148,73 @@ class DffeRagService {
   }
 
   /**
-   * Return corpus metadata (series list, years, audiences, governance policy, phases, agents, branches)
+   * Return all indexed passage chunks across the 9 logical collections
+   */
+  getAllChunks() {
+    const baseChunks = Array.isArray(gitoChunksStore.chunks) ? gitoChunksStore.chunks : [];
+    return [...this.customChunks, ...baseChunks];
+  }
+
+  /**
+   * Return the 9 logical DFFE & GITO knowledge collections
+   */
+  getCollections() {
+    return Array.isArray(gitoChunksStore.metadata?.collections)
+      ? gitoChunksStore.metadata.collections
+      : [];
+  }
+
+  /**
+   * Return structure status classifications (Official, Proposed, Statutory, Historical)
+   */
+  getStatuses() {
+    return Array.isArray(gitoChunksStore.metadata?.statuses)
+      ? gitoChunksStore.metadata.statuses
+      : [];
+  }
+
+  /**
+   * Return the 4 explicit Source A vs. Source B organogram conflict rules
+   */
+  getSourceConflictRules() {
+    return Array.isArray(gitoChunksStore.metadata?.sourceConflictRules)
+      ? gitoChunksStore.metadata.sourceConflictRules
+      : [];
+  }
+
+  /**
+   * Normalize collection filter
+   */
+  normalizeCollection(collection) {
+    if (!collection || typeof collection !== 'string') return 'all';
+    const key = collection.trim().toLowerCase();
+    return COLLECTION_ALIASES[key] || 'all';
+  }
+
+  /**
+   * Normalize structure status filter (Official, Proposed, Statutory, Historical, all)
+   */
+  normalizeStatus(status) {
+    if (!status || typeof status !== 'string') return 'all';
+    const key = status.trim().toLowerCase();
+    return STATUS_ALIASES[key] || 'all';
+  }
+
+  /**
+   * Return corpus metadata (series list, years, audiences, governance policy, phases, agents, branches, collections, chunks)
    */
   getMetadata() {
     const allDocs = this.getAllDocuments();
+    const allChunks = this.getAllChunks();
     return {
       ...corpus.metadata,
       documentCount: allDocs.length,
       customDocumentCount: this.customDocuments.length,
+      chunkCount: allChunks.length,
+      collectionCount: this.getCollections().length,
+      collections: this.getCollections(),
+      statuses: this.getStatuses(),
+      sourceConflictRules: this.getSourceConflictRules(),
       branchCount: branchesManifest.branches.length,
       branches: branchesManifest.branches,
       directorateAgents: this.getDirectorateAgents()
@@ -282,6 +391,10 @@ class DffeRagService {
       title,
       series: series === 'all' ? 'soer' : series,
       seriesLabel: seriesMeta.label === 'All DFFE Sources' ? 'Directorate Grounded Source' : seriesMeta.label,
+      collection: spec.collection || 'GITO',
+      collectionId: this.normalizeCollection(spec.collectionId || spec.collection || 'gito') === 'all' ? 'gito' : this.normalizeCollection(spec.collectionId || spec.collection),
+      status: this.normalizeStatus(spec.status) === 'all' ? 'Proposed' : this.normalizeStatus(spec.status),
+      page: spec.page || 'Page 1',
       year,
       branch,
       audiences: sensitivity === 'public' ? ['public', 'officials', 'researchers', 'compliance'] : ['officials', 'compliance'],
@@ -294,6 +407,33 @@ class DffeRagService {
       keywords: rawTokens,
       isCustomGrounded: true
     };
+
+    // Also index as a searchable passage chunk in the 9-collection chunk store
+    this.customChunks.unshift({
+      chunkId: `chunk-${id}`,
+      collection: newDoc.collection,
+      collectionId: newDoc.collectionId,
+      title,
+      content: `${summary}\n${keyFindings.join('\n')}`,
+      metadata: {
+        source: title,
+        sourceId: 'CUSTOM_GROUNDED',
+        page: newDoc.page,
+        section: 'Custom Grounded Passage',
+        category: newDoc.seriesLabel,
+        status: newDoc.status,
+        approvalCaveat: newDoc.status === 'Proposed'
+          ? 'Structure status: Proposed — Custom grounded document awaiting formal approval.'
+          : 'Grounded departmental reference source.',
+        department: 'DFFE',
+        branch,
+        directorate: spec.directorate || 'GITO',
+        sensitivity,
+        url
+      },
+      keywords: rawTokens,
+      isCustomGrounded: true
+    });
 
     this.customDocuments.unshift(newDoc);
     return newDoc;
@@ -369,7 +509,145 @@ class DffeRagService {
     const lower = text.trim().toLowerCase();
     if (lower.length < 4) return false;
 
-    return /\b(dffe|department of forestry|state of the environment|soer|saeo|environmental programmes?|working for water|working on fire|working for wetlands|working for the coast|working on waste|groen sebenza|ten million trees|nema|nemba|nemwa|nemaqa|nempaa|saaqis|sawic|ocims|frap|e-fishing|efishing|fishing rights|fishing permit|green scorpions|climate change act|sector emission targets|carbon budgets|basic assessment|environmental authorisation|environmental impact assessment|circular economy|extended producer responsibility|section 31l|section 24g|ministerial briefing|directorate agent|gito|itbs|it business solutions|corporate management services|cms|financial management services|fms|pfma|supply chain|sita|leave policy|equipment request|onboarding|sharepoint|power apps|power automate|protected tree|national forests act)\b/i.test(lower);
+    return /\b(dffe|deff|daff|department of forestry|state of the environment|soer|saeo|environmental programmes?|working for water|working on fire|working for wetlands|working for the coast|working on waste|groen sebenza|ten million trees|nema|nemba|nemwa|nemaqa|nempaa|saaqis|sawic|ocims|frap|e-fishing|efishing|fishing rights|fishing permit|green scorpions|climate change act|sector emission targets|carbon budgets|basic assessment|environmental authorisation|environmental impact assessment|circular economy|extended producer responsibility|section 31l|section 24g|ministerial briefing|directorate agent|gito|government information technology|itbs|it business solutions|corporate management services|cms|financial management services|fms|pfma|supply chain|sita|leave policy|equipment request|onboarding|sharepoint|power apps|power automate|protected tree|national forests act|organogram|capability area|capability unit|sub-directorate|chief directorate|dpsa|cgictpf|applications development|business enablement|business relationship|demand management|ict governance|ict infrastructure|ict operations|cybersecurity|service desk|service management|hybrid 4ir|communities of practice|steering committee|data governance forum|disaster recovery|enterprise architecture)\b/i.test(lower);
+  }
+
+  /**
+   * Search chunk-level passages across the 9 logical DFFE & GITO knowledge collections
+   * @param {object} options
+   * @param {string} [options.query]
+   * @param {string} [options.collection]
+   * @param {string} [options.status]
+   * @param {string} [options.accessPhase]
+   * @param {number} [options.limit]
+   */
+  searchChunks(options = {}) {
+    const rawQuery = typeof options.query === 'string' ? options.query.trim() : '';
+    const collection = this.normalizeCollection(options.collection);
+    const status = this.normalizeStatus(options.status);
+    const limit = Math.min(Math.max(Number(options.limit) || 6, 1), 15);
+
+    const queryLower = rawQuery.toLowerCase();
+    const tokens = this.tokenize(rawQuery);
+    const allChunks = this.getAllChunks();
+
+    // Filter by collection & status
+    let candidates = allChunks.filter(chunk => {
+      if (collection !== 'all' && chunk.collectionId !== collection) return false;
+      if (status !== 'all' && String(chunk.metadata?.status || '').toLowerCase() !== status.toLowerCase()) return false;
+      return true;
+    });
+
+    if (candidates.length === 0) {
+      candidates = allChunks;
+    }
+
+    const scored = candidates.map(chunk => {
+      let score = chunk.isCustomGrounded ? 4 : 0;
+      const matchedKeywords = [];
+
+      const titleLower = (chunk.title || '').toLowerCase();
+      const contentLower = (chunk.content || '').toLowerCase();
+      const collectionLower = (chunk.collection || '').toLowerCase();
+      const categoryLower = (chunk.metadata?.category || '').toLowerCase();
+      const sectionLower = (chunk.metadata?.section || '').toLowerCase();
+      const keywordsList = (chunk.keywords || []).map(k => k.toLowerCase());
+
+      for (const kw of keywordsList) {
+        if (queryLower.includes(kw)) {
+          score += kw.includes(' ') ? 14 : 7;
+          matchedKeywords.push(kw);
+        }
+      }
+
+      // Canonical question intent boosts across the 9 collections
+      if (/\b(gito|directorates?|sub-directorates?|fall under|organogram|capability area|capability unit|four units?|4 units?|structure)\b/i.test(queryLower)) {
+        if (chunk.chunkId === 'ict-org-01-source-a-revised-organogram') score += 26;
+        if (chunk.chunkId === 'ict-org-02-source-b-four-unit-model-and-conflicts') score += 24;
+        if (chunk.chunkId === 'cms-01-branch-purpose-and-gito-placement') score += 24;
+        if (chunk.chunkId === 'gito-01-role-and-accountability') score += 20;
+      }
+      if (/\b(applications? development|business enablement|business relationship|demand management|data governance|bi|analytics|digital adoption|decentralis)\b/i.test(queryLower) && chunk.collectionId === 'digital_solutions') {
+        score += 24;
+      }
+      if (/\b(hybrid 4ir|4ir|communities of practice|product teams?|experimentation|controlled innovation)\b/i.test(queryLower) && chunk.chunkId === 'dig-sol-02-hybrid-4ir-delivery-layer') {
+        score += 26;
+      }
+      if (/\b(cybersecurity|information security|incident response|vulnerability|threat|security monitoring|security governance)\b/i.test(queryLower) && chunk.collectionId === 'cybersecurity') {
+        score += 25;
+      }
+      if (/\b(infrastructure|networks?|hosting|cloud|service desk|end-user support|identity administration|directory services|patching)\b/i.test(queryLower) && chunk.collectionId === 'infrastructure') {
+        score += 24;
+      }
+      if (/\b(portfolio|commercial|service management|contracts?|licences?|vendor|sita|sla|service-level|assets?|configuration|availability)\b/i.test(queryLower) && chunk.collectionId === 'ict_operations') {
+        score += 24;
+      }
+      if (/\b(dpsa|cgictpf|corporate governance of ict|design principles|steering committee|review forum|data governance forum|operational committee|segregation of duties)\b/i.test(queryLower) && chunk.collectionId === 'ict_governance') {
+        score += 24;
+      }
+      if (/\b(approved|implemented|funded posts?|grades?|salary|validation|business case|job evaluation|functionality assessment)\b/i.test(queryLower) && chunk.chunkId === 'ict-org-03-implementation-validation-11-requirements') {
+        score += 25;
+      }
+      if (/\b(history|april 2021|name change|deff|daff|former department)\b/i.test(queryLower) && chunk.chunkId === 'dffe-ov-02-history-name-change') {
+        score += 26;
+      }
+      if (/\b(what is dffe|mandate|section 24|constitution|director-general|accounting officer)\b/i.test(queryLower) && chunk.collectionId === 'dffe_overview') {
+        score += 22;
+      }
+
+      for (const token of tokens) {
+        if (titleLower.includes(token)) score += 6;
+        if (contentLower.includes(token)) score += 4;
+        if (collectionLower.includes(token)) score += 5;
+        if (categoryLower.includes(token)) score += 3;
+        if (sectionLower.includes(token)) score += 2;
+      }
+
+      return {
+        ...chunk,
+        relevanceScore: score,
+        matchedKeywords: [...new Set(matchedKeywords)].slice(0, 6)
+      };
+    });
+
+    const hasActiveQuery = tokens.length > 0;
+    const sorted = hasActiveQuery
+      ? scored.sort((a, b) => b.relevanceScore - a.relevanceScore)
+      : scored;
+
+    let matchedChunks = hasActiveQuery
+      ? sorted.filter(c => c.relevanceScore > 0)
+      : sorted;
+
+    if (matchedChunks.length === 0) {
+      matchedChunks = sorted.slice(0, Math.min(3, limit));
+    } else {
+      matchedChunks = matchedChunks.slice(0, limit);
+    }
+
+    const sourceConflictDetected = matchedChunks.some(c =>
+      c.collectionId === 'ict_organogram' ||
+      c.collectionId === 'cybersecurity' ||
+      c.collectionId === 'ict_operations' ||
+      c.metadata?.sourceId === 'SOURCE_A' ||
+      c.metadata?.sourceId === 'SOURCE_B' ||
+      c.metadata?.sourceId === 'SOURCE_A_AND_B'
+    );
+
+    return {
+      query: rawQuery,
+      filters: {
+        collection,
+        status
+      },
+      totalChunks: allChunks.length,
+      matchCount: matchedChunks.length,
+      sourceConflictDetected,
+      sourceConflictRules: this.getSourceConflictRules(),
+      chunks: matchedChunks,
+      collections: this.getCollections(),
+      statuses: this.getStatuses()
+    };
   }
 
   /**
@@ -504,6 +782,12 @@ class DffeRagService {
       if (/\b(cms|corporate management|gito|itbs|it business solutions|equipment request|laptop|vpn|leave policy|employee leave|onboarding|template|power apps|power automate|asset management)\b/i.test(queryLower) && doc.id === 'dffe-cms-itbs-hr-sop-2026') {
         score += 22;
       }
+      if (/\b(gito|government information technology|organogram|capability area|capability unit|sub-directorate|directorates?.*under gito|revised ict organogram|cybersecurity|digital solutions|applications development|service desk|ict governance|ict infrastructure)\b/i.test(queryLower) && doc.id === 'dffe-gito-organogram-source-a-2026') {
+        score += 26;
+      }
+      if (/\b(gito|operating model|source b|four consolidated|portfolio commercial|service management|hybrid 4ir|communities of practice|dpsa|cgictpf|design principles|segregation of duties|job evaluation|functionality assessment)\b/i.test(queryLower) && doc.id === 'dffe-gito-operating-model-source-b-2026') {
+        score += 25;
+      }
       if (/\b(fms|financial management|pfma|supply chain|scm|procurement|tender|rfq|quotation|sita|csd|invoice|30 days)\b/i.test(queryLower) && doc.id === 'dffe-fms-pfma-scm-procurement-2026') {
         score += 22;
       }
@@ -563,11 +847,24 @@ class DffeRagService {
     const seriesMeta = corpus.metadata.seriesCatalogue.find(s => s.id === series) || corpus.metadata.seriesCatalogue[0];
     const audienceMeta = corpus.metadata.audiences.find(a => a.id === audience) || corpus.metadata.audiences[0];
 
+    // Also run chunk-level search across the 9 logical DFFE & GITO knowledge collections
+    const collectionFilter = this.normalizeCollection(options.collection);
+    const statusFilter = this.normalizeStatus(options.status);
+    const chunkSearchResult = this.searchChunks({
+      query: rawQuery,
+      collection: collectionFilter,
+      status: statusFilter,
+      accessPhase: phaseMeta.id,
+      limit: Number(options.chunkLimit) || 6
+    });
+
     return {
       query: rawQuery || 'DFFE Environmental Knowledge Overview',
       filters: {
         series,
         seriesLabel: seriesMeta.label,
+        collection: collectionFilter,
+        status: statusFilter,
         year,
         audience,
         audienceLabel: audienceMeta.label,
@@ -585,12 +882,19 @@ class DffeRagService {
       governance: corpus.metadata.governancePolicy,
       officialPortal: corpus.metadata.officialPortal,
       totalCorpusDocuments: allDocuments.length,
+      totalChunks: chunkSearchResult.totalChunks,
       matchCount: matchedDocs.length,
+      chunkMatchCount: chunkSearchResult.matchCount,
+      sourceConflictDetected: chunkSearchResult.sourceConflictDetected,
+      sourceConflictRules: chunkSearchResult.sourceConflictRules,
       fallbackUsed,
       filterRelaxed,
       documents: matchedDocs,
+      chunks: chunkSearchResult.chunks,
       catalogue: {
         series: corpus.metadata.seriesCatalogue,
+        collections: this.getCollections(),
+        statuses: this.getStatuses(),
         audiences: corpus.metadata.audiences,
         years: corpus.metadata.years,
         phases: this.getDeploymentPhases(),
@@ -600,30 +904,46 @@ class DffeRagService {
   }
 
   /**
-   * Format retrieved DFFE documents into an authoritative RAG grounding block
-   * for injection into the LLM system prompt.
+   * Format retrieved DFFE documents & passage chunks into an authoritative RAG grounding block
+   * for injection into the LLM system prompt, enforcing the 10 DFFE Knowledge Rules.
    */
   formatDffeGroundingContext(searchResult) {
-    if (!searchResult || !Array.isArray(searchResult.documents) || searchResult.documents.length === 0) {
+    if (!searchResult || ((!Array.isArray(searchResult.documents) || searchResult.documents.length === 0) && (!Array.isArray(searchResult.chunks) || searchResult.chunks.length === 0))) {
       return '';
     }
 
-    const { query, filters, documents, fallbackUsed, sensitivityAudit } = searchResult;
+    const { query, filters, documents = [], chunks = [], fallbackUsed, sensitivityAudit, sourceConflictDetected, sourceConflictRules = [] } = searchResult;
     const branchContext = this.formatRelevantBranchContext(query);
     const lines = [
       '[DFFE VERIFIED ENVIRONMENTAL KNOWLEDGE BASE — RAG GROUNDING CONTEXT]',
       `Query: "${query}"`,
-      `Active Filters: Series="${filters.seriesLabel}" | Year="${filters.year}" | Target Audience="${filters.audienceLabel}"`,
+      `Active Filters: Series="${filters?.seriesLabel || 'All'}" | Collection="${filters?.collection || 'all'}" | Status="${filters?.status || 'all'}" | Year="${filters?.year || 'all'}" | Target Audience="${filters?.audienceLabel || 'Public'}"`,
       `Deployment Phase & FM/IM Governance Context: ${sensitivityAudit?.phaseName || 'Phase 2: Public'} (${sensitivityAudit?.authContext || 'Public'}) — Allowed Sensitivity Tiers: [${(sensitivityAudit?.allowedSensitivities || ['public']).join(', ').toUpperCase()}]`,
-      'SCIENTIFIC INTEGRITY & INFORMATION MANAGEMENT (FM/IM) DIRECTIVE:',
-      '1. Ground your response strictly in the verified Department of Forestry, Fisheries and the Environment (DFFE) documents provided below.',
-      '2. Cite specific DFFE report titles, publication years, statutory acts (e.g., NEMA Act 107 of 1998, Climate Change Act 22 of 2024, NEMWA, NEMBA, PFMA), and official URLs (https://www.dffe.gov.za/...).',
-      '3. Tailor the explanation to the selected Target Audience and Deployment Phase while preserving scientific accuracy and quantitative indicators.',
-      '4. Enforce Information Management (FM/IM) Sensitivity Guardrails: If the user asks for restricted enforcement dockets, Section 31L compliance notices, or internal SOPs while operating in Phase 2 (External Public Web/WhatsApp), explicitly state that the FM/IM Sensitivity Gate blocks unauthenticated access to internal/restricted DFFE records.'
+      'DFFE KNOWLEDGE ASSISTANT — 10 MANDATORY KNOWLEDGE & CITATION RULES:',
+      '1. Prioritise the approved and current DFFE documents available in the knowledge base.',
+      '2. Use official DFFE (https://www.dffe.gov.za) and DPSA (CGICTPF Version 2, March 2022) publications as authoritative public references.',
+      '3. Strictly distinguish approved organisational structures (Official Public Departmental Facts) from proposed structures (Source A: Revised_ICT_Organogram.pdf and Source B: DFFE Government ICT Proposed Operating Model and GITO Structure(1).pdf) and draft documents.',
+      '4. Never invent directorates, sub-directorates, job titles, post grades, salary levels, reporting lines, responsibilities, policies or departmental procedures.',
+      '5. When answering organisational questions, explain the hierarchy: Department (DFFE) > Branch (e.g., Corporate Management Services [CMS]) > Chief Directorate (e.g., Government Information Technology Office [GITO]) > Directorate > Sub-directorate, where documented.',
+      '6. When information comes from a proposed organogram, explicitly identify it under a heading such as "Proposed functional structure", never present the capability areas as confirmed approved directorates/posts, and include a "SOURCES" section at the end with "Structure status: Proposed".',
+      '7. Cite the document name, page number (e.g., Page 1 to Page 7), and relevant section whenever possible.',
+      '8. If specific information is unavailable in the reference sources, state verbatim: "The available DFFE reference documents do not specify this information."',
+      '9. Do not confuse DFFE with historical departmental structures or former department names (note the April 2021 rename from DEFF to DFFE and the shift of forestry and fisheries from the former DAFF).',
+      '10. Enforce Information Management (FM/IM) Sensitivity Guardrails: Do not expose confidential internal or restricted information to users who are not authorised to access it in the active Deployment Phase.'
     ];
 
     if (branchContext) {
       lines.push(`\n${branchContext}`);
+    }
+
+    if (sourceConflictDetected && sourceConflictRules.length > 0) {
+      lines.push('\n[IMPORTANT SOURCE-CONFLICT & STATUS RULE — SOURCE A vs. SOURCE B PROPOSED GITO ORGANOGRAMS]');
+      lines.push('The public DFFE CMS webpage (https://www.dffe.gov.za/corporate-management-services) confirms that GITO is a Chief Directorate within the CMS branch. However, the two supplied internal ICT structure documents are BOTH PROPOSED and differ in four ways — never merge them silently or present them as approved establishment posts:');
+      sourceConflictRules.forEach(rule => {
+        lines.push(`- ${rule.dimension}:`);
+        lines.push(`  * ${rule.sourceA}`);
+        lines.push(`  * ${rule.sourceB}`);
+      });
     }
 
     if (sensitivityAudit && sensitivityAudit.withheldCount > 0) {
@@ -634,20 +954,37 @@ class DffeRagService {
       lines.push('NOTE: No exact keyword match was found in the filtered DFFE corpus for this specific query; below are the closest baseline DFFE reference reports. State clearly if a specific sub-topic is not covered in the verified corpus.');
     }
 
-    lines.push('\n--- RETRIEVED DFFE SOURCE DOCUMENTS ---');
-
-    documents.forEach((doc, idx) => {
-      lines.push(`\n[Source ${idx + 1}] ${doc.title} (${doc.year})`);
-      lines.push(`- Series: ${doc.seriesLabel} | Responsible Branch: ${doc.branch}`);
-      lines.push(`- Sensitivity & Governance Classification: [${(doc.sensitivity || 'public').toUpperCase()}] ${doc.governance}`);
-      lines.push(`- Official Citation: ${doc.citation}`);
-      lines.push(`- Reference URL: ${doc.url}`);
-      lines.push(`- Executive Summary: ${doc.summary}`);
-      lines.push(`- Key Verified Findings & Statutory Provisions:`);
-      (doc.keyFindings || []).forEach(f => {
-        lines.push(`  * ${f}`);
+    if (chunks.length > 0) {
+      lines.push('\n--- RETRIEVED DFFE & GITO PASSAGE CHUNKS (9 LOGICAL COLLECTIONS) ---');
+      chunks.forEach((chunk, idx) => {
+        const meta = chunk.metadata || {};
+        lines.push(`\n[Chunk ${idx + 1}] ${chunk.collection} / ${chunk.title}`);
+        lines.push(`- Metadata: Source="${meta.source || 'DFFE Reference'}" | Page="${meta.page || '1'}" | Section="${meta.section || 'General'}" | Category="${meta.category || chunk.collection}" | Status="${meta.status || 'Proposed'}" | Department="${meta.department || 'DFFE'}" | Directorate="${meta.directorate || 'GITO'}"`);
+        if (meta.approvalCaveat) {
+          lines.push(`- Status & Approval Caveat: ${meta.approvalCaveat}`);
+        }
+        if (meta.url) {
+          lines.push(`- Reference URL: ${meta.url}`);
+        }
+        lines.push(`- Content: ${chunk.content}`);
       });
-    });
+    }
+
+    if (documents.length > 0) {
+      lines.push('\n--- RETRIEVED DFFE SOURCE DOCUMENTS ---');
+      documents.forEach((doc, idx) => {
+        lines.push(`\n[Source ${idx + 1}] ${doc.title} (${doc.year})`);
+        lines.push(`- Series: ${doc.seriesLabel} | Responsible Branch: ${doc.branch}${doc.status ? ` | Structure Status: ${doc.status}` : ''}${doc.page ? ` | Page: ${doc.page}` : ''}`);
+        lines.push(`- Sensitivity & Governance Classification: [${(doc.sensitivity || 'public').toUpperCase()}] ${doc.governance}`);
+        lines.push(`- Official Citation: ${doc.citation}`);
+        lines.push(`- Reference URL: ${doc.url}`);
+        lines.push(`- Executive Summary: ${doc.summary}`);
+        lines.push(`- Key Verified Findings & Statutory Provisions:`);
+        (doc.keyFindings || []).forEach(f => {
+          lines.push(`  * ${f}`);
+        });
+      });
+    }
 
     lines.push('\n--- END DFFE RAG CONTEXT ---');
     return lines.join('\n');

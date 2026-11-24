@@ -118,14 +118,25 @@ export function resolveSlashCommand(prompt) {
   let isWebSearch = false;
   let overrideText = null;
 
-  if (command === 'dffe' || command === 'soer' || command === 'programmes' || command === 'nema' || command === 'sop' || command === 'restricted') {
+  if (command === 'dffe' || command === 'soer' || command === 'programmes' || command === 'nema' || command === 'sop' || command === 'restricted' || command === 'gito' || command === 'organogram' || command === 'dpsa' || command === 'cybersecurity' || command === 'sources') {
     const defaultSeriesMap = {
       dffe: state.dffeFilters?.series || 'all',
       soer: 'soer',
       programmes: 'programmes',
       nema: 'legislation',
       sop: 'internal_sop',
-      restricted: 'legislation'
+      restricted: 'legislation',
+      gito: 'gito_ict',
+      organogram: 'gito_ict',
+      dpsa: 'gito_ict',
+      cybersecurity: 'gito_ict',
+      sources: 'all'
+    };
+    const defaultCollectionMap = {
+      gito: 'gito',
+      organogram: 'ict_organogram',
+      dpsa: 'ict_governance',
+      cybersecurity: 'cybersecurity'
     };
     const defaultQueryMap = {
       dffe: 'What environmental programmes is DFFE currently running, and what are the key findings from the latest State of the Environment reports?',
@@ -133,12 +144,19 @@ export function resolveSlashCommand(prompt) {
       programmes: 'DFFE EPWP environmental programmes: Working for Water, Working on Fire, Working for Wetlands, Working for the Coast, Working on Waste',
       nema: 'NEMA Section 24 EIA regulations, Listing Notices 1, 2 and 3, and National Environmental Screening Tool',
       sop: 'DFFE Internal SOP: Directorate AI Agent Creation, SharePoint Grounding & Ministerial Submissions',
-      restricted: 'EMI Green Scorpions active Section 31L Compliance Notices and Section 24G Enforcement Register'
+      restricted: 'EMI Green Scorpions active Section 31L Compliance Notices and Section 24G Enforcement Register',
+      gito: 'What is the Chief Directorate: GITO, and what directorates or sub-directorates fall under it?',
+      organogram: 'Compare the Revised ICT Organogram (Source A) and the DFFE Government ICT Proposed Operating Model (Source B) under GITO',
+      dpsa: 'DPSA Corporate Governance of ICT Policy Framework (CGICTPF Version 2, March 2022) and the 8 GITO design principles',
+      cybersecurity: 'How is Cybersecurity & Information Security structured in Source A versus Source B under GITO?',
+      sources: 'What is the Chief Directorate: GITO, and what directorates or sub-directorates fall under it?'
     };
     toolToCall = 'search_dffe_knowledge';
     argsPayload = {
       query: arg.trim() || defaultQueryMap[command],
       series: defaultSeriesMap[command] || 'all',
+      collection: defaultCollectionMap[command] || state.dffeFilters?.collection || 'all',
+      status: state.dffeFilters?.status || 'all',
       year: state.dffeFilters?.year || 'all',
       audience: state.dffeFilters?.audience || 'public',
       accessPhase: state.dffeFilters?.accessPhase || (command === 'sop' ? 'phase1_internal' : command === 'restricted' ? 'phase3_enterprise' : 'phase2_public')

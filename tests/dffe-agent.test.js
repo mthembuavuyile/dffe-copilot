@@ -280,6 +280,11 @@ describe('DFFE 3-Phase Conversational Agentic Platform & RAG Suite (UNEP Environ
     assert.ok(triageHtml.includes('Open Workflow Form &amp; SOP in Canvas'));
 
     // Verify DFFE slash commands
+    const slashGito = resolveSlashCommand('/gito What directorates or sub-directorates fall under GITO?');
+    assert.strictEqual(slashGito.toolToCall, 'search_dffe_knowledge');
+    assert.strictEqual(slashGito.argsPayload.series, 'gito_ict');
+    assert.strictEqual(slashGito.argsPayload.collection, 'gito');
+
     const slashItbs = resolveSlashCommand('/itbs Request laptop and VPN');
     assert.strictEqual(slashItbs.toolToCall, 'triage_dffe_service_or_permit');
     assert.strictEqual(slashItbs.argsPayload.serviceCategory, 'itbs_equipment_request');
@@ -319,5 +324,86 @@ describe('DFFE 3-Phase Conversational Agentic Platform & RAG Suite (UNEP Environ
     assert.ok(indexHtml.includes('id="dffeFilterAgent"'), 'Main workspace must include Directorate Agent selector');
     assert.ok(indexHtml.includes('id="dffeFilterPhase"'), 'Main workspace must include 3-Phase FM/IM selector');
     assert.ok(indexHtml.includes('data-preset="dffe"'), 'Personalization settings must include DFFE Environmental Specialist preset');
+  });
+
+  test('DFFE & GITO 9-Collection Chunk Store, Approved vs. Proposed Status & Source A vs. Source B Conflict Rules work end-to-end', async () => {
+    const collections = dffeRagService.getCollections();
+    assert.strictEqual(collections.length, 9, 'Must define all 9 logical DFFE & GITO knowledge collections');
+    const colIds = collections.map(c => c.id);
+    for (const expectedCol of ['dffe_overview', 'cms', 'gito', 'ict_governance', 'ict_organogram', 'digital_solutions', 'infrastructure', 'cybersecurity', 'ict_operations']) {
+      assert.ok(colIds.includes(expectedCol), `Must include logical collection: ${expectedCol}`);
+    }
+
+    // Canonical user query: "What is the Chief Directorate: GITO, and what directorates or sub-directorates fall under it?"
+    const gitoQuery = 'What is the Chief Directorate: GITO, and what directorates or sub-directorates fall under it?';
+    assert.strictEqual(dffeRagService.isDffeQuery(gitoQuery), true);
+
+    const gitoRes = dffeRagService.searchKnowledge({ query: gitoQuery });
+    assert.ok(Array.isArray(gitoRes.chunks) && gitoRes.chunks.length >= 3, 'Must return indexed passage chunks');
+    assert.strictEqual(gitoRes.sourceConflictDetected, true, 'Must flag Source A vs. Source B proposed organogram distinction');
+    assert.strictEqual(gitoRes.sourceConflictRules.length, 4, 'Must include all 4 Source A vs. Source B conflict dimensions');
+
+    const chunkIds = gitoRes.chunks.map(c => c.chunkId);
+    assert.ok(chunkIds.includes('ict-org-01-source-a-revised-organogram'), 'Must retrieve Source A Revised ICT Organogram chunk (Page 1)');
+    assert.ok(chunkIds.includes('ict-org-02-source-b-four-unit-model-and-conflicts'), 'Must retrieve Source B 4-Unit Operating Model & Conflicts chunk');
+    assert.ok(chunkIds.includes('cms-01-branch-purpose-and-gito-placement'), 'Must retrieve Official CMS placement chunk');
+
+    const sourceAChunk = gitoRes.chunks.find(c => c.chunkId === 'ict-org-01-source-a-revised-organogram');
+    assert.strictEqual(sourceAChunk.metadata.status, 'Proposed');
+    assert.strictEqual(sourceAChunk.metadata.page, 1);
+    assert.strictEqual(sourceAChunk.metadata.department, 'DFFE');
+    assert.strictEqual(sourceAChunk.metadata.directorate, 'GITO');
+
+    const officialCmsChunk = gitoRes.chunks.find(c => c.chunkId === 'cms-01-branch-purpose-and-gito-placement');
+    assert.strictEqual(officialCmsChunk.metadata.status, 'Official');
+
+    // Verify RAG grounding context includes the 10 Knowledge Rules, Source Conflict notice, and verbatim chunks
+    const groundingText = dffeRagService.formatDffeGroundingContext(gitoRes);
+    assert.ok(groundingText.includes('DFFE KNOWLEDGE ASSISTANT — 10 MANDATORY KNOWLEDGE & CITATION RULES:'));
+    assert.ok(groundingText.includes('The available DFFE reference documents do not specify this information.'));
+    assert.ok(groundingText.includes('[IMPORTANT SOURCE-CONFLICT & STATUS RULE — SOURCE A vs. SOURCE B PROPOSED GITO ORGANOGRAMS]'));
+    assert.ok(groundingText.includes('Structure status: Proposed'));
+
+    // Verify specific sub-function query: "What does Applications Development and Support do?"
+    const appDevRes = dffeRagService.searchChunks({
+      query: 'What does Applications Development and Support do?',
+      collection: 'digital_solutions'
+    });
+    assert.ok(appDevRes.chunks.some(c => c.chunkId === 'dig-sol-01-unit2-responsibilities'));
+    assert.ok(appDevRes.chunks[0].content.includes('Applications Development and Support'));
+
+    // Verify Source Explorer rendering in dffeWidget
+    const { dffeWidget } = await import('../public/js/widgets/components/dffe-widget.js');
+    const gitoHtml = dffeWidget.render(gitoRes);
+    assert.ok(gitoHtml.includes('Source Explorer — Indexed Knowledge Passages &amp; Page Citations (9 Logical Collections)'));
+    assert.ok(gitoHtml.includes('Structure status: Proposed'));
+    assert.ok(gitoHtml.includes('Compare Source A vs. Source B in Source Explorer'));
+    assert.ok(gitoHtml.includes('Inspect in Source Explorer (Page 1)'));
+
+    // Verify HTTP endpoints /api/dffe/collections and /api/dffe/chunks/search
+    const server = app.listen(0);
+    const port = server.address().port;
+    try {
+      const colRes = await fetch(`http://127.0.0.1:${port}/api/dffe/collections`);
+      assert.strictEqual(colRes.status, 200);
+      const colData = await colRes.json();
+      assert.strictEqual(colData.collectionCount, 9);
+      assert.ok(colData.totalChunks >= 12);
+
+      const chunkSearchRes = await fetch(`http://127.0.0.1:${port}/api/dffe/chunks/search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: 'Cybersecurity placement in Source A versus Source B',
+          collection: 'cybersecurity',
+          status: 'Proposed'
+        })
+      });
+      assert.strictEqual(chunkSearchRes.status, 200);
+      const chunkSearchData = await chunkSearchRes.json();
+      assert.ok(chunkSearchData.chunks.some(c => c.chunkId === 'cyber-01-security-governance-and-placement-comparison'));
+    } finally {
+      server.close();
+    }
   });
 });

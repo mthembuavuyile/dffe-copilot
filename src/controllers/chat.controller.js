@@ -147,6 +147,8 @@ class ChatController {
         const dffeSearchRes = dffeRagService.searchKnowledge({
           query: lastUserQueryText,
           series: dffeFilters?.series || 'all',
+          collection: dffeFilters?.collection || 'all',
+          status: dffeFilters?.status || 'all',
           year: dffeFilters?.year || 'all',
           audience: dffeFilters?.audience || 'public',
           accessPhase: dffeFilters?.accessPhase || null,
