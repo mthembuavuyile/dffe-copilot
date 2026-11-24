@@ -214,8 +214,18 @@ class ChatController {
         const maxIterations = 5;
         const executedToolCallsInTurn = new Map();
 
-        // In build mode, allocate 100% of token budget to code generation without tool schema overhead
-        const activeTools = mode === 'build' ? undefined : DFFE_AGENT_TOOLS;
+        // In build mode, allocate 100% of token budget to code generation without tool schema overhead.
+        // When activeDffeSearchRes has ALREADY grounded the prompt with DFFE & GITO knowledge chunks,
+        // exclude 'search_dffe_knowledge' from activeTools so the model answers directly in 1 fast pass
+        // instead of wasting a round-trip calling search_dffe_knowledge a second time.
+        let activeTools;
+        if (mode === 'build') {
+          activeTools = undefined;
+        } else if (activeDffeSearchRes) {
+          activeTools = DFFE_AGENT_TOOLS.filter(t => t.function?.name !== 'search_dffe_knowledge');
+        } else {
+          activeTools = DFFE_AGENT_TOOLS;
+        }
 
         while (iteration < maxIterations) {
           iteration++;
@@ -227,24 +237,26 @@ class ChatController {
               model,
               temperature,
               stream: true,
-              tools: activeTools,
+              tools: iteration > 1 ? undefined : activeTools,
               maxTokens: safeMaxTokens,
               reasoning: reasoningConfig,
               apiKey: customApiKey,
               referer: env.APP_URL
             });
           } catch (upstreamErr) {
-            // If all upstream OpenRouter keys/models fail (e.g. 401, 429, 503) AND we have verified DFFE & GITO RAG chunks,
-            // serve the deterministic source-cited DFFE Knowledge Assistant synthesis + Source Explorer widget rather than an error card!
-            if (activeDffeSearchRes && !res.headersSent) {
+            // If all upstream OpenRouter keys/models fail (on Iteration 1 OR Iteration 2, even if headers were already sent!)
+            // AND we have verified DFFE & GITO RAG chunks, stream the deterministic source-cited DFFE Knowledge Assistant response!
+            if (activeDffeSearchRes && !res.writableEnded) {
               console.warn(`[DFFE RAG Resilient Fallback] Upstream LLM error (${upstreamErr.message}); streaming deterministic DFFE & GITO RAG synthesis.`);
-              res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
-              res.setHeader('Cache-Control', 'no-cache, no-transform');
-              res.setHeader('Connection', 'keep-alive');
-              res.setHeader('X-Accel-Buffering', 'no');
-              res.setHeader('Access-Control-Allow-Origin', '*');
-              if (typeof res.flushHeaders === 'function') {
-                res.flushHeaders();
+              if (!res.headersSent) {
+                res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+                res.setHeader('Cache-Control', 'no-cache, no-transform');
+                res.setHeader('Connection', 'keep-alive');
+                res.setHeader('X-Accel-Buffering', 'no');
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                if (typeof res.flushHeaders === 'function') {
+                  res.flushHeaders();
+                }
               }
               const fallbackMarkdown = dffeRagService.buildDeterministicResponse(activeDffeSearchRes);
               res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: fallbackMarkdown } }] })}\n\n`);
@@ -289,6 +301,18 @@ class ChatController {
 
                 try {
                   const data = JSON.parse(dataStr);
+                  // Guard: If OpenRouter sends an upstream provider error object inside a 200 SSE stream,
+                  // intercept it and stream our verified DFFE RAG fallback instead of forwarding the error to the UI!
+                  if (data.error) {
+                    const errMsg = typeof data.error === 'string' ? data.error : (data.error.message || 'Upstream provider error');
+                    console.warn(`[SSE Mid-Stream Provider Error]: ${errMsg}`);
+                    if (activeDffeSearchRes && !res.writableEnded) {
+                      const fallbackMarkdown = dffeRagService.buildDeterministicResponse(activeDffeSearchRes);
+                      res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: fallbackMarkdown } }] })}\n\n`);
+                      toolCallsMap.clear();
+                      break;
+                    }
+                  }
                   const delta = data.choices?.[0]?.delta;
                   if (delta?.tool_calls && Array.isArray(delta.tool_calls)) {
                     for (const tc of delta.tool_calls) {

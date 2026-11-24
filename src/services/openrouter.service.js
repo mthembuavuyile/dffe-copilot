@@ -1,14 +1,13 @@
 const env = require('../config/env');
 const { APP } = require('../config/identity');
 
-// Resilient fallback candidate pool (prioritizing high-availability & zero-cost models)
+// Resilient fallback candidate pool (prioritizing verified 200 OK low-latency free models)
 const DEFAULT_FALLBACK_POOL = [
   'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free',
   'nvidia/nemotron-3-ultra-550b-a55b:free',
-  'cohere/north-mini-code:free',
-  'nvidia/nemotron-3.5-lightning:free',
   'dots-studio/dots-3-note-preview:free',
-  'liquid/lfm-2.5-2.6b:free'
+  'nvidia/nemotron-3.5-super-vl:free',
+  'openrouter/free'
 ];
 
 class OpenRouterService {
@@ -76,10 +75,16 @@ class OpenRouterService {
       throw new Error('A non-empty messages array is required.');
     }
 
-    attemptedModels.add(model);
+    // When 'openrouter/free' is requested on the first attempt, route directly to our fastest verified 200 OK engine first
+    // so we avoid OpenRouter's random meta-router picking a 502/429 upstream provider.
+    const effectiveModel = (model === 'openrouter/free' && attemptedModels.size === 0)
+      ? DEFAULT_FALLBACK_POOL[0]
+      : model;
+
+    attemptedModels.add(effectiveModel);
 
     const payload = {
-      model,
+      model: effectiveModel,
       messages,
       temperature,
       stream,
