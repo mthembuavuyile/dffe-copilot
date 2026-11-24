@@ -148,12 +148,32 @@ class OpenRouterService {
       const rawMessage = errorJson.error?.message || errorJson.message || `Atlas Engine API error (${response.status})`;
       const lower = rawMessage.toLowerCase();
 
-      // Check if account-level daily limit for free models was hit on this key
+      // Check if account-level daily limit for free models was hit on this key, or if this key returned 401/403 (revoked/expired)
       const isDailyFreeLimitExceeded = lower.includes('free-models-per-day') || lower.includes('free tier daily') || lower.includes('purchase credits to raise');
+      const isAuthFailedOnKey = response.status === 401 || response.status === 403 || lower.includes('user not found') || lower.includes('invalid api key');
 
-      // If we hit daily limit on this server key and we have other backup keys in the pool, switch key first!
-      if (isDailyFreeLimitExceeded && !apiKey && keyPool.length > 1 && keyIndex + 1 < keyPool.length) {
-        console.warn(`⚡ [Daily Free Quota Hit on OpenRouter Key #${keyIndex + 1}]: Rotating to backup OpenRouter key #${keyIndex + 2}...`);
+      // If a stale client custom apiKey failed with 401/403, fall back to the server's valid keyPool!
+      if (isAuthFailedOnKey && apiKey && keyPool.length > 0) {
+        console.warn(`⚡ [Custom Key Auth Failed (${response.status})]: Falling back to server OpenRouter key pool...`);
+        await this.sleep(50);
+        return this.createChatCompletion({
+          messages,
+          model,
+          temperature,
+          stream,
+          tools,
+          maxTokens,
+          reasoning,
+          apiKey: null,
+          referer,
+          attemptedModels: new Set(),
+          keyIndex: 0
+        });
+      }
+
+      // If we hit daily limit or 401/403 on this server key and we have other backup keys in the pool, switch key first!
+      if ((isDailyFreeLimitExceeded || isAuthFailedOnKey) && !apiKey && keyPool.length > 1 && keyIndex + 1 < keyPool.length) {
+        console.warn(`⚡ [Key #${keyIndex + 1} returned ${response.status} (${rawMessage})]: Rotating to backup OpenRouter key #${keyIndex + 2}...`);
         await this.sleep(100);
         return this.createChatCompletion({
           messages,

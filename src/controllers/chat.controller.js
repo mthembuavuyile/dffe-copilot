@@ -143,8 +143,9 @@ class ChatController {
         ? (typeof lastUserMessageObj.content === 'string' ? lastUserMessageObj.content : JSON.stringify(lastUserMessageObj.content))
         : '';
 
+      let activeDffeSearchRes = null;
       if (lastUserQueryText && dffeRagService.isDffeQuery(lastUserQueryText)) {
-        const dffeSearchRes = dffeRagService.searchKnowledge({
+        activeDffeSearchRes = dffeRagService.searchKnowledge({
           query: lastUserQueryText,
           series: dffeFilters?.series || 'all',
           collection: dffeFilters?.collection || 'all',
@@ -154,7 +155,7 @@ class ChatController {
           accessPhase: dffeFilters?.accessPhase || null,
           limit: 4
         });
-        const dffeContext = dffeRagService.formatDffeGroundingContext(dffeSearchRes);
+        const dffeContext = dffeRagService.formatDffeGroundingContext(activeDffeSearchRes);
         if (dffeContext) {
           normalizedMessages.push({
             role: 'system',
@@ -219,17 +220,39 @@ class ChatController {
         while (iteration < maxIterations) {
           iteration++;
 
-          const openRouterResponse = await openrouterService.createChatCompletion({
-            messages: currentMessages,
-            model,
-            temperature,
-            stream: true,
-            tools: activeTools,
-            maxTokens: safeMaxTokens,
-            reasoning: reasoningConfig,
-            apiKey: customApiKey,
-            referer: env.APP_URL
-          });
+          let openRouterResponse;
+          try {
+            openRouterResponse = await openrouterService.createChatCompletion({
+              messages: currentMessages,
+              model,
+              temperature,
+              stream: true,
+              tools: activeTools,
+              maxTokens: safeMaxTokens,
+              reasoning: reasoningConfig,
+              apiKey: customApiKey,
+              referer: env.APP_URL
+            });
+          } catch (upstreamErr) {
+            // If all upstream OpenRouter keys/models fail (e.g. 401, 429, 503) AND we have verified DFFE & GITO RAG chunks,
+            // serve the deterministic source-cited DFFE Knowledge Assistant synthesis + Source Explorer widget rather than an error card!
+            if (activeDffeSearchRes && !res.headersSent) {
+              console.warn(`[DFFE RAG Resilient Fallback] Upstream LLM error (${upstreamErr.message}); streaming deterministic DFFE & GITO RAG synthesis.`);
+              res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+              res.setHeader('Cache-Control', 'no-cache, no-transform');
+              res.setHeader('Connection', 'keep-alive');
+              res.setHeader('X-Accel-Buffering', 'no');
+              res.setHeader('Access-Control-Allow-Origin', '*');
+              if (typeof res.flushHeaders === 'function') {
+                res.flushHeaders();
+              }
+              const fallbackMarkdown = dffeRagService.buildDeterministicResponse(activeDffeSearchRes);
+              res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: fallbackMarkdown } }] })}\n\n`);
+              res.write('data: [DONE]\n\n');
+              return res.end();
+            }
+            throw upstreamErr;
+          }
 
           // Send SSE headers ONLY after OpenRouter handshake succeeds
           // This allows upstream failures (429, 503, etc.) to return proper HTTP error codes before headers are sent

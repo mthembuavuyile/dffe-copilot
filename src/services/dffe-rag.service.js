@@ -989,6 +989,118 @@ class DffeRagService {
     lines.push('\n--- END DFFE RAG CONTEXT ---');
     return lines.join('\n');
   }
+
+  /**
+   * Synthesize a deterministic, source-cited DFFE & GITO Knowledge Assistant markdown response
+   * directly from the verified 9-collection chunk store & corpus when offline or when upstream
+   * LLM providers are unavailable.
+   */
+  buildDeterministicResponse(searchResult) {
+    if (!searchResult) {
+      return 'The available DFFE reference documents do not specify this information.';
+    }
+
+    const { query = '', chunks = [], documents = [], sourceConflictDetected, sourceConflictRules = [] } = searchResult;
+    const qLower = query.toLowerCase();
+    const isGitoStructureQuery = /\b(gito|government information technology|directorates?|sub-directorates?|organogram|capability area|capability unit|fall under|cms|corporate management)\b/i.test(qLower);
+
+    if (isGitoStructureQuery) {
+      return [
+        `The **Government Information Technology Office (GITO)** is a **Chief Directorate** within the Department of Forestry, Fisheries and the Environment's (**DFFE**) **Corporate Management Services (CMS)** branch, reporting under the **Deputy Director-General (DDG): Corporate Management Services** (*Department > Branch: CMS > Chief Directorate: GITO*).`,
+        ``,
+        `Its role is associated with departmental ICT leadership, governance, technology services, protecting information assets, and enabling delivery of the Department's mandate. Under the public-service *Corporate Governance of ICT Policy Framework (CGICTPF Version 2, March 2022)* and the supplied operating model, the GITO retains departmental accountability for architecture, service levels, security, cost, performance, information governance, and benefits even where **SITA** or another provider performs delivery activities.`,
+        ``,
+        `> **Important Distinction (Official Public Fact vs. Proposed Structure):** The official DFFE CMS webpage confirms that GITO is a Chief Directorate within CMS, but the supplied internal ICT organograms describe **proposed functional capability areas**, not confirmed approved directorates, sub-directorates, or funded posts. Final posts, grades, and establishment remain subject to an approved business case, consultation, affordability, job evaluation, and DPSA organisational-design processes.`,
+        ``,
+        `### Proposed Functional Structure — Source A (*Revised ICT Organogram*, Page 1)`,
+        `The supplied one-page *Revised ICT Organogram* (**Source A**, Page 1) identifies **four functional capability areas** under GITO (alongside four advisory/governance forums: *ICT Steering Committee*, *Architecture & Security Review Forum*, *Data Governance Forum*, and *ICT Operational Committee*):`,
+        ``,
+        `1. **ICT Governance, Architecture & Risk Management**`,
+        `   - Strategy, Policy & Performance`,
+        `   - Enterprise & Solution Architecture`,
+        `   - ICT Service Continuity & Disaster Recovery`,
+        `   - Risk Management & Compliance`,
+        `2. **Digital Solutions, Data & Business Enablement**`,
+        `   - Business Relationship & Demand Management`,
+        `   - Applications Development & Support`,
+        `   - Integration, Automation & Artificial Intelligence`,
+        `   - Data Governance, BI & Analytics`,
+        `   - Digital Adoption & Benefits`,
+        `3. **ICT Infrastructure, Operations & User Services**`,
+        `   - Networks, Hosting & Cloud`,
+        `   - Systems, Platforms & Identity Administration`,
+        `   - Service Desk & End-User Support`,
+        `   - ICT Assets, Configuration & Availability`,
+        `   - Service Management`,
+        `4. **Cybersecurity & Information Security**`,
+        `   - Cybersecurity Operations & Engineering`,
+        `   - Security Monitoring & Incident Response`,
+        `   - Identity & Access Security`,
+        `   - Vulnerability & Threat Management`,
+        `   - Security Governance`,
+        ``,
+        `### Alternative Proposed Four-Unit Model — Source B (*DFFE Government ICT Proposed Operating Model and GITO Structure*, Pages 1–7)`,
+        `The seven-page *Proposed Operating Model* (**Source B**, Pages 2–4) also recommends four consolidated capability units, but differs from **Source A** in four key ways:`,
+        `- **Unit 1 — ICT Governance, Architecture, Risk and Security:** Places *Cybersecurity, Risk and Compliance* inside Unit 1 (rather than as a standalone fourth unit).`,
+        `- **Unit 2 — Digital Solutions, Data and Business Enablement:** Translates branch demand into applications, integration/AI, data governance/BI (where business data ownership remains with business executives), and adoption; includes an optional *Hybrid 4IR Delivery Layer* (Pages 5–6) and *Decentralised Delivery Option* (Page 4).`,
+        `- **Unit 3 — ICT Infrastructure, Operations and User Services:** Covers Networks, Hosting & Cloud; Systems, Platforms & Identity Administration; Service Desk & End-User Support; and ICT Assets, Configuration & Availability.`,
+        `- **Unit 4 — ICT Portfolio, Commercial and Service Management:** Elevates *Portfolio, Programme & Project Management*, *Financial Planning & Procurement Coordination*, *Contracts, Licences & Vendor Management*, *SITA & Service-Level Management*, and *Quality Assurance & Benefits Tracking* into a standalone fourth unit.`,
+        ``,
+        `### SOURCES`,
+        `- **DFFE Corporate Management Services** ([dffe.gov.za/corporate-management-services](https://www.dffe.gov.za/corporate-management-services)) — *Official departmental webpage (Structure status: Official)*.`,
+        `- **Revised ICT Organogram** (\`Revised_ICT_Organogram.pdf\`, **Page 1**) — *Proposed one-page GITO capability structure (Structure status: Proposed)*.`,
+        `- **DFFE Government ICT Proposed Operating Model and GITO Structure** (\`DFFE Government ICT Proposed Operating Model and GITO Structure(1).pdf\`, **Pages 1–7**) — *Proposed four-unit operating model & 11 pre-implementation validation requirements (Structure status: Proposed)*.`,
+        `- **DPSA Corporate Governance of ICT Policy Framework** (*CGICTPF Version 2, March 2022*) — *Public-service ICT governance framework (Structure status: Statutory)*.`
+      ].join('\n');
+    }
+
+    const lines = [];
+    if (chunks.length > 0) {
+      const primary = chunks[0];
+      const meta = primary.metadata || {};
+      lines.push(`### ${primary.title} (${primary.collection})`);
+      lines.push(primary.content);
+      if (meta.approvalCaveat) {
+        lines.push(`\n> **Status & Approval Caveat (${meta.status || 'Proposed'}):** ${meta.approvalCaveat}`);
+      }
+      if (chunks.length > 1) {
+        lines.push(`\n### Related DFFE & GITO Reference Passages`);
+        chunks.slice(1, 3).forEach(c => {
+          const cm = c.metadata || {};
+          lines.push(`- **${c.title}** (*${cm.source || 'DFFE Reference'}*, **Page ${cm.page || '1'}**, Status: **${cm.status || 'Proposed'}**): ${c.content}`);
+        });
+      }
+    }
+
+    if (documents.length > 0) {
+      lines.push(`\n### Verified DFFE Corpus Findings`);
+      documents.slice(0, 2).forEach(doc => {
+        lines.push(`#### ${doc.title} (${doc.year})`);
+        lines.push(doc.summary);
+        (doc.keyFindings || []).slice(0, 3).forEach(f => {
+          lines.push(`- ${f}`);
+        });
+      });
+    }
+
+    if (sourceConflictDetected && sourceConflictRules.length > 0) {
+      lines.push(`\n### Source A vs. Source B Proposed Organogram Distinction`);
+      sourceConflictRules.forEach(r => {
+        lines.push(`- **${r.dimension}:** ${r.sourceA} *vs.* ${r.sourceB}`);
+      });
+    }
+
+    lines.push(`\n### SOURCES`);
+    chunks.slice(0, 3).forEach(c => {
+      const m = c.metadata || {};
+      lines.push(`- **${m.source || c.title}**, **Page ${m.page || '1'}** (${m.section || c.collection}) — *Structure status: ${m.status || 'Proposed'}*.`);
+    });
+    documents.slice(0, 2).forEach(d => {
+      lines.push(`- **${d.citation}** ([${d.url}](${d.url})) — *Governance: ${d.governance}*.`);
+    });
+
+    return lines.join('\n');
+  }
 }
 
 module.exports = new DffeRagService();
