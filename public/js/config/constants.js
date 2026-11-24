@@ -39,10 +39,10 @@ export const INVESTIGATION_MODES = {
     desc: 'Statutory & policy decomposition, NEMA Section 24 EIA screening, Green Scorpions enforcement, and PFMA / SCM rules',
     actionHint: 'what NEMA EIA activity, permit, or PFMA compliance rule shall we evaluate?',
     suggestions: [
-      { label: 'Screen NEMA Section 24 EIA Activity', prompt: '/eia 75 MW Solar PV & Grid Connection in a Renewable Energy Development Zone (REDZ)' },
+      { label: 'Screen NEMA Section 24 EIA Activity', prompt: 'Evaluate the NEMA Section 24 EIA pathway, Listing Notices 1, 2 & 3, mandatory DFFE National Screening Tool specialist protocols, and REDZ 57-day decision timeframes for a 75 MW Solar PV & Grid Connection project.' },
       { label: 'PFMA & SITA ICT Procurement Rules', prompt: 'Explain DFFE Financial Management Services (FMS) procurement thresholds under the PFMA, SITA ICT sign-off requirements, and the 30-day invoice payment rule.' },
       { label: 'NEMA Section 28 & Green Scorpions', prompt: 'Deconstruct the legal elements, strict liability principles, and Environmental Management Inspector (Green Scorpions) enforcement powers under NEMA Section 28, 31L, and 24G.' },
-      { label: 'FM/IM 3-Phase Sensitivity Audit', prompt: 'Challenge this proposal: "DFFE should deploy a single unsegmented AI chatbot connected to both internal SharePoint and the public website." Identify FM/IM governance and POPIA risks.' }
+      { label: 'GITO Official vs. Proposed Structure', prompt: 'What is the Chief Directorate: GITO, and how do the two proposed ICT organogram documents (Source A and Source B) differ from the official DFFE Corporate Management Services webpage?' }
     ]
   },
   solve: {

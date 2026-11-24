@@ -313,7 +313,7 @@ class DffeRagService {
       if (PHASE_ALIASES[key]) return PHASE_ALIASES[key];
     }
     if (audience === 'officials') return 'phase1_internal';
-    return 'phase2_public';
+    return 'phase1_internal';
   }
 
   /**
@@ -509,7 +509,7 @@ class DffeRagService {
     const lower = text.trim().toLowerCase();
     if (lower.length < 4) return false;
 
-    return /\b(dffe|deff|daff|department of forestry|state of the environment|soer|saeo|environmental programmes?|working for water|working on fire|working for wetlands|working for the coast|working on waste|groen sebenza|ten million trees|nema|nemba|nemwa|nemaqa|nempaa|saaqis|sawic|ocims|frap|e-fishing|efishing|fishing rights|fishing permit|green scorpions|climate change act|sector emission targets|carbon budgets|basic assessment|environmental authorisation|environmental impact assessment|circular economy|extended producer responsibility|section 31l|section 24g|ministerial briefing|directorate agent|gito|government information technology|itbs|it business solutions|corporate management services|cms|financial management services|fms|pfma|supply chain|sita|leave policy|equipment request|onboarding|sharepoint|power apps|power automate|protected tree|national forests act|organogram|capability area|capability unit|sub-directorate|chief directorate|dpsa|cgictpf|applications development|business enablement|business relationship|demand management|ict governance|ict infrastructure|ict operations|cybersecurity|service desk|service management|hybrid 4ir|communities of practice|steering committee|data governance forum|disaster recovery|enterprise architecture)\b/i.test(lower);
+    return /\b(dffe|deff|daff|department of forestry|state of the environment|soer|saeo|environmental programmes?|working for water|working on fire|working for wetlands|working for the coast|working on waste|groen sebenza|ten million trees|nema|eia|redz|renewable energy development zone|listing notice|screening tool|scoping|eapasa|nemba|nemwa|nemaqa|nempaa|saaqis|sawic|ocims|frap|e-fishing|efishing|fishing rights|fishing permit|green scorpions|climate change act|sector emission targets|carbon budgets|basic assessment|environmental authorisation|environmental impact assessment|circular economy|extended producer responsibility|section 31l|section 24g|ministerial briefing|directorate agent|gito|government information technology|itbs|it business solutions|corporate management services|cms|financial management services|fms|pfma|supply chain|sita|leave policy|equipment request|onboarding|sharepoint|power apps|power automate|protected tree|national forests act|organogram|capability area|capability unit|sub-directorate|chief directorate|dpsa|cgictpf|applications development|business enablement|business relationship|demand management|ict governance|ict infrastructure|ict operations|cybersecurity|service desk|service management|hybrid 4ir|communities of practice|steering committee|data governance forum|disaster recovery|enterprise architecture)\b/i.test(lower);
   }
 
   /**
@@ -615,11 +615,12 @@ class DffeRagService {
       ? scored.sort((a, b) => b.relevanceScore - a.relevanceScore)
       : scored;
 
+    const minScoreThreshold = collection !== 'all' ? 1 : 10;
     let matchedChunks = hasActiveQuery
-      ? sorted.filter(c => c.relevanceScore > 0)
+      ? sorted.filter(c => c.relevanceScore >= minScoreThreshold)
       : sorted;
 
-    if (matchedChunks.length === 0) {
+    if (matchedChunks.length === 0 && (!hasActiveQuery || collection !== 'all')) {
       matchedChunks = sorted.slice(0, Math.min(3, limit));
     } else {
       matchedChunks = matchedChunks.slice(0, limit);
@@ -758,8 +759,8 @@ class DffeRagService {
       if (/\b(state of the environment|soer|saeo|latest.*report|key findings)\b/i.test(queryLower) && doc.series === 'soer') {
         score += 18;
       }
-      if (/\b(nema|eia|screening|authorisation|basic assessment|listing notice|green scorpions)\b/i.test(queryLower) && doc.id === 'dffe-nema-eia-screening-2026') {
-        score += 18;
+      if (/\b(nema|eia|redz|renewable energy development zone|solar|wind|screening|authorisation|basic assessment|scoping|listing notice|green scorpions)\b/i.test(queryLower) && doc.id === 'dffe-nema-eia-screening-2026') {
+        score += 24;
       }
       if (/\b(climate change|carbon budget|emission target|act 22|ndc|ghg)\b/i.test(queryLower) && doc.id === 'dffe-climate-change-act-2026') {
         score += 18;
@@ -1055,10 +1056,25 @@ class DffeRagService {
     }
 
     const lines = [];
+    const topChunkScore = chunks[0]?.relevanceScore || 0;
+    const topDocScore = documents[0]?.relevanceScore || 0;
+    const prioritizeDocs = documents.length > 0 && topDocScore >= topChunkScore;
+
+    if (prioritizeDocs) {
+      documents.slice(0, 3).forEach((doc, idx) => {
+        lines.push(`${idx > 0 ? '\n' : ''}### ${doc.title} (${doc.year})`);
+        lines.push(`**Responsible Branch:** ${doc.branch} &bull; **Series:** ${doc.seriesLabel}`);
+        lines.push(doc.summary);
+        (doc.keyFindings || []).forEach(f => {
+          lines.push(`- ${f}`);
+        });
+      });
+    }
+
     if (chunks.length > 0) {
       const primary = chunks[0];
       const meta = primary.metadata || {};
-      lines.push(`### ${primary.title} (${primary.collection})`);
+      lines.push(`${lines.length > 0 ? '\n' : ''}### ${primary.title} (${primary.collection})`);
       lines.push(primary.content);
       if (meta.approvalCaveat) {
         lines.push(`\n> **Status & Approval Caveat (${meta.status || 'Proposed'}):** ${meta.approvalCaveat}`);
@@ -1072,12 +1088,12 @@ class DffeRagService {
       }
     }
 
-    if (documents.length > 0) {
+    if (!prioritizeDocs && documents.length > 0) {
       lines.push(`\n### Verified DFFE Corpus Findings`);
       documents.slice(0, 2).forEach(doc => {
         lines.push(`#### ${doc.title} (${doc.year})`);
         lines.push(doc.summary);
-        (doc.keyFindings || []).slice(0, 3).forEach(f => {
+        (doc.keyFindings || []).slice(0, 4).forEach(f => {
           lines.push(`- ${f}`);
         });
       });

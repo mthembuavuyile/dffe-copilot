@@ -294,6 +294,13 @@ export async function executeChatTurn(session) {
         if (slash.overrideText && payloadMessages.length > 0) {
           payloadMessages[payloadMessages.length - 1].content = `${slash.overrideText}${projectContext || ''}`;
         }
+      } else if (slash.isDffeRag) {
+        if (slash.overrideText && payloadMessages.length > 0) {
+          payloadMessages[payloadMessages.length - 1].content = `${slash.overrideText}${projectContext || ''}`;
+        }
+        if (slash.dffeFilters) {
+          state.dffeFilters = { ...(state.dffeFilters || {}), ...slash.dffeFilters };
+        }
       } else if (slash.toolToCall) {
         const handled = await runLocalWidget(slash.toolToCall, slash.argsPayload, slash.label, widgetContext, { fallbackToAi: true });
         if (handled) return;

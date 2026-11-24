@@ -116,120 +116,109 @@ export function resolveSlashCommand(prompt) {
   let toolToCall = null;
   let argsPayload = {};
   let isWebSearch = false;
+  let isDffeRag = false;
+  let dffeFilters = null;
   let overrideText = null;
 
-  if (command === 'dffe' || command === 'soer' || command === 'programmes' || command === 'nema' || command === 'sop' || command === 'restricted' || command === 'gito' || command === 'organogram' || command === 'dpsa' || command === 'cybersecurity' || command === 'sources') {
+  if (command === 'sources') {
+    toolToCall = 'search_dffe_knowledge';
+    argsPayload = {
+      query: arg.trim() || 'What is the Chief Directorate: GITO, and what directorates or sub-directorates fall under it?',
+      series: state.dffeFilters?.series || 'all',
+      collection: state.dffeFilters?.collection || 'all',
+      status: state.dffeFilters?.status || 'all',
+      year: state.dffeFilters?.year || 'all',
+      audience: state.dffeFilters?.audience || 'public'
+    };
+  } else if (
+    command === 'dffe' ||
+    command === 'soer' ||
+    command === 'programmes' ||
+    command === 'nema' ||
+    command === 'eia' ||
+    command === 'screening' ||
+    command === 'sop' ||
+    command === 'gito' ||
+    command === 'organogram' ||
+    command === 'dpsa' ||
+    command === 'cybersecurity' ||
+    command === 'climate' ||
+    command === 'air' ||
+    command === 'saaqis' ||
+    command === 'waste' ||
+    command === 'sawic' ||
+    command === 'itbs' ||
+    command === 'cms' ||
+    command === 'pfma' ||
+    command === 'efishing' ||
+    command === 'permit' ||
+    command === 'service'
+  ) {
     const defaultSeriesMap = {
       dffe: state.dffeFilters?.series || 'all',
       soer: 'soer',
       programmes: 'programmes',
       nema: 'legislation',
+      eia: 'legislation',
+      screening: 'legislation',
       sop: 'internal_sop',
-      restricted: 'legislation',
       gito: 'gito_ict',
       organogram: 'gito_ict',
       dpsa: 'gito_ict',
       cybersecurity: 'gito_ict',
-      sources: 'all'
+      climate: 'climate',
+      air: 'climate',
+      saaqis: 'climate',
+      waste: 'waste',
+      sawic: 'waste',
+      itbs: 'internal_sop',
+      cms: 'internal_sop',
+      pfma: 'internal_sop',
+      efishing: 'forestry_fisheries',
+      permit: 'forestry_fisheries',
+      service: 'internal_sop'
     };
     const defaultCollectionMap = {
       gito: 'gito',
       organogram: 'ict_organogram',
       dpsa: 'ict_governance',
-      cybersecurity: 'cybersecurity'
+      cybersecurity: 'cybersecurity',
+      itbs: 'digital_solutions',
+      cms: 'cms'
     };
     const defaultQueryMap = {
       dffe: 'What environmental programmes is DFFE currently running, and what are the key findings from the latest State of the Environment reports?',
-      soer: 'South Africa State of the Environment Report (SoER) national synthesis and key findings',
-      programmes: 'DFFE EPWP environmental programmes: Working for Water, Working on Fire, Working for Wetlands, Working for the Coast, Working on Waste',
-      nema: 'NEMA Section 24 EIA regulations, Listing Notices 1, 2 and 3, and National Environmental Screening Tool',
-      sop: 'DFFE Internal SOP: Directorate AI Agent Creation, SharePoint Grounding & Ministerial Submissions',
-      restricted: 'EMI Green Scorpions active Section 31L Compliance Notices and Section 24G Enforcement Register',
+      soer: 'Summarize the latest South Africa State of the Environment Report (SoER) key findings across biodiversity, water, climate, land degradation, and waste.',
+      programmes: 'Explain DFFE EPWP environmental programmes: Working for Water, Working on Fire, Working for Wetlands, Working for the Coast, Working on Waste, and Ten Million Trees.',
+      nema: 'Explain NEMA Section 24 EIA regulations, Listing Notices 1, 2 and 3, the mandatory DFFE National Environmental Screening Tool, and Green Scorpions compliance.',
+      eia: 'Explain the NEMA Section 24 EIA pathway, Listing Notices 1, 2 & 3, mandatory DFFE National Environmental Screening Tool protocols, and statutory decision timeframes.',
+      screening: 'Explain the mandatory DFFE National Web-Based Environmental Screening Tool requirements under NEMA Section 24.',
+      sop: 'Explain DFFE internal Corporate Management Services (CMS) and GITO operational procedures for ICT requests, HR leave, and PFMA procurement.',
       gito: 'What is the Chief Directorate: GITO, and what directorates or sub-directorates fall under it?',
-      organogram: 'Compare the Revised ICT Organogram (Source A) and the DFFE Government ICT Proposed Operating Model (Source B) under GITO',
-      dpsa: 'DPSA Corporate Governance of ICT Policy Framework (CGICTPF Version 2, March 2022) and the 8 GITO design principles',
+      organogram: 'Compare the Revised ICT Organogram (Source A) and the DFFE Government ICT Proposed Operating Model (Source B) under GITO.',
+      dpsa: 'Explain the DPSA Corporate Governance of ICT Policy Framework (CGICTPF Version 2, March 2022) and the 8 GITO design principles.',
       cybersecurity: 'How is Cybersecurity & Information Security structured in Source A versus Source B under GITO?',
-      sources: 'What is the Chief Directorate: GITO, and what directorates or sub-directorates fall under it?'
+      climate: 'Explain the Climate Change Act (Act 22 of 2024) Sector Emission Targets (SETs), mandatory company Carbon Budgets, and municipal adaptation duties.',
+      air: 'Summarize the State of Air Report and National Priority Area Air Quality Management Plans (Highveld, Vaal Triangle, Waterberg-Bojanala) on SAAQIS.',
+      saaqis: 'Summarize the State of Air Report and National Priority Area Air Quality Management Plans (Highveld, Vaal Triangle, Waterberg-Bojanala) on SAAQIS.',
+      waste: 'Explain the National Waste Management Strategy (NWMS) and NEMWA Section 18 Extended Producer Responsibility (EPR) targets tracked on SAWIC.',
+      sawic: 'Explain the National Waste Management Strategy (NWMS) and NEMWA Section 18 Extended Producer Responsibility (EPR) targets tracked on SAWIC.',
+      itbs: 'How do I request IT equipment or VPN access in GITO / ITBS, and how are internal approvals routed?',
+      cms: 'What are the DFFE Corporate Management Services (CMS) procedures for employee leave, new staff onboarding, and ICT equipment requests?',
+      pfma: 'What are the DFFE Financial Management Services (FMS) PFMA Supply Chain Management procurement thresholds, SITA ICT alignment rules, and 30-day invoice requirements?',
+      efishing: 'How do citizens and small-scale fishing co-operatives apply for permits on DFFE e-Fishing and under the Marine Living Resources Act (MLRA)?',
+      permit: 'How do applicants apply for a National Forests Act Section 15 protected tree licence or NEMBA TOPS / Bioprospecting permit?',
+      service: 'What are the DFFE internal procedures for GITO / ITBS equipment requests, CMS HR leave, and FMS PFMA procurement?'
     };
-    toolToCall = 'search_dffe_knowledge';
-    argsPayload = {
-      query: arg.trim() || defaultQueryMap[command],
+
+    isDffeRag = true;
+    overrideText = arg.trim()
+      ? (command === 'eia' ? `Evaluate the NEMA Section 24 EIA pathway, applicable Listing Notices (1, 2 or 3), DFFE National Screening Tool specialist protocols, and statutory decision timeframes for: ${arg.trim()}` : arg.trim())
+      : defaultQueryMap[command];
+    dffeFilters = {
       series: defaultSeriesMap[command] || 'all',
-      collection: defaultCollectionMap[command] || state.dffeFilters?.collection || 'all',
-      status: state.dffeFilters?.status || 'all',
-      year: state.dffeFilters?.year || 'all',
-      audience: state.dffeFilters?.audience || 'public',
-      accessPhase: state.dffeFilters?.accessPhase || (command === 'sop' ? 'phase1_internal' : command === 'restricted' ? 'phase3_enterprise' : 'phase2_public')
+      collection: defaultCollectionMap[command] || state.dffeFilters?.collection || 'all'
     };
-  } else if (command === 'eia' || command === 'screening') {
-    toolToCall = 'screen_nema_eia_activity';
-    argsPayload = {
-      projectDescription: arg.trim() || '75 MW Solar PV & Grid Connection in a Renewable Energy Development Zone (REDZ)'
-    };
-  } else if (command === 'service' || command === 'itbs' || command === 'cms' || command === 'pfma' || command === 'efishing' || command === 'permit' || command === 'branches') {
-    const categoryMap = {
-      itbs: 'itbs_equipment_request',
-      cms: 'cms_hr_onboarding_leave',
-      pfma: 'fms_pfma_procurement',
-      efishing: 'efishing_marine_permit',
-      permit: 'forestry_tops_biodiversity_permit',
-      service: 'auto',
-      branches: 'auto'
-    };
-    const defaultDetailMap = {
-      itbs: 'ITBS IT equipment request (laptop, VPN, or Power Platform digital workflow)',
-      cms: 'CMS employee leave policy, new staff onboarding checklist, and SharePoint templates',
-      pfma: 'FMS PFMA Supply Chain Management procurement thresholds and SITA ICT sign-off',
-      efishing: 'e-Fishing online recreational fishing permit and Small-Scale Fisheries (FRAP) guide',
-      permit: 'National Forests Act protected tree cutting permit and NEMBA TOPS/Bioprospecting licence',
-      service: 'ITBS IT equipment request, HR leave SOP, and digital approval workflow',
-      branches: 'ITBS internal service request and DFFE 10-Branch workflow routing'
-    };
-    toolToCall = 'triage_dffe_service_or_permit';
-    argsPayload = {
-      serviceCategory: categoryMap[command] || 'auto',
-      requestDetails: arg.trim() || defaultDetailMap[command]
-    };
-  } else if (command === 'climate' || command === 'air' || command === 'saaqis' || command === 'waste' || command === 'sawic' || command === 'indicators') {
-    const domainMap = {
-      climate: 'climate',
-      air: 'saaqis',
-      saaqis: 'saaqis',
-      waste: 'sawic',
-      sawic: 'sawic',
-      indicators: 'all'
-    };
-    toolToCall = 'query_dffe_environmental_indicators';
-    argsPayload = {
-      domain: domainMap[command] || 'all',
-      query: arg.trim() || `DFFE ${command.toUpperCase()} statutory benchmarks and system indicators`
-    };
-  } else if (command === 'agent' || command === 'agents' || command === 'studio') {
-    toolToCall = 'manage_dffe_directorate_agent';
-    if (arg.trim()) {
-      const parts = arg.split('|').map(s => s.trim());
-      argsPayload = {
-        action: 'create_agent',
-        name: parts[0] || 'Custom Directorate Agent',
-        directorate: parts[1] || 'DFFE Directorate',
-        groundingUrl: parts[2] || 'https://www.dffe.gov.za',
-        customText: parts[3] || ''
-      };
-    } else {
-      argsPayload = { action: 'overview' };
-    }
-  } else if (command === 'ground') {
-    toolToCall = 'manage_dffe_directorate_agent';
-    const isUrl = /^https?:\/\//i.test(arg.trim());
-    argsPayload = {
-      action: 'ground_source',
-      name: isUrl ? `Grounded DFFE URL (${arg.trim()})` : 'Directorate Grounded Policy Extract',
-      groundingUrl: isUrl ? arg.trim() : 'https://www.dffe.gov.za',
-      customText: arg.trim() || 'Grounded DFFE policy reference source.'
-    };
-  } else if (command === 'sensitivity' || command === 'rbac') {
-    toolToCall = 'manage_dffe_directorate_agent';
-    argsPayload = { action: 'sensitivity_audit' };
   } else if (command === 'web') {
     isWebSearch = true;
     overrideText = arg;
@@ -294,8 +283,10 @@ export function resolveSlashCommand(prompt) {
     toolToCall,
     argsPayload,
     isWebSearch,
+    isDffeRag,
+    dffeFilters,
     overrideText,
-    label: `Executed DFFE operational command \`/${command}\`.`
+    label: `Opened DFFE Source Explorer for \`/${command}\`.`
   };
 }
 

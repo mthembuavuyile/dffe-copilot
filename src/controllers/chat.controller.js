@@ -51,7 +51,7 @@ class ChatController {
     if (activeToolsState.webSearch) {
       stateContexts.push("- Live Web Search toggle is ENABLED in UI. Real-time internet grounding is active.");
     } else {
-      stateContexts.push("- Live Web Search toggle is currently OFF in UI. However, you have access to autonomous DFFE operational function tools ('search_dffe_knowledge', 'screen_nema_eia_activity', 'query_dffe_environmental_indicators', 'manage_dffe_directorate_agent', and 'search_web'). Invoke the appropriate DFFE tool whenever a query involves DFFE reports, NEMA EIA compliance, SAAQIS/SAWIC/Climate Change Act metrics, or Directorate Agent creation.");
+      stateContexts.push("- Live Web Search toggle is currently OFF in UI. However, you have access to autonomous DFFE RAG & utility function tools ('search_dffe_knowledge' and 'search_web'). Invoke 'search_dffe_knowledge' whenever a query involves DFFE reports, GITO/CMS structure, NEMA EIA compliance, SAAQIS/SAWIC/Climate Change Act metrics, or internal departmental procedures.");
     }
     
     if (activeToolsState.hasAttachments) {
@@ -161,13 +161,6 @@ class ChatController {
         const branchOnlyContext = dffeRagService.formatRelevantBranchContext(lastUserQueryText);
         if (branchOnlyContext) {
           systemPromptContent += `\n\n${branchOnlyContext}`;
-        }
-      }
-
-      if (dffeFilters?.agentId) {
-        const activeAgent = dffeRagService.getDirectorateAgents().find(a => a.id === dffeFilters.agentId);
-        if (activeAgent) {
-          systemPromptContent += `\n\n[ACTIVE DFFE DIRECTORATE AGENT PROFILE]\n- Agent Name: ${activeAgent.name}\n- Responsible Directorate: ${activeAgent.directorate}\n- Default Series Scope: ${activeAgent.defaultSeries}\n- Sensitivity Tier: ${activeAgent.sensitivity.toUpperCase()}\n- Grounded Official URLs: ${(activeAgent.groundingUrls || []).join(', ')}\n- Required Deliverable Format: ${activeAgent.deliverableFormat}${activeAgent.instructions ? `\n- Directorate Custom Instructions: ${activeAgent.instructions}` : ''}`;
         }
       }
 

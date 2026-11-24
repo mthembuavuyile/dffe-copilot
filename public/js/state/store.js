@@ -57,9 +57,9 @@ export const state = {
   projectFiles: [],
   dffeFilters: {
     series: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_series')) || 'all',
+    collection: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_collection')) || 'all',
+    status: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_status')) || 'all',
     year: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_year')) || 'all',
-    audience: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_audience')) || 'public',
-    accessPhase: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_phase')) || 'phase1_internal',
-    agentId: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_agent')) || 'dffe-general-agent'
+    audience: (typeof window !== 'undefined' && window.localStorage?.getItem('atlas_dffe_audience')) || 'public'
   }
 };

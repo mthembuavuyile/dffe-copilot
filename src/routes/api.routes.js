@@ -9,9 +9,6 @@ const toolController = require('../controllers/tool.controller');
 const widgetController = require('../controllers/widget.controller');
 const elevenlabsService = require('../services/elevenlabs.service');
 const dffeRagService = require('../services/dffe-rag.service');
-const dffeEiaScreeningCapability = require('../capabilities/dffe/dffe-eia-screening.capability');
-const dffeIndicatorsCapability = require('../capabilities/dffe/dffe-indicators.capability');
-const dffeServiceTriageCapability = require('../capabilities/dffe/dffe-service-triage.capability');
 
 // Security & Rate Limiting Middlewares
 const { chatLimiter, titleLimiter, toolLimiter } = require('../middleware/rateLimiter');
@@ -95,52 +92,6 @@ router.post('/dffe/chunks/search', toolLimiter, (req, res) => {
   res.json(result);
 });
 
-// DFFE Directorate Agent Studio & Self-Service URL/Document Grounding endpoints
-router.get('/dffe/agents', (req, res) => {
-  res.json({
-    agents: dffeRagService.getDirectorateAgents(),
-    phases: dffeRagService.getDeploymentPhases()
-  });
-});
-
-router.post('/dffe/agents', toolLimiter, (req, res) => {
-  const body = req.body || {};
-  if (!body.name && !body.directorate) {
-    return res.status(400).json({ error: 'Agent name or directorate is required.' });
-  }
-  const created = dffeRagService.createDirectorateAgent(body);
-  res.status(201).json({
-    status: 'created',
-    ...created,
-    agents: dffeRagService.getDirectorateAgents()
-  });
-});
-
-router.post('/dffe/ground', toolLimiter, (req, res) => {
-  const body = req.body || {};
-  if (!body.title && !body.url && !body.content) {
-    return res.status(400).json({ error: 'Source title, URL, or content is required for RAG grounding.' });
-  }
-  const doc = dffeRagService.groundCustomSource(body);
-  res.status(201).json({
-    status: 'grounded',
-    document: doc,
-    totalCorpusDocuments: dffeRagService.getAllDocuments().length
-  });
-});
-
-// Deterministic NEMA Section 24 EIA & National Screening Tool endpoint
-router.post('/dffe/eia-screen', toolLimiter, async (req, res) => {
-  const result = await dffeEiaScreeningCapability.execute(req.body || {});
-  res.json(result);
-});
-
-// Deterministic SAAQIS, SAWIC, Climate Change Act & EPWP Indicators endpoint
-router.post('/dffe/indicators', toolLimiter, async (req, res) => {
-  const result = await dffeIndicatorsCapability.execute(req.body || {});
-  res.json(result);
-});
-
 // DFFE 10-Branch Directory & Dynamic Branch Classifier endpoint
 router.get('/dffe/branches', (req, res) => {
   const q = req.query.q || req.query.query || '';
@@ -151,12 +102,6 @@ router.get('/dffe/branches', (req, res) => {
     branches: dffeRagService.getBranches(),
     matchedBranches: matched
   });
-});
-
-// Deterministic DFFE Service, Permit & Internal ITBS Workflow Triage endpoint
-router.post('/dffe/service-triage', toolLimiter, async (req, res) => {
-  const result = await dffeServiceTriageCapability.execute(req.body || {});
-  res.json(result);
 });
 
 // Read-Aloud Text-to-Speech (ElevenLabs Free Tier API alongside Browser/Google Speech)
