@@ -779,14 +779,14 @@ class DffeRagService {
       if (/\b(internal|sop|ministerial briefing|sharepoint|teams|directorate agent)\b/i.test(queryLower) && doc.id === 'dffe-internal-directorate-sop-2026') {
         score += 20;
       }
-      if (/\b(cms|corporate management|gito|itbs|it business solutions|equipment request|laptop|vpn|leave policy|employee leave|onboarding|template|power apps|power automate|asset management)\b/i.test(queryLower) && doc.id === 'dffe-cms-itbs-hr-sop-2026') {
+      if (/\b(equipment request|laptop|vpn|leave policy|employee leave|onboarding|template|power apps|power automate|asset management|persal)\b/i.test(queryLower) && doc.id === 'dffe-cms-itbs-hr-sop-2026') {
         score += 22;
       }
-      if (/\b(gito|government information technology|organogram|capability area|capability unit|sub-directorate|directorates?.*under gito|revised ict organogram|cybersecurity|digital solutions|applications development|service desk|ict governance|ict infrastructure)\b/i.test(queryLower) && doc.id === 'dffe-gito-organogram-source-a-2026') {
-        score += 26;
+      if (/\b(gito|government information technology|organogram|capability area|capability unit|sub-directorate|directorates?.*under gito|directorates?.*in gito|revised ict organogram|cybersecurity|digital solutions|applications development|service desk|ict governance|ict infrastructure)\b/i.test(queryLower) && doc.id === 'dffe-gito-organogram-source-a-2026') {
+        score += 35;
       }
-      if (/\b(gito|operating model|source b|four consolidated|portfolio commercial|service management|hybrid 4ir|communities of practice|dpsa|cgictpf|design principles|segregation of duties|job evaluation|functionality assessment)\b/i.test(queryLower) && doc.id === 'dffe-gito-operating-model-source-b-2026') {
-        score += 25;
+      if (/\b(gito|government information technology|organogram|operating model|source b|four consolidated|directorates?.*under gito|directorates?.*in gito|portfolio commercial|service management|hybrid 4ir|communities of practice|dpsa|cgictpf|design principles|segregation of duties|job evaluation|functionality assessment)\b/i.test(queryLower) && doc.id === 'dffe-gito-operating-model-source-b-2026') {
+        score += 34;
       }
       if (/\b(fms|financial management|pfma|supply chain|scm|procurement|tender|rfq|quotation|sita|csd|invoice|30 days)\b/i.test(queryLower) && doc.id === 'dffe-fms-pfma-scm-procurement-2026') {
         score += 22;

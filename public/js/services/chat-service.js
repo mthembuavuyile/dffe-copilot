@@ -578,7 +578,8 @@ export async function executeChatTurn(session) {
     if (statusAnimator) { statusAnimator.stop(); statusAnimator = null; }
 
     if (!accumulatedContent) {
-      accumulatedContent = accumulatedReasoning || '*(The model returned an empty response. This usually happens due to a safety filter or a temporary model glitch. Please try again or switch to a different model.)*';
+      // Never dump raw internal chain-of-thought reasoning monologue into the visible response bubble!
+      accumulatedContent = '*(The model completed its reasoning trace without generating a final summary. Expand "Reasoning Process" above or click Try Again.)*';
     } else {
       // Detect and separate untagged "Thought Process" blocks leaked into content
       const thoughtPrefixMatch = accumulatedContent.match(/^(?:Thought Process|Thinking Process|Thought|Reasoning|Chain of Thought)[:\s]*\n*([\s\S]*?)(?:\n\n(?=[A-Z0-9#*`📍])|$)/i);

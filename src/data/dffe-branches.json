@@ -6,7 +6,7 @@
     "1. Biodiversity & Conservation (NEMBA, NEMPAA, TOPS permits, SANParks/SANBI, 30x30 target, Nagoya Bioprospecting, NISCWT anti-poaching)",
     "2. Chemicals & Waste Management (NEMWA, SAWIC/SAWIS telemetry, Section 18 EPR, Circular Economy, hazardous waste, Stockholm/Minamata POPs)",
     "3. Climate Change & Air Quality (Climate Change Act 22 of 2024, Sector Emission Targets, Carbon Budgets, 2030 NDC, NEMAQA, SAAQIS, NAEIS)",
-    "4. Corporate Management Services [CMS] (Chief Directorate: GITO -> Directorate: IT Business Solutions [ITBS], SharePoint/M365 Intranet, Power Platform, HR Leave/Onboarding, Legal Services)",
+    "4. Corporate Management Services [CMS] (Chief Directorate: Government Information Technology Office [GITO] -> Proposed Capability Areas: ICT Governance, Digital Solutions & Business Enablement, ICT Infrastructure & Operations, Cybersecurity / Portfolio Management; plus separate CMS branch functions: HRM, Information Management, Legal Services)",
     "5. Environmental Programmes [EPWP] (Working for Water, Working on Fire, Working for Wetlands, Working for the Coast, Working on Waste, Ten Million Trees, Groen Sebenza)",
     "6. Financial Management Services [FMS] (PFMA Act 1 of 1999 compliance, Supply Chain Management [SCM], SITA ICT procurement, RFQs/Tenders, GEF/Green Climate Fund)",
     "7. Forestry Management (National Forests Act 84 of 1998, Commercial Forestry Masterplan, Indigenous State Forests, Champion & Protected Trees licensing, NVFFA wildfire standards)",
@@ -110,31 +110,30 @@
       "number": 4,
       "name": "Corporate Management Services",
       "shortCode": "CMS",
-      "mandate": "Deliver enterprise ICT governance (GITO), internal digital business solutions (ITBS), human resources, legal services, communications, and records/information management (FM/IM) across DFFE.",
+      "mandate": "Coordinate and manage the strategic functions and operations of the Department (headed by the Deputy Director-General: Corporate Management Services), including the Chief Directorate: Government Information Technology Office (GITO) alongside separate CMS corporate functions (Human Resource Management, Information Management, Legal Services, Communications, and Facilities).",
       "chiefDirectorates": [
-        "Office of the Government Information Technology Officer (GITO) — Directorate: IT Business Solutions (ITBS) & Directorate: ICT Infrastructure & Operations",
-        "Human Resource Management and Development (Leave, Onboarding, Wellness, PMDS)",
-        "Information Management and Records Governance (FM/IM, EDMS, SharePoint & PAIA/POPIA)",
-        "Legal Services, Corporate Communications and Facilities Management (Environment House)"
+        "Chief Directorate: Government Information Technology Office (GITO) [Official Public Placement under CMS; Proposed GITO functional capability areas in Source A & Source B: (1) ICT Governance, Architecture & Risk/Security, (2) Digital Solutions, Data & Business Enablement, (3) ICT Infrastructure, Operations & User Services, and (4) Cybersecurity & Information Security (Source A) / ICT Portfolio, Commercial & Service Management (Source B)]",
+        "Other Separate CMS Branch Functions (NOT under GITO): Human Resource Management & Development, Information & Records Management, Legal Services, Corporate Communications, and Facilities Management"
       ],
       "statutes": [
+        "Public Service Corporate Governance of ICT Policy Framework (DPSA CGICTPF Version 2, March 2022)",
         "Protection of Personal Information Act (POPIA, Act 4 of 2013)",
         "Promotion of Access to Information Act (PAIA, Act 2 of 2000)",
-        "Public Service Act & Corporate Governance of ICT Policy Framework (CGICTPF)"
+        "Public Service Act & Public Service Regulations, 2016 (Regulation 35)"
       ],
       "systemsAndPortals": [
         "DFFE SharePoint Online Intranet & Microsoft 365 Collaboration Environment",
-        "ITBS Internal Service Request, Asset Management & Digital Workflow Portal (Power Apps / Power Automate)",
-        "DFFE Copilot & Directorate Agent Studio (Microsoft Copilot Studio / Azure AI / OpenRouter Hybrid)",
+        "GITO Digital Solutions & Business Enablement Service Portal (Power Apps / Power Automate)",
+        "DFFE Copilot & Directorate Agent Studio (DFFE Knowledge Assistant)",
         "Electronic Document and Records Management System (EDMS)"
       ],
       "coreWorkflows": [
-        "ITBS IT Equipment Requests (laptops, monitors, 3G/LTE, VPN access) with line-manager Power Automate approval",
-        "IT Service Desk incident logging, ICT asset lifecycle tracking, and software provisioning",
-        "Directorate AI Agent creation, SharePoint document library grounding, and 3-Phase FM/IM content sensitivity classification",
-        "HR Employee Leave Applications, New Employee Onboarding Checklists, and PMDS performance agreements"
+        "GITO ICT Equipment & VPN Requests (laptops, monitors, 3G/LTE, VPN access) with line-manager Power Automate approval",
+        "ICT Infrastructure, Operations & Service Desk incident logging, ICT asset lifecycle tracking, and software provisioning",
+        "Digital Solutions, Data & Business Enablement: Applications development, integration, automation, AI, and SharePoint document grounding",
+        "CMS HR Employee Leave Applications, New Employee Onboarding Checklists, and PMDS performance agreements (managed by CMS HRM, separate from GITO)"
       ],
-      "keywords": ["cms", "corporate management", "gito", "itbs", "it business solutions", "sharepoint", "intranet", "power apps", "power automate", "power bi", "microsoft 365", "teams", "copilot", "laptop", "equipment request", "vpn", "it support", "service desk", "asset management", "leave", "leave policy", "onboarding", "hr", "human resources", "popia", "paia", "edms", "template", "internal process", "fm/im"]
+      "keywords": ["cms", "corporate management", "gito", "government information technology office", "digital solutions", "business enablement", "applications development", "itbs", "it business solutions", "sharepoint", "intranet", "power apps", "power automate", "power bi", "microsoft 365", "teams", "copilot", "laptop", "equipment request", "vpn", "it support", "service desk", "asset management", "leave", "leave policy", "onboarding", "hr", "human resources", "popia", "paia", "edms", "template", "internal process", "fm/im"]
     },
     {
       "id": "branch-5-programmes",

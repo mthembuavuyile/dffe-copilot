@@ -129,77 +129,63 @@ class ChatController {
         reasoning: Boolean(enableDeepReasoning)
       };
 
-      const normalizedMessages = [
-        {
-          role: 'system',
-          content: this.buildSystemPrompt(mode, clientCustomPrompt, activeToolsState)
-        },
-        ...nonSystemMessages
-      ];
+      let systemPromptContent = this.buildSystemPrompt(mode, clientCustomPrompt, activeToolsState);
 
-      // DFFE RAG Knowledge Grounding (Silent reference data source only — AI response only, no widget dump)
-      const lastUserMessageObj = [...normalizedMessages].reverse().find(m => m.role === 'user');
+      // DFFE RAG Knowledge Grounding (Injected into the top system message so the user message is always last!)
+      const lastUserMessageObj = [...nonSystemMessages].reverse().find(m => m.role === 'user');
       const lastUserQueryText = lastUserMessageObj && lastUserMessageObj.content
         ? (typeof lastUserMessageObj.content === 'string' ? lastUserMessageObj.content : JSON.stringify(lastUserMessageObj.content))
         : '';
 
       let activeDffeSearchRes = null;
       if (lastUserQueryText && dffeRagService.isDffeQuery(lastUserQueryText)) {
+        const isPureGitoStructureQuery = /\b(gito|government information technology|organogram|capability area|capability unit|revised ict|operating model|dpsa|cgictpf)\b/i.test(lastUserQueryText) &&
+          !/\b(soer|working for|nema|eia|saaqis|sawic|fishing|frap|forest|biodiversity|climate change act)\b/i.test(lastUserQueryText);
+
         activeDffeSearchRes = dffeRagService.searchKnowledge({
           query: lastUserQueryText,
-          series: dffeFilters?.series || 'all',
+          series: isPureGitoStructureQuery ? 'gito_ict' : (dffeFilters?.series || 'all'),
           collection: dffeFilters?.collection || 'all',
           status: dffeFilters?.status || 'all',
           year: dffeFilters?.year || 'all',
           audience: dffeFilters?.audience || 'public',
           accessPhase: dffeFilters?.accessPhase || null,
-          limit: 4
+          limit: isPureGitoStructureQuery ? 2 : 4
         });
         const dffeContext = dffeRagService.formatDffeGroundingContext(activeDffeSearchRes);
         if (dffeContext) {
-          normalizedMessages.push({
-            role: 'system',
-            content: dffeContext
-          });
+          systemPromptContent += `\n\n${dffeContext}`;
         }
       } else if (lastUserQueryText) {
         // Even if not matching a specific report keyword, check if one of the 10 DFFE Branches is referenced
         const branchOnlyContext = dffeRagService.formatRelevantBranchContext(lastUserQueryText);
         if (branchOnlyContext) {
-          normalizedMessages.push({
-            role: 'system',
-            content: branchOnlyContext
-          });
+          systemPromptContent += `\n\n${branchOnlyContext}`;
         }
       }
 
       if (dffeFilters?.agentId) {
         const activeAgent = dffeRagService.getDirectorateAgents().find(a => a.id === dffeFilters.agentId);
         if (activeAgent) {
-          normalizedMessages.push({
-            role: 'system',
-            content: `[ACTIVE DFFE DIRECTORATE AGENT PROFILE]\n- Agent Name: ${activeAgent.name}\n- Responsible Directorate: ${activeAgent.directorate}\n- Default Series Scope: ${activeAgent.defaultSeries}\n- Sensitivity Tier: ${activeAgent.sensitivity.toUpperCase()}\n- Grounded Official URLs: ${(activeAgent.groundingUrls || []).join(', ')}\n- Required Deliverable Format: ${activeAgent.deliverableFormat}${activeAgent.instructions ? `\n- Directorate Custom Instructions: ${activeAgent.instructions}` : ''}`
-          });
+          systemPromptContent += `\n\n[ACTIVE DFFE DIRECTORATE AGENT PROFILE]\n- Agent Name: ${activeAgent.name}\n- Responsible Directorate: ${activeAgent.directorate}\n- Default Series Scope: ${activeAgent.defaultSeries}\n- Sensitivity Tier: ${activeAgent.sensitivity.toUpperCase()}\n- Grounded Official URLs: ${(activeAgent.groundingUrls || []).join(', ')}\n- Required Deliverable Format: ${activeAgent.deliverableFormat}${activeAgent.instructions ? `\n- Directorate Custom Instructions: ${activeAgent.instructions}` : ''}`;
         }
       }
 
-      if (webSearch) {
-        const lastUserMsg = [...normalizedMessages].reverse().find(m => m.role === 'user');
-        if (lastUserMsg && lastUserMsg.content) {
-          const userQuery = typeof lastUserMsg.content === 'string'
-            ? lastUserMsg.content
-            : JSON.stringify(lastUserMsg.content);
-
-          const searchResults = await searchService.searchWeb(userQuery, 5);
-          if (searchResults && searchResults.length > 0) {
-            const groundingContext = searchService.formatGroundingContext(searchResults, userQuery);
-            normalizedMessages.push({
-              role: 'system',
-              content: groundingContext
-            });
-          }
+      if (webSearch && lastUserQueryText) {
+        const searchResults = await searchService.searchWeb(lastUserQueryText, 5);
+        if (searchResults && searchResults.length > 0) {
+          const groundingContext = searchService.formatGroundingContext(searchResults, lastUserQueryText);
+          systemPromptContent += `\n\n${groundingContext}`;
         }
       }
+
+      const normalizedMessages = [
+        {
+          role: 'system',
+          content: systemPromptContent
+        },
+        ...nonSystemMessages
+      ];
 
       const reasoningConfig = enableDeepReasoning
         ? { effort: 'high' }
@@ -282,6 +268,7 @@ class ChatController {
           const reader = openRouterResponse.body.getReader();
           const toolCallsMap = new Map();
           let sseBuffer = '';
+          let hasStreamedVisibleContent = false;
 
           try {
             while (true) {
@@ -309,6 +296,7 @@ class ChatController {
                     if (activeDffeSearchRes && !res.writableEnded) {
                       const fallbackMarkdown = dffeRagService.buildDeterministicResponse(activeDffeSearchRes);
                       res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: fallbackMarkdown } }] })}\n\n`);
+                      hasStreamedVisibleContent = true;
                       toolCallsMap.clear();
                       break;
                     }
@@ -330,6 +318,9 @@ class ChatController {
                       if (tc.function?.arguments) existing.argsChunks.push(tc.function.arguments);
                     }
                   } else if (toolCallsMap.size === 0) {
+                    if (typeof delta?.content === 'string' && delta.content.trim().length > 0) {
+                      hasStreamedVisibleContent = true;
+                    }
                     res.write(`data: ${dataStr}\n\n`);
                   }
                 } catch (e) {
@@ -342,13 +333,24 @@ class ChatController {
           } catch (streamErr) {
             console.error('[Stream Read Error]:', streamErr.message);
             if (!res.writableEnded) {
-              res.write(`data: ${JSON.stringify({ error: 'Stream interrupted. Please try again.' })}\n\n`);
+              if (activeDffeSearchRes && !hasStreamedVisibleContent) {
+                const fallbackMarkdown = dffeRagService.buildDeterministicResponse(activeDffeSearchRes);
+                res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: fallbackMarkdown } }] })}\n\n`);
+                hasStreamedVisibleContent = true;
+              } else {
+                res.write(`data: ${JSON.stringify({ error: 'Stream interrupted. Please try again.' })}\n\n`);
+              }
             }
             break;
           }
 
-          // If no tool calls were requested in this iteration, final text has been streamed to client!
+          // If no tool calls were requested in this iteration:
+          // Check if a reasoning model consumed its entire token limit inside delta.reasoning without emitting delta.content!
           if (toolCallsMap.size === 0) {
+            if (!hasStreamedVisibleContent && activeDffeSearchRes && !res.writableEnded) {
+              const fallbackMarkdown = dffeRagService.buildDeterministicResponse(activeDffeSearchRes);
+              res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: fallbackMarkdown } }] })}\n\n`);
+            }
             break;
           }
 

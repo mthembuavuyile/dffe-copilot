@@ -55,18 +55,19 @@
     "directorateAgents": [
       {
         "id": "dffe-general-agent",
-        "name": "DFFE Environmental Intelligence Agent",
-        "directorate": "Chief Directorate: Environmental Knowledge Management & IT Business Solutions",
+        "name": "DFFE Environmental & GITO Knowledge Assistant",
+        "directorate": "Branch: Corporate Management Services (CMS) — Chief Directorate: Government Information Technology Office (GITO)",
         "defaultSeries": "all",
         "defaultAudience": "public",
         "sensitivity": "public",
         "channels": ["Internal Teams", "dffe.gov.za Web", "WhatsApp"],
         "groundingUrls": [
+          "https://www.dffe.gov.za/corporate-management-services",
           "https://www.dffe.gov.za/state-of-the-environment-reports",
           "https://www.dffe.gov.za/projectsprogrammes"
         ],
-        "description": "Cross-departmental environmental synthesis across State of the Environment (SoER) reports, EPWP programmes, climate, biodiversity, and waste.",
-        "deliverableFormat": "Cited Environmental Synthesis & Policy Summary"
+        "description": "Departmental reference and environmental intelligence assistant across DFFE's mandate, CMS & GITO structure (Official vs. Proposed organograms), State of the Environment (SoER) reports, EPWP programmes, and legislation.",
+        "deliverableFormat": "Cited Departmental Reference & Policy Summary"
       },
       {
         "id": "dffe-eia-compliance-agent",
@@ -129,18 +130,18 @@
       },
       {
         "id": "dffe-cms-itbs-agent",
-        "name": "CMS / GITO / ITBS Internal Service & Policy Agent",
-        "directorate": "Branch: Corporate Management Services (CMS) — GITO & ITBS",
-        "defaultSeries": "internal_sop",
+        "name": "CMS & GITO Internal ICT & Corporate Service Agent",
+        "directorate": "Branch: Corporate Management Services (CMS) — Chief Directorate: Government Information Technology Office (GITO)",
+        "defaultSeries": "gito_ict",
         "defaultAudience": "officials",
         "sensitivity": "internal",
         "channels": ["Internal Teams", "DFFE SharePoint Intranet", "Power Apps Portal"],
         "groundingUrls": [
-          "https://www.dffe.gov.za/internal-im-governance",
+          "https://www.dffe.gov.za/corporate-management-services",
           "https://www.dffe.gov.za/tenders"
         ],
-        "description": "Guides DFFE officials on ITBS IT equipment requests, Power Platform digital workflows, HR leave & onboarding policies, and FMS PFMA / SITA procurement thresholds.",
-        "deliverableFormat": "ITBS Digital Workflow Blueprint & Internal SOP Checklist"
+        "description": "Guides DFFE officials on GITO structure (Official CMS placement vs. Proposed Source A & Source B organograms), Digital Solutions & Business Enablement workflows, ICT equipment requests, HR leave SOPs, and PFMA / SITA procurement thresholds.",
+        "deliverableFormat": "GITO ICT Reference & Digital Workflow Blueprint"
       }
     ]
   },
@@ -151,7 +152,7 @@
       "series": "soer",
       "seriesLabel": "State of the Environment (SoER)",
       "year": "2026",
-      "branch": "Environmental Advisory Services & Chief Directorate: Environmental Knowledge Management",
+      "branch": "Department of Forestry, Fisheries and the Environment (DFFE) — Environmental Knowledge & SoER Outlook",
       "audiences": ["public", "officials", "researchers"],
       "sensitivity": "public",
       "governance": "PUBLIC — Verified DFFE Publication",
@@ -320,7 +321,7 @@
       "series": "internal_sop",
       "seriesLabel": "Internal Directorate SOPs & Governance",
       "year": "2026",
-      "branch": "Chief Directorate: Information Management & IT Business Solutions (Environment House)",
+      "branch": "Branch: Corporate Management Services (CMS) — Chief Directorate: Government Information Technology Office (GITO)",
       "audiences": ["officials"],
       "sensitivity": "internal",
       "governance": "INTERNAL OFFICIAL ONLY — Phase 1 Entra ID / Microsoft Teams Grounding",
@@ -356,11 +357,11 @@
     },
     {
       "id": "dffe-cms-itbs-hr-sop-2026",
-      "title": "DFFE Corporate Management Services (CMS): GITO / ITBS Equipment Requests, HR Leave & Onboarding SOP",
+      "title": "DFFE Corporate Management Services (CMS): GITO ICT Equipment Requests, Digital Solutions & HR Leave/Onboarding SOP",
       "series": "internal_sop",
       "seriesLabel": "Internal Directorate SOPs & Governance",
       "year": "2026",
-      "branch": "Branch: Corporate Management Services (CMS) — Chief Directorate: GITO / Directorate: IT Business Solutions (ITBS) & HRM",
+      "branch": "Branch: Corporate Management Services (CMS) — Chief Directorate: GITO & CMS Human Resource Management",
       "audiences": ["officials"],
       "sensitivity": "internal",
       "governance": "INTERNAL OFFICIAL ONLY — Phase 1 CMS / GITO / SharePoint Intranet",

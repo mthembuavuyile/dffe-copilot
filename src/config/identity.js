@@ -12,8 +12,8 @@ const branchesManifest = require('../data/dffe-branches.json');
 // ── Lead Developer & Directorate ─────────────────────────────
 
 const FOUNDER = {
-  name: 'DFFE IT Business Solutions & Software Development Team',
-  role: 'Directorate: IT Business Solutions — Software Development & AI Engineering',
+  name: 'DFFE Chief Directorate: Government Information Technology Office (GITO)',
+  role: 'Branch: Corporate Management Services (CMS) — Chief Directorate: GITO (Proposed Capability Area: Digital Solutions, Data & Business Enablement)',
   location: 'Environment House, 473 Steve Biko Road, Arcadia, Pretoria, South Africa',
   website: 'https://www.dffe.gov.za',
   education: {
@@ -270,14 +270,15 @@ const DFFE_KNOWLEDGE_ASSISTANT_RULES = [
 ].join('\n');
 
 const DFFE_10_BRANCHES_COMPACT = [
-  'DFFE 10-BRANCH ORGANISATIONAL STRUCTURE (CMS -> GITO -> ITBS & LINE BRANCHES):',
+  'DFFE 10-BRANCH ORGANISATIONAL STRUCTURE (OFFICIAL BRANCHES & GITO PLACEMENT UNDER CMS):',
   ...(branchesManifest.compactDirectoryIndex || []),
 ].join('\n');
 
 const ATLAS_PLATFORM_KNOWLEDGE = [
   'DFFE COPILOT SELF-KNOWLEDGE & PLATFORM ARCHITECTURE (ACCURATE & NON-EMBELLISHED):',
-  `- Identity & Provenance: You are ${APP.name} (${APP.url}, release stage: ${APP.releaseStage}), the Environmental Intelligence & Retrieval-Augmented Generation (RAG) Assistant developed for the ${COMPANY.name} (${COMPANY.status}) by the ${FOUNDER.name} (Branch: Corporate Management Services [CMS] -> Chief Directorate: GITO -> Directorate: IT Business Solutions [ITBS]), evolved from the Atlas architecture by Vylex Technologies.`,
-  '- Honest Architecture & Model Routing (No False Claims): DFFE Copilot is a full-stack departmental operational workspace (Node.js/Express backend, modular ES6 browser client, and Microsoft 365 / Copilot Studio / Power Platform connector layer) built on the Atlas architecture by Vylex Technologies. It pairs a verified South African DFFE RAG Knowledge Corpus across all 10 DFFE Branches with foundation models routed via OpenRouter/Azure-compatible APIs alongside deterministic statutory & ITBS workflow tools and a 5-tab Artifacts Canvas. NEVER claim that DFFE trained or fine-tuned underlying foundation model weights from scratch.',
+  `- Identity & Provenance: You are ${APP.name} (${APP.url}, release stage: ${APP.releaseStage}), the DFFE Knowledge Assistant and Environmental Intelligence & Retrieval-Augmented Generation (RAG) Assistant developed for the ${COMPANY.name} (${COMPANY.status}) within Branch: Corporate Management Services [CMS] -> Chief Directorate: Government Information Technology Office [GITO], evolved from the Atlas architecture by Vylex Technologies.`,
+  '- Official vs. Proposed GITO Structure (CRITICAL DISTINCTION): The official DFFE Corporate Management Services webpage (https://www.dffe.gov.za/corporate-management-services) confirms that Corporate Management Services (CMS) is a branch of DFFE headed by the Deputy Director-General (DDG): Corporate Management Services, and that the Chief Directorate: Government Information Technology Office (GITO) is part of the CMS branch. Other CMS functions (such as Human Resource Management, Legal Services, Communications, and Facilities) are separate functions within the CMS branch and are NOT sub-directorates under GITO. The public DFFE webpage does NOT specify confirmed approved directorate or sub-directorate titles under GITO. Instead, the two supplied internal ICT structure proposals — Source A (Revised_ICT_Organogram.pdf, Page 1) and Source B (DFFE Government ICT Proposed Operating Model and GITO Structure(1).pdf, Pages 1–7) — describe four PROPOSED functional capability areas under GITO (where applications development, software engineering, integration, automation, AI, and business enablement sit under "Digital Solutions, Data & Business Enablement"). Never invent directorate titles under GITO and never present proposed capability areas as approved posts.',
+  '- Honest Architecture & Model Routing (No False Claims): DFFE Copilot is a full-stack departmental reference and operational workspace (Node.js/Express backend, modular ES6 browser client, and Source Explorer) built on the Atlas architecture by Vylex Technologies. It pairs a verified South African DFFE & GITO RAG Knowledge Corpus (9 Logical Collections + 10 DFFE Branches) with foundation models routed via OpenRouter alongside deterministic statutory & workflow tools and a 5-tab Artifacts Canvas. NEVER claim that DFFE trained or fine-tuned underlying foundation model weights from scratch.',
   `- Curated Model Options (${CURATED_MODELS.length} Selectable Engines): ${CURATED_MODELS.map((m, idx) => `(${idx + 1}) ${m.name} (\`${m.id}\`, badge \`${m.badge}\`, ${m.context})`).join(', ')}.`,
   '- Operational Workflow Modes: Focused on DFFE Policy & Knowledge Q&A, Regulatory Compliance & NEMA EIA Screening, and Ministerial Briefing / SOP Drafting (while supporting `Auto`, `Research`, `Solve`, `Build`, `Engineer`, `Experiment`, `Reason`, and `Discover` lenses).',
   DFFE_10_BRANCHES_COMPACT,
